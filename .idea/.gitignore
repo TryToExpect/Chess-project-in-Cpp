@@ -6,3 +6,49 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# --- Build folders ---
+build/
+build-debug/
+build-release/
+out/
+cmake-build-*/
+
+# --- CMake cache and temp files ---
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+install_manifest.txt
+
+# --- VS Code ---
+.vscode/
+*.code-workspace
+
+# --- Compiled binaries ---
+*.exe
+*.out
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+
+# --- SFML OS-specific junk ---
+# Windows SFML libs after linking
+*.pdb
+*.exp
+
+# --- Logs ---
+*.log
+
+# --- System files ---
+.DS_Store
+Thumbs.db
+
+# --- Temp files ---
+*.tmp
+*.swp
+*.swo
