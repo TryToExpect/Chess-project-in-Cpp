@@ -12,22 +12,22 @@ struct Piece {
     Color color;
 };
 
-array<array<Piece, 8>, 8> board; // plansza 8x8
+array<array<Piece, 8>, 8> board; // Board 8x8
 
 void setupBoard() {
-    // Wyczyść planszę
+    // Clean board
     for (auto &row : board)
         for (auto &cell : row)
             cell.type = NONE;
 
-    // Białe
+    // White
     for (int i = 0; i < 8; i++) board[1][i] = { PAWN, WHITE };
     board[0][0] = { ROOK, WHITE }; board[0][7] = { ROOK, WHITE };
     board[0][1] = { KNIGHT, WHITE }; board[0][6] = { KNIGHT, WHITE };
     board[0][2] = { BISHOP, WHITE }; board[0][5] = { BISHOP, WHITE };
     board[0][3] = { QUEEN, WHITE };  board[0][4] = { KING, WHITE };
 
-    // Czarne
+    // Black
     for (int i = 0; i < 8; i++) board[6][i] = { PAWN, BLACK };
     board[7][0] = { ROOK, BLACK }; board[7][7] = { ROOK, BLACK };
     board[7][1] = { KNIGHT, BLACK }; board[7][6] = { KNIGHT, BLACK };
@@ -39,7 +39,7 @@ int main() {
     sf::RenderWindow window({512, 512}, "SFML Chess", sf::Style::Close);
     window.setFramerateLimit(60);
 
-    // === ŁADOWANIE TEKSTUR ===
+    // === LOADING TEXTURES ===
     sf::Texture boardTexture;
     if (!boardTexture.loadFromFile("images/board.png")) {
         cerr << "Nie udalo sie zaladowac board.png\n";
@@ -59,17 +59,17 @@ int main() {
         }
     }
 
-    // === Ustawienie planszy ===
+    // === Setting board ===
     setupBoard();
     sf::Sprite boardSprite(boardTexture);
 
-    // === Główna pętla gry ===
+    // === GAME MAIN LOOP ===
     while (window.isOpen()) {
         for (auto event = sf::Event{}; window.pollEvent(event);) {
             if (event.is<sf::Event::Closed>())
                 window.close();
 
-            // Kliknięcie myszy - diagnostyka
+            // Mouse clicking - testing
             if (event.is<sf::Event::MouseButtonPressed>()) {
                 auto mouse = event.getIf<sf::Event::MouseButtonPressed>();
                 int x = mouse->x / 64;
@@ -81,7 +81,7 @@ int main() {
         window.clear();
         window.draw(boardSprite);
 
-        // Rysowanie figur
+        // Drawing figures
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Piece p = board[i][j];
@@ -106,4 +106,3 @@ int main() {
     return 0;
 }
 
-// ZOBACZMY CZY DZIALA JAK WYJDE POWIEDZMY WYLACZE KOMPA     3213211111111111321321321321123
