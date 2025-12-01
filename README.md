@@ -1,2 +1,1 @@
-# Chess-project-in-C-
-C++
+## How to build project
