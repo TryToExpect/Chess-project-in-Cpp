@@ -5,6 +5,7 @@ SFML_CHESS: \
   CMakeFiles/SFML_CHESS.dir/src/main.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o \
+  CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o \
   /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.3.0.2 \
   /usr/lib/x86_64-linux-gnu/libsfml-window.so.3.0.2 \
   /usr/lib/x86_64-linux-gnu/libsfml-audio.so.3.0.2 \
@@ -70,6 +71,8 @@ CMakeFiles/SFML_CHESS.dir/src/main.cpp.o:
 CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o:
+
+CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o:
 
 /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.3.0.2:
 

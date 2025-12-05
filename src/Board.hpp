@@ -16,6 +16,12 @@ public:
     void setTileSize(float tileSize);
     float getTileSize() const;
 
+    // Piece rendering: attach a PieceManager to provide textures
+    void setPieceManager(const class PieceManager* pm);
+
+    // initialize pieces to standard chess starting position
+    void setInitialPosition();
+
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -23,4 +29,8 @@ private:
     sf::Vector2f m_origin;
     sf::Color m_light;
     sf::Color m_dark;
+    // pointer to piece textures provider (not owned)
+    const class PieceManager* m_pieceManager = nullptr;
+    // board piece codes, row-major [row][col], empty string -> no piece
+    std::array<std::array<std::string, 8>, 8> m_pieces;
 };

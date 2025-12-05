@@ -2,6 +2,9 @@
 #include <algorithm>
 #include <cmath>
 #include "Board.hpp"
+#include "PieceManager.hpp"
+#include <memory>
+#include <iostream>
 
 int main() {
     // Fixed tile size — board won't scale on window resize
@@ -21,6 +24,28 @@ int main() {
 
     sf::RenderWindow window(sf::VideoMode(sf::Vector2u(static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight))), "Chess - SFML 3");
     window.setVerticalSyncEnabled(true);
+
+    // Load piece style: prefer "maestro" if available, otherwise pick first available.
+    std::string defaultStyle = "maestro";
+    auto styles = PieceManager::listAvailableStyles("../assets/pieces");
+    std::unique_ptr<PieceManager> pmPtr;
+    if (styles.empty()) {
+        std::cerr << "No piece styles found in assets/pieces. Pieces will not be shown.\n";
+    } else {
+        bool hasDefault = false;
+        for (auto &s : styles) if (s == defaultStyle) hasDefault = true;
+        if (!hasDefault) defaultStyle = styles.front();
+
+        pmPtr = std::make_unique<PieceManager>(defaultStyle, "../assets/pieces");
+        if (!pmPtr->isLoaded()) {
+            std::cerr << "Failed to load piece style: " << defaultStyle << "\n";
+            pmPtr.reset();
+        } else {
+            std::cout << "Loaded piece style: " << defaultStyle << "\n";
+            board.setPieceManager(pmPtr.get());
+            board.setInitialPosition();
+        }
+    }
 
     while (window.isOpen()) {
         while (auto evt = window.pollEvent()) {

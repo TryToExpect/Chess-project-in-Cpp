@@ -15,6 +15,7 @@ add_executable(SFML_CHESS
 	src/main.cpp
 	src/Board.cpp
 	src/Piece.cpp
+	src/PieceManager.cpp
 )
 
 target_link_libraries(SFML_CHESS PRIVATE SFML::Graphics SFML::Window SFML::System SFML::Audio)

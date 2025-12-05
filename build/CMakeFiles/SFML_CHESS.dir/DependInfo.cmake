@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Board.cpp" "CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o" "gcc" "CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o.d"
   "/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Piece.cpp" "CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o" "gcc" "CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o.d"
+  "/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.cpp" "CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o" "gcc" "CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o.d"
   "/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/main.cpp" "CMakeFiles/SFML_CHESS.dir/src/main.cpp.o" "gcc" "CMakeFiles/SFML_CHESS.dir/src/main.cpp.o.d"
   "" "SFML_CHESS" "gcc" "CMakeFiles/SFML_CHESS.dir/link.d"
   )

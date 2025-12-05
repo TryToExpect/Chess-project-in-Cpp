@@ -177,6 +177,30 @@ src/Piece.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.s
 .PHONY : src/Piece.cpp.s
 
+src/PieceManager.o: src/PieceManager.cpp.o
+.PHONY : src/PieceManager.o
+
+# target to build an object file
+src/PieceManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o
+.PHONY : src/PieceManager.cpp.o
+
+src/PieceManager.i: src/PieceManager.cpp.i
+.PHONY : src/PieceManager.i
+
+# target to preprocess a source file
+src/PieceManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.i
+.PHONY : src/PieceManager.cpp.i
+
+src/PieceManager.s: src/PieceManager.cpp.s
+.PHONY : src/PieceManager.s
+
+# target to generate assembly for a file
+src/PieceManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.s
+.PHONY : src/PieceManager.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -216,6 +240,9 @@ help:
 	@echo "... src/Piece.o"
 	@echo "... src/Piece.i"
 	@echo "... src/Piece.s"
+	@echo "... src/PieceManager.o"
+	@echo "... src/PieceManager.i"
+	@echo "... src/PieceManager.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
