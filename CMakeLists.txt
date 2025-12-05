@@ -3,11 +3,18 @@ project(SFML_CHESS)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# 🔹 Ścieżka do SFML (zmień na swoją)
-set(SFML_DIR "C:/SFML_3.0.2/build")
+# On Linux you can usually install SFML 3 via your package manager.
+# If you have SFML in a custom location, set SFML_DIR before configuring.
+# Example (bash):
+#   cmake -DSFML_DIR=/path/to/sfml/share/SFML ..
 
-find_package(SFML 3 COMPONENTS Graphics Audio Window System REQUIRED)
+find_package(SFML 3 COMPONENTS Graphics Window System Audio REQUIRED)
 
-add_executable(SFML_CHESS main.cpp)
+# Build sources in src/
+add_executable(SFML_CHESS
+	src/main.cpp
+	src/Board.cpp
+	src/Piece.cpp
+)
 
 target_link_libraries(SFML_CHESS PRIVATE SFML::Graphics SFML::Window SFML::System SFML::Audio)
