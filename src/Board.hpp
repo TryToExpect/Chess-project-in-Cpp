@@ -22,6 +22,12 @@ public:
     // initialize pieces to standard chess starting position
     void setInitialPosition();
 
+    // get current piece style name
+    std::string getCurrentStyle() const { return m_currentStyle; }
+
+    // set piece style (reloads textures and pieces)
+    void setStyle(const std::string& styleName);
+
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -33,4 +39,8 @@ private:
     const class PieceManager* m_pieceManager = nullptr;
     // board piece codes, row-major [row][col], empty string -> no piece
     std::array<std::array<std::string, 8>, 8> m_pieces;
+    // current piece style name
+    std::string m_currentStyle;
+    // base directory for piece assets
+    std::string m_assetDir = "../assets/pieces";
 };

@@ -7,7 +7,8 @@
 Board::Board(float tileSize, const sf::Vector2f& origin)
     : m_tileSize(tileSize), m_origin(origin),
       m_light(240, 217, 181), // typical light square
-      m_dark(181, 136, 99)    // typical dark square
+      m_dark(181, 136, 99),   // typical dark square
+      m_currentStyle("maestro") // default style
 {
 }
 
@@ -89,4 +90,9 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             }
         }
     }
+}
+
+void Board::setStyle(const std::string& styleName) {
+    m_currentStyle = styleName;
+    // Reload pieces with new style (main.cpp will handle PieceManager creation)
 }

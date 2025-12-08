@@ -27,24 +27,37 @@ int main() {
 
     // Load piece style: prefer "maestro" if available, otherwise pick first available.
     std::string defaultStyle = "maestro";
-    auto styles = PieceManager::listAvailableStyles("../assets/pieces");
+    auto allStyles = PieceManager::listAvailableStyles("../assets/pieces");
     std::unique_ptr<PieceManager> pmPtr;
-    if (styles.empty()) {
+    int currentStyleIndex = 0;
+    
+    if (allStyles.empty()) {
         std::cerr << "No piece styles found in assets/pieces. Pieces will not be shown.\n";
     } else {
-        bool hasDefault = false;
-        for (auto &s : styles) if (s == defaultStyle) hasDefault = true;
-        if (!hasDefault) defaultStyle = styles.front();
+        // find index of default style
+        for (size_t i = 0; i < allStyles.size(); ++i) {
+            if (allStyles[i] == defaultStyle) {
+                currentStyleIndex = i;
+                break;
+            }
+        }
 
-        pmPtr = std::make_unique<PieceManager>(defaultStyle, "../assets/pieces");
+        pmPtr = std::make_unique<PieceManager>(allStyles[currentStyleIndex], "../assets/pieces");
         if (!pmPtr->isLoaded()) {
-            std::cerr << "Failed to load piece style: " << defaultStyle << "\n";
+            std::cerr << "Failed to load piece style: " << allStyles[currentStyleIndex] << "\n";
             pmPtr.reset();
         } else {
-            std::cout << "Loaded piece style: " << defaultStyle << "\n";
+            std::cout << "Loaded piece style: " << allStyles[currentStyleIndex] << "\n";
             board.setPieceManager(pmPtr.get());
+            board.setStyle(allStyles[currentStyleIndex]);
             board.setInitialPosition();
         }
+    }
+
+    // Font for UI text (try system fonts)
+    sf::Font font;
+    if (!font.openFromFile("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf")) {
+        std::cerr << "Warning: Could not load font. Style text will not be displayed.\n";
     }
 
     while (window.isOpen()) {
@@ -58,9 +71,32 @@ int main() {
 
             if (evt->is<sf::Event::KeyPressed>()) {
                 const auto *key = evt->getIf<sf::Event::KeyPressed>();
-                if (key && key->code == sf::Keyboard::Key::Escape) {
-                    window.close();
-                    break;
+                if (key) {
+                    if (key->code == sf::Keyboard::Key::Escape) {
+                        window.close();
+                        break;
+                    }
+                    // Cycle through piece styles with arrow keys
+                    if ((key->code == sf::Keyboard::Key::Right || key->code == sf::Keyboard::Key::Down) && !allStyles.empty()) {
+                        currentStyleIndex = (currentStyleIndex + 1) % allStyles.size();
+                        pmPtr = std::make_unique<PieceManager>(allStyles[currentStyleIndex], "../assets/pieces");
+                        if (pmPtr->isLoaded()) {
+                            board.setPieceManager(pmPtr.get());
+                            board.setStyle(allStyles[currentStyleIndex]);
+                            board.setInitialPosition();
+                            std::cout << "Switched to style: " << allStyles[currentStyleIndex] << "\n";
+                        }
+                    }
+                    if ((key->code == sf::Keyboard::Key::Left || key->code == sf::Keyboard::Key::Up) && !allStyles.empty()) {
+                        currentStyleIndex = (currentStyleIndex + allStyles.size() - 1) % allStyles.size();
+                        pmPtr = std::make_unique<PieceManager>(allStyles[currentStyleIndex], "../assets/pieces");
+                        if (pmPtr->isLoaded()) {
+                            board.setPieceManager(pmPtr.get());
+                            board.setStyle(allStyles[currentStyleIndex]);
+                            board.setInitialPosition();
+                            std::cout << "Switched to style: " << allStyles[currentStyleIndex] << "\n";
+                        }
+                    }
                 }
             }
         }
@@ -78,6 +114,24 @@ int main() {
         separator.setPosition({historyPanelWidth, 0.f});
         separator.setFillColor(sf::Color(100, 100, 100));
         window.draw(separator);
+
+        // Draw current piece style info in history panel
+        if (font.getInfo().family.size() > 0 && !allStyles.empty()) {
+            sf::Text styleLabel(font, "Piece Style:", 14);
+            styleLabel.setPosition({10.f, 20.f});
+            styleLabel.setFillColor(sf::Color(200, 200, 200));
+            window.draw(styleLabel);
+
+            sf::Text styleName(font, allStyles[currentStyleIndex], 16);
+            styleName.setPosition({10.f, 40.f});
+            styleName.setFillColor(sf::Color(255, 200, 100));
+            window.draw(styleName);
+
+            sf::Text hints(font, "Use <- -> to change", 11);
+            hints.setPosition({10.f, 70.f});
+            hints.setFillColor(sf::Color(150, 150, 150));
+            window.draw(hints);
+        }
 
         // Draw the board
         window.draw(board);
