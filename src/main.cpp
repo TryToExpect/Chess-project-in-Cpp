@@ -76,8 +76,8 @@ int main() {
                         window.close();
                         break;
                     }
-                    // Cycle through piece styles with arrow keys
-                    if ((key->code == sf::Keyboard::Key::Right || key->code == sf::Keyboard::Key::Down) && !allStyles.empty()) {
+                    // Cycle through piece styles with Left/Right
+                    if (key->code == sf::Keyboard::Key::Right && !allStyles.empty()) {
                         currentStyleIndex = (currentStyleIndex + 1) % allStyles.size();
                         pmPtr = std::make_unique<PieceManager>(allStyles[currentStyleIndex], "../assets/pieces");
                         if (pmPtr->isLoaded()) {
@@ -87,7 +87,7 @@ int main() {
                             std::cout << "Switched to style: " << allStyles[currentStyleIndex] << "\n";
                         }
                     }
-                    if ((key->code == sf::Keyboard::Key::Left || key->code == sf::Keyboard::Key::Up) && !allStyles.empty()) {
+                    if (key->code == sf::Keyboard::Key::Left && !allStyles.empty()) {
                         currentStyleIndex = (currentStyleIndex + allStyles.size() - 1) % allStyles.size();
                         pmPtr = std::make_unique<PieceManager>(allStyles[currentStyleIndex], "../assets/pieces");
                         if (pmPtr->isLoaded()) {
@@ -96,6 +96,20 @@ int main() {
                             board.setInitialPosition();
                             std::cout << "Switched to style: " << allStyles[currentStyleIndex] << "\n";
                         }
+                    }
+
+                    // Cycle board color palettes with Up/Down
+                    if (key->code == sf::Keyboard::Key::Up) {
+                        board.cyclePalette(1);
+                        auto cols = board.getColorsRGB();
+                        auto &l = cols.first; auto &d = cols.second;
+                        std::cout << "Board colors set to light=(" << l[0] << "," << l[1] << "," << l[2] << ") dark=(" << d[0] << "," << d[1] << "," << d[2] << ")\n";
+                    }
+                    if (key->code == sf::Keyboard::Key::Down) {
+                        board.cyclePalette(-1);
+                        auto cols = board.getColorsRGB();
+                        auto &l = cols.first; auto &d = cols.second;
+                        std::cout << "Board colors set to light=(" << l[0] << "," << l[1] << "," << l[2] << ") dark=(" << d[0] << "," << d[1] << "," << d[2] << ")\n";
                     }
                 }
             }
@@ -127,10 +141,25 @@ int main() {
             styleName.setFillColor(sf::Color(255, 200, 100));
             window.draw(styleName);
 
-            sf::Text hints(font, "Use <- -> to change", 11);
+            sf::Text hints(font, "Use <- -> to change piece style", 11);
             hints.setPosition({10.f, 70.f});
             hints.setFillColor(sf::Color(150, 150, 150));
             window.draw(hints);
+
+            // Show board colors and keyboard hint
+            auto cols = board.getColorsRGB();
+            Board::RGB l = cols.first; Board::RGB d = cols.second;
+            char buf[128];
+            std::snprintf(buf, sizeof(buf), "Board colors L:(%d,%d,%d) D:(%d,%d,%d)", l[0], l[1], l[2], d[0], d[1], d[2]);
+            sf::Text colorInfo(font, buf, 12);
+            colorInfo.setPosition({10.f, 92.f});
+            colorInfo.setFillColor(sf::Color(200,200,200));
+            window.draw(colorInfo);
+
+            sf::Text colorHint(font, "Use Up/Down to change board colors", 11);
+            colorHint.setPosition({10.f, 114.f});
+            colorHint.setFillColor(sf::Color(150,150,150));
+            window.draw(colorHint);
         }
 
         // Draw the board

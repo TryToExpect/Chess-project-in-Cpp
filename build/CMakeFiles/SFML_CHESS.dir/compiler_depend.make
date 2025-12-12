@@ -160,6 +160,7 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/c++/15/bits/shared_ptr.h \
   /usr/include/c++/15/bits/shared_ptr_atomic.h \
   /usr/include/c++/15/bits/shared_ptr_base.h \
+  /usr/include/c++/15/bits/specfun.h \
   /usr/include/c++/15/bits/sstream.tcc \
   /usr/include/c++/15/bits/std_abs.h \
   /usr/include/c++/15/bits/stl_algo.h \
@@ -195,6 +196,7 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/c++/15/cerrno \
   /usr/include/c++/15/chrono \
   /usr/include/c++/15/clocale \
+  /usr/include/c++/15/cmath \
   /usr/include/c++/15/codecvt \
   /usr/include/c++/15/compare \
   /usr/include/c++/15/concepts \
@@ -220,6 +222,7 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/c++/15/iomanip \
   /usr/include/c++/15/ios \
   /usr/include/c++/15/iosfwd \
+  /usr/include/c++/15/iostream \
   /usr/include/c++/15/istream \
   /usr/include/c++/15/iterator \
   /usr/include/c++/15/limits \
@@ -239,6 +242,18 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/c++/15/string \
   /usr/include/c++/15/string_view \
   /usr/include/c++/15/system_error \
+  /usr/include/c++/15/tr1/bessel_function.tcc \
+  /usr/include/c++/15/tr1/beta_function.tcc \
+  /usr/include/c++/15/tr1/ell_integral.tcc \
+  /usr/include/c++/15/tr1/exp_integral.tcc \
+  /usr/include/c++/15/tr1/gamma.tcc \
+  /usr/include/c++/15/tr1/hypergeometric.tcc \
+  /usr/include/c++/15/tr1/legendre_function.tcc \
+  /usr/include/c++/15/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/15/tr1/poly_hermite.tcc \
+  /usr/include/c++/15/tr1/poly_laguerre.tcc \
+  /usr/include/c++/15/tr1/riemann_zeta.tcc \
+  /usr/include/c++/15/tr1/special_function_util.h \
   /usr/include/c++/15/tuple \
   /usr/include/c++/15/type_traits \
   /usr/include/c++/15/typeinfo \
@@ -258,6 +273,7 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/linux/stddef.h \
   /usr/include/linux/types.h \
   /usr/include/locale.h \
+  /usr/include/math.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/stdc-predef.h \
@@ -275,9 +291,19 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/x86_64-linux-gnu/bits/errno.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
@@ -1184,40 +1210,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /lib/x86_64-linux-gnu/libX11.so.6:
 
-/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
-
-/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
-
-/usr/include/x86_64-linux-gnu/bits/fp-logb.h:
-
-/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
-
-/usr/include/c++/15/tr1/modified_bessel_func.tcc:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
-
-/usr/include/c++/15/tr1/legendre_function.tcc:
-
-/usr/lib/x86_64-linux-gnu/Scrt1.o:
-
-/usr/include/c++/15/tr1/hypergeometric.tcc:
-
-/lib/x86_64-linux-gnu/libXdmcp.so.6:
-
-/usr/include/c++/15/tr1/gamma.tcc:
-
-/usr/lib/x86_64-linux-gnu/libsfml-window.so.3.0.2:
-
-/usr/include/c++/15/tr1/exp_integral.tcc:
-
-/usr/include/c++/15/tr1/beta_function.tcc:
-
-/usr/include/c++/15/tr1/bessel_function.tcc:
-
-/usr/include/c++/15/cmath:
-
 /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/main.cpp:
 
 /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.cpp:
@@ -1231,10 +1223,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/lib/gcc/x86_64-linux-gnu/15/include/stdint.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h:
-
-/usr/include/c++/15/tr1/ell_integral.tcc:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
@@ -1298,10 +1286,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
-/usr/include/c++/15/tr1/special_function_util.h:
-
-/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
-
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/x86_64-linux-gnu/bits/timex.h:
@@ -1324,7 +1308,17 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
+
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
+
+/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
+
+/usr/include/x86_64-linux-gnu/bits/fp-logb.h:
+
+/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
 
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
@@ -1366,6 +1360,24 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/pthread.h:
 
+/usr/include/locale.h:
+
+/usr/include/features.h:
+
+/usr/include/features-time64.h:
+
+/usr/include/stdint.h:
+
+/usr/include/endian.h:
+
+/usr/include/ctype.h:
+
+/usr/include/c++/15/vector:
+
+/usr/include/c++/15/variant:
+
+/usr/include/c++/15/utility:
+
 /usr/include/c++/15/initializer_list:
 
 /usr/include/c++/15/bits/chrono.h:
@@ -1386,8 +1398,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/cxxabi_init_exception.h:
 
-/usr/include/c++/15/variant:
-
 /usr/include/c++/15/bits/basic_string.h:
 
 /usr/include/c++/15/bits/cpp_type_traits.h:
@@ -1404,9 +1414,9 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/alloc_traits.h:
 
-/usr/include/math.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
+
+/usr/include/math.h:
 
 /usr/include/SFML/Graphics/Transform.hpp:
 
@@ -1426,6 +1436,8 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/memoryfwd.h:
 
+/usr/include/c++/15/tr1/beta_function.tcc:
+
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
 
 /usr/include/asm-generic/types.h:
@@ -1444,15 +1456,13 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/locale_facets_nonio.tcc:
 
+/usr/include/linux/types.h:
+
+/usr/include/SFML/Window/Keyboard.hpp:
+
 /usr/include/x86_64-linux-gnu/c++/15/bits/gthr.h:
 
 /usr/include/SFML/Window/Joystick.hpp:
-
-/usr/include/c++/15/bits/specfun.h:
-
-/usr/include/c++/15/backward/binders.h:
-
-/usr/include/c++/15/utility:
 
 /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o:
 
@@ -1483,8 +1493,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /lib/x86_64-linux-gnu/libc.so.6:
 
 /usr/include/c++/15/memory:
-
-/usr/include/c++/15/vector:
 
 /usr/include/c++/15/system_error:
 
@@ -1518,8 +1526,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Graphics/Export.hpp:
 
-/usr/include/locale.h:
-
 /usr/include/SFML/Graphics/RenderTarget.hpp:
 
 /usr/include/SFML/Window/Touch.hpp:
@@ -1546,6 +1552,10 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Graphics/Glyph.hpp:
 
+/usr/include/c++/15/backward/binders.h:
+
+/usr/include/c++/15/bits/specfun.h:
+
 /usr/include/c++/15/bits/unique_ptr.h:
 
 /usr/include/SFML/Graphics/Shader.hpp:
@@ -1568,6 +1578,10 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/ext/string_conversions.h:
 
+/usr/include/libintl.h:
+
+/usr/include/SFML/System/String.hpp:
+
 /usr/include/c++/15/cctype:
 
 /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Board.cpp:
@@ -1580,15 +1594,13 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/System/Exception.hpp:
 
-/usr/include/stdint.h:
-
-/usr/include/endian.h:
+/usr/include/c++/15/cmath:
 
 /usr/include/SFML/Window/Vulkan.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/math-vector.h:
-
 /usr/include/x86_64-linux-gnu/c++/15/bits/time_members.h:
+
+/usr/include/x86_64-linux-gnu/bits/math-vector.h:
 
 /usr/include/c++/15/algorithm:
 
@@ -1605,10 +1617,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/include/SFML/Graphics/Glsl.inl:
 
 /usr/include/SFML/System/Vector3.inl:
-
-/usr/include/SFML/System/String.hpp:
-
-/usr/include/libintl.h:
 
 /usr/include/SFML/Graphics/VertexBuffer.hpp:
 
@@ -1636,21 +1644,17 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/System/MemoryInputStream.hpp:
 
+/usr/include/c++/15/tr1/modified_bessel_func.tcc:
+
 /usr/include/SFML/Graphics/Rect.hpp:
 
 /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.hpp:
 
 /usr/include/c++/15/bits/algorithmfwd.h:
 
-/usr/include/c++/15/tr1/poly_laguerre.tcc:
-
-/usr/include/c++/15/bits/charconv.h:
-
-/usr/include/c++/15/pstl/glue_algorithm_defs.h:
+/usr/include/errno.h:
 
 /usr/include/c++/15/bits/fs_fwd.h:
-
-/usr/include/errno.h:
 
 /usr/include/c++/15/cstddef:
 
@@ -1662,12 +1666,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Graphics/ConvexShape.hpp:
 
-/usr/include/c++/15/tr1/poly_hermite.tcc:
-
-/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
-
-/usr/include/SFML/Window/Export.hpp:
-
 /usr/include/c++/15/ext/numeric_traits.h:
 
 /usr/include/SFML/Graphics/Color.inl:
@@ -1677,12 +1675,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
 
 /usr/include/asm-generic/errno.h:
-
-/usr/include/c++/15/tr1/riemann_zeta.tcc:
-
-/usr/include/SFML/Graphics/Color.hpp:
-
-/usr/include/SFML/System.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/locale.h:
 
@@ -1696,15 +1688,15 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/stl_heap.h:
 
+/usr/include/linux/posix_types.h:
+
+/usr/include/SFML/Graphics/Text.hpp:
+
 /usr/include/SFML/Graphics/Transform.inl:
 
 /usr/include/c++/15/bits/istream.tcc:
 
 /usr/include/c++/15/bits/allocated_ptr.h:
-
-/usr/include/c++/15/iostream:
-
-/usr/include/c++/15/bits/vector.tcc:
 
 /lib/x86_64-linux-gnu/libXau.so.6:
 
@@ -1732,15 +1724,13 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Graphics/VertexArray.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
+
+/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
 
 /usr/include/SFML/Graphics/PrimitiveType.hpp:
 
 /usr/include/SFML/System/Sleep.hpp:
-
-/usr/include/features.h:
 
 /usr/include/c++/15/bits/quoted_string.h:
 
@@ -1753,6 +1743,10 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/include/SFML/Window/Window.hpp:
 
 /usr/include/c++/15/bits/streambuf_iterator.h:
+
+/usr/lib/x86_64-linux-gnu/libsfml-window.so.3.0.2:
+
+/usr/include/c++/15/tr1/exp_integral.tcc:
 
 /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a:
 
@@ -1794,6 +1788,12 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/sstream:
 
+/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
+
+/usr/include/SFML/Window/Export.hpp:
+
+/usr/include/c++/15/tr1/poly_hermite.tcc:
+
 /usr/include/SFML/System/Time.hpp:
 
 /usr/include/c++/15/ios:
@@ -1806,11 +1806,13 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/cerrno:
 
+/usr/include/linux/stddef.h:
+
+/usr/include/c++/15/bits/locale_classes.h:
+
 /usr/include/c++/15/bits/locale_conv.h:
 
 /usr/include/c++/15/bits/locale_facets.tcc:
-
-/usr/include/ctype.h:
 
 /usr/include/c++/15/bits/locale_facets.h:
 
@@ -1916,8 +1918,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/uniform_int_dist.h:
 
-/usr/include/features-time64.h:
-
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
 /usr/include/c++/15/bits/utility.h:
@@ -1946,10 +1946,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/ext/alloc_traits.h:
 
-/usr/include/SFML/Window/Keyboard.hpp:
-
-/usr/include/linux/types.h:
-
 /usr/include/c++/15/bits/exception_ptr.h:
 
 /usr/include/c++/15/ext/concurrence.h:
@@ -1959,6 +1955,10 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/include/x86_64-linux-gnu/c++/15/bits/gthr-default.h:
 
 /usr/include/c++/15/limits:
+
+/usr/include/c++/15/bits/vector.tcc:
+
+/usr/include/c++/15/iostream:
 
 /usr/include/c++/15/istream:
 
@@ -1984,10 +1984,36 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/string:
 
-/usr/include/SFML/Graphics/Text.hpp:
+/usr/include/c++/15/tr1/bessel_function.tcc:
 
-/usr/include/linux/posix_types.h:
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
-/usr/include/c++/15/bits/locale_classes.h:
+/usr/include/c++/15/tr1/ell_integral.tcc:
 
-/usr/include/linux/stddef.h:
+/lib/x86_64-linux-gnu/libXdmcp.so.6:
+
+/usr/include/c++/15/tr1/gamma.tcc:
+
+/usr/lib/x86_64-linux-gnu/Scrt1.o:
+
+/usr/include/c++/15/tr1/hypergeometric.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
+
+/usr/include/c++/15/tr1/legendre_function.tcc:
+
+/usr/include/c++/15/bits/charconv.h:
+
+/usr/include/c++/15/pstl/glue_algorithm_defs.h:
+
+/usr/include/c++/15/tr1/poly_laguerre.tcc:
+
+/usr/include/SFML/Graphics/Color.hpp:
+
+/usr/include/SFML/System.hpp:
+
+/usr/include/c++/15/tr1/riemann_zeta.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
+
+/usr/include/c++/15/tr1/special_function_util.h:
