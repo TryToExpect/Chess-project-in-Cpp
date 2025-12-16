@@ -24,7 +24,7 @@ struct Piece {
 };
 
 
-//  Display function
+//  Function that assigns letter for every chess piece (it is gonna be usefull for debugging)
 char getSymbol(const Piece& p) {
     if (p.type == PieceType::None) return '.';
 
