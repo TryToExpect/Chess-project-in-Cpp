@@ -1,0 +1,110 @@
+#include <iostream>
+#include <vector>
+#include <cctype>
+#include <utility>
+
+// Function of Move
+struct Move {
+    int fromX, fromY;
+    int toX, toY;
+};
+
+
+
+enum class PieceType { None, Pawn, Knight, Bishop, Rook, Queen, King };
+enum class Color { None, White, Black };
+
+struct Piece {
+    PieceType type;
+    Color color;
+    bool moved = false; // for castle and pawns
+
+    Piece(PieceType t = PieceType::None, Color c = Color::None)
+        : type(t), color(c) {}
+};
+
+
+//  Display function
+char getSymbol(const Piece& p) {
+    if (p.type == PieceType::None) return '.';
+
+    char symbol = '?';
+    switch (p.type) {
+        case PieceType::Pawn:   symbol = 'P'; break;
+        case PieceType::Knight: symbol = 'N'; break;
+        case PieceType::Bishop: symbol = 'B'; break;
+        case PieceType::Rook:   symbol = 'R'; break;
+        case PieceType::Queen:  symbol = 'Q'; break;
+        case PieceType::King:   symbol = 'K'; break;
+        default: break;
+    }
+
+    // small alphabet letters for black
+    if (p.color == Color::Black) symbol = tolower(symbol);
+    return symbol;
+}
+
+void printBoard(Piece** board) {
+    for (int y = 0; y < 8; ++y) {
+        for (int x = 0; x < 8; ++x) {
+            std::cout << getSymbol(board[y][x]) << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+//  Board starting positions
+void initBoard(Piece** board) {
+    // Pieces of Black raw 0
+    board[0][0] = Piece(PieceType::Rook, Color::Black);
+    board[0][1] = Piece(PieceType::Knight, Color::Black);
+    board[0][2] = Piece(PieceType::Bishop, Color::Black);
+    board[0][3] = Piece(PieceType::Queen, Color::Black);
+    board[0][4] = Piece(PieceType::King, Color::Black);
+    board[0][5] = Piece(PieceType::Bishop, Color::Black);
+    board[0][6] = Piece(PieceType::Knight, Color::Black);
+    board[0][7] = Piece(PieceType::Rook, Color::Black);
+
+    // Pieces of Black second raw
+    for (int x = 0; x < 8; ++x)
+        board[1][x] = Piece(PieceType::Pawn, Color::Black);
+
+    // White Pawns
+    for (int x = 0; x < 8; ++x)
+        board[6][x] = Piece(PieceType::Pawn, Color::White);
+
+    // White Raw 7
+    board[7][0] = Piece(PieceType::Rook, Color::White);
+    board[7][1] = Piece(PieceType::Knight, Color::White);
+    board[7][2] = Piece(PieceType::Bishop, Color::White);
+    board[7][3] = Piece(PieceType::Queen, Color::White);
+    board[7][4] = Piece(PieceType::King, Color::White);
+    board[7][5] = Piece(PieceType::Bishop, Color::White);
+    board[7][6] = Piece(PieceType::Knight, Color::White);
+    board[7][7] = Piece(PieceType::Rook, Color::White);
+
+    // Other areas are empty
+    for (int y = 2; y <= 5; ++y)
+        for (int x = 0; x < 8; ++x)
+            board[y][x] = Piece();
+}
+
+// Main program
+int main() {
+    // Dynamic table 8x8
+    Piece** board = new Piece*[8];
+    for (int i = 0; i < 8; ++i)
+        board[i] = new Piece[8];
+
+    initBoard(board);
+
+    std::cout << "Board on the beginining:\n";
+    printBoard(board);
+
+    // Leaving memory
+    for (int i = 0; i < 8; ++i)
+        delete[] board[i];
+    delete[] board;
+
+    return 0;
+}
