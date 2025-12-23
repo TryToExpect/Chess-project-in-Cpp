@@ -1,110 +1,215 @@
 #include <iostream>
 #include <vector>
-#include <cctype>
-#include <utility>
+using namespace std;
 
-// Function of Move
-struct Move {
-    int fromX, fromY;
-    int toX, toY;
-};
+enum Color { WHITE, BLACK };
 
-
-
-enum class PieceType { None, Pawn, Knight, Bishop, Rook, Queen, King };
-enum class Color { None, White, Black };
-
-struct Piece {
-    PieceType type;
+// ================= PIECE =================
+class Piece {
+protected:
     Color color;
-    bool moved = false; // for castle and pawns
+public:
+    Piece(Color c) : color(c) {}
+    virtual ~Piece() {}
+    Color getColor() const { return color; }
 
-    Piece(PieceType t = PieceType::None, Color c = Color::None)
-        : type(t), color(c) {}
+    virtual char symbol() const = 0;
+    virtual bool isValidMove(int sx, int sy, int dx, int dy) const = 0;
 };
 
+// ================= PAWN =================
+class Pawn : public Piece {
+public:
+    Pawn(Color c) : Piece(c) {}
 
-//  Function that assigns letter for every chess piece (it is gonna be usefull for debugging)
-char getSymbol(const Piece& p) {
-    if (p.type == PieceType::None) return '.';
-
-    char symbol = '?';
-    switch (p.type) {
-        case PieceType::Pawn:   symbol = 'P'; break;
-        case PieceType::Knight: symbol = 'N'; break;
-        case PieceType::Bishop: symbol = 'B'; break;
-        case PieceType::Rook:   symbol = 'R'; break;
-        case PieceType::Queen:  symbol = 'Q'; break;
-        case PieceType::King:   symbol = 'K'; break;
-        default: break;
+    char symbol() const override {
+        return color == WHITE ? 'P' : 'p';
     }
 
-    // small alphabet letters for black
-    if (p.color == Color::Black) symbol = tolower(symbol);
-    return symbol;
-}
+    bool isValidMove(int sx, int sy, int dx, int dy) const override {
+        int direction = (color == WHITE) ? -1 : 1;
+        return (sx == dx && dy - sy == direction);
+    }
+};
 
-void printBoard(Piece** board) {
-    for (int y = 0; y < 8; ++y) {
-        for (int x = 0; x < 8; ++x) {
-            std::cout << getSymbol(board[y][x]) << " ";
+// ================= ROOK =================
+class Rook : public Piece {
+public:
+    Rook(Color c) : Piece(c) {}
+
+    char symbol() const override {
+        return color == WHITE ? 'R' : 'r';
+    }
+
+    bool isValidMove(int sx, int sy, int dx, int dy) const override {
+        return sx == dx || sy == dy;
+    }
+};
+
+// ================= KNIGHT =================
+class Knight : public Piece {
+public:
+    Knight(Color c) : Piece(c) {}
+
+    char symbol() const override {
+        return color == WHITE ? 'N' : 'n';
+    }
+
+    bool isValidMove(int sx, int sy, int dx, int dy) const override {
+        int dxAbs = abs(dx - sx);
+        int dyAbs = abs(dy - sy);
+        return (dxAbs == 2 && dyAbs == 1) || (dxAbs == 1 && dyAbs == 2);
+    }
+};
+
+// ================= BISHOP =================
+class Bishop : public Piece {
+public:
+    Bishop(Color c) : Piece(c) {}
+
+    char symbol() const override {
+        return color == WHITE ? 'B' : 'b';
+    }
+
+    bool isValidMove(int sx, int sy, int dx, int dy) const override {
+        return abs(dx - sx) == abs(dy - sy);
+    }
+};
+
+// ================= QUEEN =================
+class Queen : public Piece {
+public:
+    Queen(Color c) : Piece(c) {}
+
+    char symbol() const override {
+        return color == WHITE ? 'Q' : 'q';
+    }
+
+    bool isValidMove(int sx, int sy, int dx, int dy) const override {
+        return sx == dx || sy == dy || abs(dx - sx) == abs(dy - sy);
+    }
+};
+
+// ================= KING =================
+class King : public Piece {
+public:
+    King(Color c) : Piece(c) {}
+
+    char symbol() const override {
+        return color == WHITE ? 'K' : 'k';
+    }
+
+    bool isValidMove(int sx, int sy, int dx, int dy) const override {
+        return abs(dx - sx) <= 1 && abs(dy - sy) <= 1;
+    }
+};
+
+// ================= BOARD =================
+class Board {
+private:
+    Piece*** board;
+
+public:
+    Board() {
+        board = new Piece**[8];
+        for (int i = 0; i < 8; i++) {
+            board[i] = new Piece*[8]{ nullptr };
         }
-        std::cout << std::endl;
+        setup();
     }
-}
 
-//  Board starting positions
-void initBoard(Piece** board) {
-    // Pieces of Black raw 0
-    board[0][0] = Piece(PieceType::Rook, Color::Black);
-    board[0][1] = Piece(PieceType::Knight, Color::Black);
-    board[0][2] = Piece(PieceType::Bishop, Color::Black);
-    board[0][3] = Piece(PieceType::Queen, Color::Black);
-    board[0][4] = Piece(PieceType::King, Color::Black);
-    board[0][5] = Piece(PieceType::Bishop, Color::Black);
-    board[0][6] = Piece(PieceType::Knight, Color::Black);
-    board[0][7] = Piece(PieceType::Rook, Color::Black);
+    ~Board() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++)
+                delete board[i][j];
+            delete[] board[i];
+        }
+        delete[] board;
+    }
 
-    // Pieces of Black second raw
-    for (int x = 0; x < 8; ++x)
-        board[1][x] = Piece(PieceType::Pawn, Color::Black);
+    void setup() {
+        for (int i = 0; i < 8; i++) {
+            board[1][i] = new Pawn(BLACK);
+            board[6][i] = new Pawn(WHITE);
+        }
 
-    // White Pawns
-    for (int x = 0; x < 8; ++x)
-        board[6][x] = Piece(PieceType::Pawn, Color::White);
+        board[0][0] = board[0][7] = new Rook(BLACK);
+        board[7][0] = board[7][7] = new Rook(WHITE);
 
-    // White Raw 7
-    board[7][0] = Piece(PieceType::Rook, Color::White);
-    board[7][1] = Piece(PieceType::Knight, Color::White);
-    board[7][2] = Piece(PieceType::Bishop, Color::White);
-    board[7][3] = Piece(PieceType::Queen, Color::White);
-    board[7][4] = Piece(PieceType::King, Color::White);
-    board[7][5] = Piece(PieceType::Bishop, Color::White);
-    board[7][6] = Piece(PieceType::Knight, Color::White);
-    board[7][7] = Piece(PieceType::Rook, Color::White);
+        board[0][1] = board[0][6] = new Knight(BLACK);
+        board[7][1] = board[7][6] = new Knight(WHITE);
 
-    // Other areas are empty
-    for (int y = 2; y <= 5; ++y)
-        for (int x = 0; x < 8; ++x)
-            board[y][x] = Piece();
-}
+        board[0][2] = board[0][5] = new Bishop(BLACK);
+        board[7][2] = board[7][5] = new Bishop(WHITE);
 
-// Main program
+        board[0][3] = new Queen(BLACK);
+        board[7][3] = new Queen(WHITE);
+
+        board[0][4] = new King(BLACK);
+        board[7][4] = new King(WHITE);
+    }
+
+    Piece* get(int x, int y) {
+        return board[x][y];
+    }
+
+    bool move(int sx, int sy, int dx, int dy, Color playerColor) {
+        Piece* p = board[sx][sy];
+        if (!p || p->getColor() != playerColor) return false;
+        if (!p->isValidMove(sx, sy, dx, dy)) return false;
+
+        delete board[dx][dy];
+        board[dx][dy] = p;
+        board[sx][sy] = nullptr;
+        return true;
+    }
+
+    void print() {
+        cout << "\n";
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                cout << (board[i][j] ? board[i][j]->symbol() : '.') << " ";
+            }
+            cout << endl;
+        }
+    }
+};
+
+// ================= PLAYER =================
+class Player {
+public:
+    Color color;
+    Player(Color c) : color(c) {}
+};
+
+// ================= GAME =================
+class Game {
+private:
+    Board board;
+    Player p1{WHITE}, p2{BLACK};
+    Player* current;
+
+public:
+    Game() : current(&p1) {}
+
+    void play() {
+        int sx, sy, dx, dy;
+        while (true) {
+            board.print();
+            cout << (current->color == WHITE ? "WHITE" : "BLACK")
+                 << " move (sx sy dx dy): ";
+            cin >> sx >> sy >> dx >> dy;
+
+            if (board.move(sx, sy, dx, dy, current->color))
+                current = (current == &p1) ? &p2 : &p1;
+            else
+                cout << "Invalid move!\n";
+        }
+    }
+};
+
+// ================= MAIN =================
 int main() {
-    // Dynamic table 8x8
-    Piece** board = new Piece*[8];
-    for (int i = 0; i < 8; ++i)
-        board[i] = new Piece[8];
-
-    initBoard(board);
-
-    std::cout << "Board on the beginining:\n";
-    printBoard(board);
-
-    // Leaving memory
-    for (int i = 0; i < 8; ++i)
-        delete[] board[i];
-    delete[] board;
-
+    Game game;
+    game.play();
     return 0;
-}
