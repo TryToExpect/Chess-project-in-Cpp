@@ -1,215 +1,349 @@
 #include <iostream>
 #include <vector>
+#include <memory>
+#include <string>
+#include <optional>
+#include <cctype>
+
 using namespace std;
 
-enum Color { WHITE, BLACK };
+// ================= COLOR =================
+enum class Color { White, Black };
+
+Color opposite(Color c) {
+    return c == Color::White ? Color::Black : Color::White;
+}
+
+// ================= POSITION =================
+struct Position {
+    int row, col;
+
+    bool isValid() const {
+        return row >= 0 && row < 8 && col >= 0 && col < 8;
+    }
+
+    bool operator==(const Position& o) const {
+        return row == o.row && col == o.col;
+    }
+};
+
+// ================= MOVE =================
+struct Move {
+    Position from;
+    Position to;
+    bool enPassant = false;
+    char promotion = 0;
+};
 
 // ================= PIECE =================
 class Piece {
 protected:
     Color color;
+    bool moved = false;
+
 public:
     Piece(Color c) : color(c) {}
     virtual ~Piece() {}
+
     Color getColor() const { return color; }
+    bool hasMoved() const { return moved; }
+    void markMoved() { moved = true; }
 
     virtual char symbol() const = 0;
-    virtual bool isValidMove(int sx, int sy, int dx, int dy) const = 0;
+    virtual vector<Position> getMoves(
+        const Position&,
+        const vector<vector<shared_ptr<Piece>>>&
+    ) const = 0;
 };
 
-// ================= PAWN =================
+// ================= PIECES =================
 class Pawn : public Piece {
 public:
     Pawn(Color c) : Piece(c) {}
+    char symbol() const override { return color == Color::White ? 'P' : 'p'; }
 
-    char symbol() const override {
-        return color == WHITE ? 'P' : 'p';
-    }
+    vector<Position> getMoves(const Position& p,
+        const vector<vector<shared_ptr<Piece>>>& board) const override {
 
-    bool isValidMove(int sx, int sy, int dx, int dy) const override {
-        int direction = (color == WHITE) ? -1 : 1;
-        return (sx == dx && dy - sy == direction);
+        vector<Position> m;
+        int dir = (color == Color::White) ? -1 : 1;
+
+        Position one{p.row + dir, p.col};
+        if (one.isValid() && !board[one.row][one.col])
+            m.push_back(one);
+
+        if (!moved) {
+            Position two{p.row + 2 * dir, p.col};
+            if (two.isValid() && !board[two.row][two.col] &&
+                !board[one.row][one.col])
+                m.push_back(two);
+        }
+
+        for (int dc : {-1, 1}) {
+            Position d{p.row + dir, p.col + dc};
+            if (d.isValid() && board[d.row][d.col] &&
+                board[d.row][d.col]->getColor() != color)
+                m.push_back(d);
+        }
+        return m;
     }
 };
 
-// ================= ROOK =================
 class Rook : public Piece {
 public:
     Rook(Color c) : Piece(c) {}
+    char symbol() const override { return color == Color::White ? 'R' : 'r'; }
 
-    char symbol() const override {
-        return color == WHITE ? 'R' : 'r';
-    }
+    vector<Position> getMoves(const Position& p,
+        const vector<vector<shared_ptr<Piece>>>& board) const override {
 
-    bool isValidMove(int sx, int sy, int dx, int dy) const override {
-        return sx == dx || sy == dy;
-    }
-};
-
-// ================= KNIGHT =================
-class Knight : public Piece {
-public:
-    Knight(Color c) : Piece(c) {}
-
-    char symbol() const override {
-        return color == WHITE ? 'N' : 'n';
-    }
-
-    bool isValidMove(int sx, int sy, int dx, int dy) const override {
-        int dxAbs = abs(dx - sx);
-        int dyAbs = abs(dy - sy);
-        return (dxAbs == 2 && dyAbs == 1) || (dxAbs == 1 && dyAbs == 2);
+        vector<Position> m;
+        int d[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
+        for (auto& x : d) {
+            int r = p.row + x[0], c = p.col + x[1];
+            while (Position{r,c}.isValid()) {
+                if (!board[r][c]) m.push_back({r,c});
+                else {
+                    if (board[r][c]->getColor() != color) m.push_back({r,c});
+                    break;
+                }
+                r += x[0]; c += x[1];
+            }
+        }
+        return m;
     }
 };
 
-// ================= BISHOP =================
 class Bishop : public Piece {
 public:
     Bishop(Color c) : Piece(c) {}
+    char symbol() const override { return color == Color::White ? 'B' : 'b'; }
 
-    char symbol() const override {
-        return color == WHITE ? 'B' : 'b';
-    }
+    vector<Position> getMoves(const Position& p,
+        const vector<vector<shared_ptr<Piece>>>& board) const override {
 
-    bool isValidMove(int sx, int sy, int dx, int dy) const override {
-        return abs(dx - sx) == abs(dy - sy);
+        vector<Position> m;
+        int d[4][2] = {{1,1},{1,-1},{-1,1},{-1,-1}};
+        for (auto& x : d) {
+            int r = p.row + x[0], c = p.col + x[1];
+            while (Position{r,c}.isValid()) {
+                if (!board[r][c]) m.push_back({r,c});
+                else {
+                    if (board[r][c]->getColor() != color) m.push_back({r,c});
+                    break;
+                }
+                r += x[0]; c += x[1];
+            }
+        }
+        return m;
     }
 };
 
-// ================= QUEEN =================
 class Queen : public Piece {
 public:
     Queen(Color c) : Piece(c) {}
+    char symbol() const override { return color == Color::White ? 'Q' : 'q'; }
 
-    char symbol() const override {
-        return color == WHITE ? 'Q' : 'q';
-    }
+    vector<Position> getMoves(const Position& p,
+        const vector<vector<shared_ptr<Piece>>>& board) const override {
 
-    bool isValidMove(int sx, int sy, int dx, int dy) const override {
-        return sx == dx || sy == dy || abs(dx - sx) == abs(dy - sy);
+        vector<Position> m;
+        int d[8][2] = {{1,0},{-1,0},{0,1},{0,-1},{1,1},{1,-1},{-1,1},{-1,-1}};
+        for (auto& x : d) {
+            int r = p.row + x[0], c = p.col + x[1];
+            while (Position{r,c}.isValid()) {
+                if (!board[r][c]) m.push_back({r,c});
+                else {
+                    if (board[r][c]->getColor() != color) m.push_back({r,c});
+                    break;
+                }
+                r += x[0]; c += x[1];
+            }
+        }
+        return m;
     }
 };
 
-// ================= KING =================
+class Knight : public Piece {
+public:
+    Knight(Color c) : Piece(c) {}
+    char symbol() const override { return color == Color::White ? 'N' : 'n'; }
+
+    vector<Position> getMoves(const Position& p,
+        const vector<vector<shared_ptr<Piece>>>& board) const override {
+
+        vector<Position> m;
+        int o[8][2] = {{2,1},{1,2},{-1,2},{-2,1},{-2,-1},{-1,-2},{1,-2},{2,-1}};
+        for (auto& x : o) {
+            Position n{p.row + x[0], p.col + x[1]};
+            if (n.isValid() && (!board[n.row][n.col] ||
+                board[n.row][n.col]->getColor() != color))
+                m.push_back(n);
+        }
+        return m;
+    }
+};
+
 class King : public Piece {
 public:
     King(Color c) : Piece(c) {}
+    char symbol() const override { return color == Color::White ? 'K' : 'k'; }
 
-    char symbol() const override {
-        return color == WHITE ? 'K' : 'k';
-    }
+    vector<Position> getMoves(const Position& p,
+        const vector<vector<shared_ptr<Piece>>>& board) const override {
 
-    bool isValidMove(int sx, int sy, int dx, int dy) const override {
-        return abs(dx - sx) <= 1 && abs(dy - sy) <= 1;
-    }
-};
-
-// ================= BOARD =================
-class Board {
-private:
-    Piece*** board;
-
-public:
-    Board() {
-        board = new Piece**[8];
-        for (int i = 0; i < 8; i++) {
-            board[i] = new Piece*[8]{ nullptr };
-        }
-        setup();
-    }
-
-    ~Board() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++)
-                delete board[i][j];
-            delete[] board[i];
-        }
-        delete[] board;
-    }
-
-    void setup() {
-        for (int i = 0; i < 8; i++) {
-            board[1][i] = new Pawn(BLACK);
-            board[6][i] = new Pawn(WHITE);
-        }
-
-        board[0][0] = board[0][7] = new Rook(BLACK);
-        board[7][0] = board[7][7] = new Rook(WHITE);
-
-        board[0][1] = board[0][6] = new Knight(BLACK);
-        board[7][1] = board[7][6] = new Knight(WHITE);
-
-        board[0][2] = board[0][5] = new Bishop(BLACK);
-        board[7][2] = board[7][5] = new Bishop(WHITE);
-
-        board[0][3] = new Queen(BLACK);
-        board[7][3] = new Queen(WHITE);
-
-        board[0][4] = new King(BLACK);
-        board[7][4] = new King(WHITE);
-    }
-
-    Piece* get(int x, int y) {
-        return board[x][y];
-    }
-
-    bool move(int sx, int sy, int dx, int dy, Color playerColor) {
-        Piece* p = board[sx][sy];
-        if (!p || p->getColor() != playerColor) return false;
-        if (!p->isValidMove(sx, sy, dx, dy)) return false;
-
-        delete board[dx][dy];
-        board[dx][dy] = p;
-        board[sx][sy] = nullptr;
-        return true;
-    }
-
-    void print() {
-        cout << "\n";
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                cout << (board[i][j] ? board[i][j]->symbol() : '.') << " ";
+        vector<Position> m;
+        for (int dr=-1; dr<=1; dr++)
+            for (int dc=-1; dc<=1; dc++) {
+                if (dr==0 && dc==0) continue;
+                Position n{p.row+dr, p.col+dc};
+                if (n.isValid() && (!board[n.row][n.col] ||
+                    board[n.row][n.col]->getColor()!=color))
+                    m.push_back(n);
             }
-            cout << endl;
-        }
+        return m;
     }
-};
-
-// ================= PLAYER =================
-class Player {
-public:
-    Color color;
-    Player(Color c) : color(c) {}
 };
 
 // ================= GAME =================
 class Game {
-private:
-    Board board;
-    Player p1{WHITE}, p2{BLACK};
-    Player* current;
+    vector<vector<shared_ptr<Piece>>> board;
+    Color current = Color::White;
+    optional<Move> lastMove;
+    vector<string> history;
 
 public:
-    Game() : current(&p1) {}
+    Game() : board(8, vector<shared_ptr<Piece>>(8,nullptr)) {
+        setup();
+    }
+
+    void setup() {
+        for(int i=0;i<8;i++){
+            board[1][i]=make_shared<Pawn>(Color::Black);
+            board[6][i]=make_shared<Pawn>(Color::White);
+        }
+        board[0][0]=board[0][7]=make_shared<Rook>(Color::Black);
+        board[7][0]=board[7][7]=make_shared<Rook>(Color::White);
+        board[0][1]=board[0][6]=make_shared<Knight>(Color::Black);
+        board[7][1]=board[7][6]=make_shared<Knight>(Color::White);
+        board[0][2]=board[0][5]=make_shared<Bishop>(Color::Black);
+        board[7][2]=board[7][5]=make_shared<Bishop>(Color::White);
+        board[0][3]=make_shared<Queen>(Color::Black);
+        board[7][3]=make_shared<Queen>(Color::White);
+        board[0][4]=make_shared<King>(Color::Black);
+        board[7][4]=make_shared<King>(Color::White);
+    }
+
+    bool enPassantPossible(const Position& from, const Position& to) {
+        if (!lastMove) return false;
+        auto& lm = *lastMove;
+
+        auto pawn = dynamic_pointer_cast<Pawn>(board[from.row][from.col]);
+        if (!pawn) return false;
+
+        int dir = pawn->getColor()==Color::White ? -1 : 1;
+        if (to.row != from.row + dir || abs(to.col-from.col)!=1) return false;
+
+        auto enemyPawn = dynamic_pointer_cast<Pawn>(
+            board[from.row][to.col]);
+        if (!enemyPawn) return false;
+
+        if (abs(lm.from.row - lm.to.row) == 2 &&
+            lm.to.row == from.row &&
+            lm.to.col == to.col)
+            return true;
+
+        return false;
+    }
+
+    bool makeMove(Move m) {
+        auto piece = board[m.from.row][m.from.col];
+        if (!piece || piece->getColor()!=current) return false;
+
+        auto moves = piece->getMoves(m.from, board);
+        bool ok=false;
+        for(auto& p:moves) if(p==m.to) ok=true;
+
+        if (!ok && !enPassantPossible(m.from,m.to)) return false;
+
+        // en passant capture
+        if (enPassantPossible(m.from,m.to)) {
+            board[m.from.row][m.to.col] = nullptr;
+            m.enPassant = true;
+        }
+
+        board[m.to.row][m.to.col]=piece;
+        board[m.from.row][m.from.col]=nullptr;
+
+        piece->markMoved();
+
+        // promotion
+        if (auto pawn=dynamic_pointer_cast<Pawn>(piece)) {
+            if ((pawn->getColor()==Color::White && m.to.row==0) ||
+                (pawn->getColor()==Color::Black && m.to.row==7)) {
+
+                char c;
+                cout<<"Promote to (Q/R/B/N): ";
+                cin>>c; c=toupper(c);
+                if(c=='R') board[m.to.row][m.to.col]=make_shared<Rook>(current);
+                else if(c=='B') board[m.to.row][m.to.col]=make_shared<Bishop>(current);
+                else if(c=='N') board[m.to.row][m.to.col]=make_shared<Knight>(current);
+                else board[m.to.row][m.to.col]=make_shared<Queen>(current);
+                m.promotion=c;
+            }
+        }
+
+        history.push_back(moveToString(m));
+        lastMove = m;
+        current = opposite(current);
+        return true;
+    }
+
+    string moveToString(const Move& m) {
+        string s;
+        s+=char('a'+m.from.col);
+        s+=char('8'-m.from.row);
+        s+=char('a'+m.to.col);
+        s+=char('8'-m.to.row);
+        if(m.enPassant) s+="ep";
+        if(m.promotion) s+=m.promotion;
+        return s;
+    }
+
+    void display() {
+        cout<<"\n";
+        for(int r=0;r<8;r++){
+            cout<<8-r<<" ";
+            for(int c=0;c<8;c++)
+                cout<<(board[r][c]?board[r][c]->symbol():'.')<<" ";
+            cout<<"\n";
+        }
+        cout<<"  a b c d e f g h\n";
+    }
 
     void play() {
-        int sx, sy, dx, dy;
-        while (true) {
-            board.print();
-            cout << (current->color == WHITE ? "WHITE" : "BLACK")
-                 << " move (sx sy dx dy): ";
-            cin >> sx >> sy >> dx >> dy;
-
-            if (board.move(sx, sy, dx, dy, current->color))
-                current = (current == &p1) ? &p2 : &p1;
-            else
-                cout << "Invalid move!\n";
+        while(true){
+            display();
+            cout<<(current==Color::White?"White":"Black")<<" move: ";
+            string a,b; cin>>a>>b;
+            Move m{{8-(a[1]-'0'),a[0]-'a'},
+                   {8-(b[1]-'0'),b[0]-'a'}};
+            if(!makeMove(m)) cout<<"Invalid move\n";
         }
+    }
+
+    void printHistory() {
+        cout<<"\nGAME RECORD:\n";
+        for(size_t i=0;i<history.size();i++){
+            if(i%2==0) cout<<(i/2+1)<<". ";
+            cout<<history[i]<<" ";
+        }
+        cout<<"\n";
     }
 };
 
 // ================= MAIN =================
 int main() {
-    Game game;
-    game.play();
-    return 0;
+    Game g;
+    g.play();
+}
