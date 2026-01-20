@@ -16,6 +16,13 @@ add_executable(SFML_CHESS
 	src/Board.cpp
 	src/Piece.cpp
 	src/PieceManager.cpp
+	src/GameLogic.cpp
+	src/Pieces/Rook.cpp
+	src/Pieces/Pawn.cpp
+	src/Pieces/Knight.cpp
+	src/Pieces/Bishop.cpp
+	src/Pieces/Queen.cpp
+	src/Pieces/King.cpp
 )
 
 target_link_libraries(SFML_CHESS PRIVATE SFML::Graphics SFML::Window SFML::System SFML::Audio)

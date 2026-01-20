@@ -153,6 +153,30 @@ src/Board.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Board.cpp.s
 .PHONY : src/Board.cpp.s
 
+src/GameLogic.o: src/GameLogic.cpp.o
+.PHONY : src/GameLogic.o
+
+# target to build an object file
+src/GameLogic.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o
+.PHONY : src/GameLogic.cpp.o
+
+src/GameLogic.i: src/GameLogic.cpp.i
+.PHONY : src/GameLogic.i
+
+# target to preprocess a source file
+src/GameLogic.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.i
+.PHONY : src/GameLogic.cpp.i
+
+src/GameLogic.s: src/GameLogic.cpp.s
+.PHONY : src/GameLogic.s
+
+# target to generate assembly for a file
+src/GameLogic.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.s
+.PHONY : src/GameLogic.cpp.s
+
 src/Piece.o: src/Piece.cpp.o
 .PHONY : src/Piece.o
 
@@ -201,6 +225,150 @@ src/PieceManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.s
 .PHONY : src/PieceManager.cpp.s
 
+src/Pieces/Bishop.o: src/Pieces/Bishop.cpp.o
+.PHONY : src/Pieces/Bishop.o
+
+# target to build an object file
+src/Pieces/Bishop.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o
+.PHONY : src/Pieces/Bishop.cpp.o
+
+src/Pieces/Bishop.i: src/Pieces/Bishop.cpp.i
+.PHONY : src/Pieces/Bishop.i
+
+# target to preprocess a source file
+src/Pieces/Bishop.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.i
+.PHONY : src/Pieces/Bishop.cpp.i
+
+src/Pieces/Bishop.s: src/Pieces/Bishop.cpp.s
+.PHONY : src/Pieces/Bishop.s
+
+# target to generate assembly for a file
+src/Pieces/Bishop.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.s
+.PHONY : src/Pieces/Bishop.cpp.s
+
+src/Pieces/King.o: src/Pieces/King.cpp.o
+.PHONY : src/Pieces/King.o
+
+# target to build an object file
+src/Pieces/King.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o
+.PHONY : src/Pieces/King.cpp.o
+
+src/Pieces/King.i: src/Pieces/King.cpp.i
+.PHONY : src/Pieces/King.i
+
+# target to preprocess a source file
+src/Pieces/King.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.i
+.PHONY : src/Pieces/King.cpp.i
+
+src/Pieces/King.s: src/Pieces/King.cpp.s
+.PHONY : src/Pieces/King.s
+
+# target to generate assembly for a file
+src/Pieces/King.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.s
+.PHONY : src/Pieces/King.cpp.s
+
+src/Pieces/Knight.o: src/Pieces/Knight.cpp.o
+.PHONY : src/Pieces/Knight.o
+
+# target to build an object file
+src/Pieces/Knight.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o
+.PHONY : src/Pieces/Knight.cpp.o
+
+src/Pieces/Knight.i: src/Pieces/Knight.cpp.i
+.PHONY : src/Pieces/Knight.i
+
+# target to preprocess a source file
+src/Pieces/Knight.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.i
+.PHONY : src/Pieces/Knight.cpp.i
+
+src/Pieces/Knight.s: src/Pieces/Knight.cpp.s
+.PHONY : src/Pieces/Knight.s
+
+# target to generate assembly for a file
+src/Pieces/Knight.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.s
+.PHONY : src/Pieces/Knight.cpp.s
+
+src/Pieces/Pawn.o: src/Pieces/Pawn.cpp.o
+.PHONY : src/Pieces/Pawn.o
+
+# target to build an object file
+src/Pieces/Pawn.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o
+.PHONY : src/Pieces/Pawn.cpp.o
+
+src/Pieces/Pawn.i: src/Pieces/Pawn.cpp.i
+.PHONY : src/Pieces/Pawn.i
+
+# target to preprocess a source file
+src/Pieces/Pawn.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.i
+.PHONY : src/Pieces/Pawn.cpp.i
+
+src/Pieces/Pawn.s: src/Pieces/Pawn.cpp.s
+.PHONY : src/Pieces/Pawn.s
+
+# target to generate assembly for a file
+src/Pieces/Pawn.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.s
+.PHONY : src/Pieces/Pawn.cpp.s
+
+src/Pieces/Queen.o: src/Pieces/Queen.cpp.o
+.PHONY : src/Pieces/Queen.o
+
+# target to build an object file
+src/Pieces/Queen.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o
+.PHONY : src/Pieces/Queen.cpp.o
+
+src/Pieces/Queen.i: src/Pieces/Queen.cpp.i
+.PHONY : src/Pieces/Queen.i
+
+# target to preprocess a source file
+src/Pieces/Queen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.i
+.PHONY : src/Pieces/Queen.cpp.i
+
+src/Pieces/Queen.s: src/Pieces/Queen.cpp.s
+.PHONY : src/Pieces/Queen.s
+
+# target to generate assembly for a file
+src/Pieces/Queen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.s
+.PHONY : src/Pieces/Queen.cpp.s
+
+src/Pieces/Rook.o: src/Pieces/Rook.cpp.o
+.PHONY : src/Pieces/Rook.o
+
+# target to build an object file
+src/Pieces/Rook.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o
+.PHONY : src/Pieces/Rook.cpp.o
+
+src/Pieces/Rook.i: src/Pieces/Rook.cpp.i
+.PHONY : src/Pieces/Rook.i
+
+# target to preprocess a source file
+src/Pieces/Rook.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.i
+.PHONY : src/Pieces/Rook.cpp.i
+
+src/Pieces/Rook.s: src/Pieces/Rook.cpp.s
+.PHONY : src/Pieces/Rook.s
+
+# target to generate assembly for a file
+src/Pieces/Rook.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.s
+.PHONY : src/Pieces/Rook.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -237,12 +405,33 @@ help:
 	@echo "... src/Board.o"
 	@echo "... src/Board.i"
 	@echo "... src/Board.s"
+	@echo "... src/GameLogic.o"
+	@echo "... src/GameLogic.i"
+	@echo "... src/GameLogic.s"
 	@echo "... src/Piece.o"
 	@echo "... src/Piece.i"
 	@echo "... src/Piece.s"
 	@echo "... src/PieceManager.o"
 	@echo "... src/PieceManager.i"
 	@echo "... src/PieceManager.s"
+	@echo "... src/Pieces/Bishop.o"
+	@echo "... src/Pieces/Bishop.i"
+	@echo "... src/Pieces/Bishop.s"
+	@echo "... src/Pieces/King.o"
+	@echo "... src/Pieces/King.i"
+	@echo "... src/Pieces/King.s"
+	@echo "... src/Pieces/Knight.o"
+	@echo "... src/Pieces/Knight.i"
+	@echo "... src/Pieces/Knight.s"
+	@echo "... src/Pieces/Pawn.o"
+	@echo "... src/Pieces/Pawn.i"
+	@echo "... src/Pieces/Pawn.s"
+	@echo "... src/Pieces/Queen.o"
+	@echo "... src/Pieces/Queen.i"
+	@echo "... src/Pieces/Queen.s"
+	@echo "... src/Pieces/Rook.o"
+	@echo "... src/Pieces/Rook.i"
+	@echo "... src/Pieces/Rook.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

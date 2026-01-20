@@ -292,4 +292,6 @@ CMakeFiles/SFML_CHESS.dir/src/main.cpp.o: \
  /usr/include/c++/15/tr1/riemann_zeta.tcc \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Board.hpp \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.hpp \
+ /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
+ /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
  /usr/include/c++/15/iostream

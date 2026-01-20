@@ -41,6 +41,8 @@ public:
     // set piece style (reloads textures and pieces)
     void setStyle(const std::string& styleName);
 
+    // Update board display from GameLogic
+    void updateFromGame(const class GameLogic& game);
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
