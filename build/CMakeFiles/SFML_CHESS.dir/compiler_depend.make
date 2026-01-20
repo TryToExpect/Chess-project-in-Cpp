@@ -3,7 +3,9 @@
 
 CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Board.cpp \
   /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Board.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
   /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
   /usr/include/SFML/Config.hpp \
   /usr/include/SFML/Graphics.hpp \
   /usr/include/SFML/Graphics/BlendMode.hpp \
@@ -160,7 +162,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/c++/15/bits/shared_ptr.h \
   /usr/include/c++/15/bits/shared_ptr_atomic.h \
   /usr/include/c++/15/bits/shared_ptr_base.h \
-  /usr/include/c++/15/bits/specfun.h \
   /usr/include/c++/15/bits/sstream.tcc \
   /usr/include/c++/15/bits/std_abs.h \
   /usr/include/c++/15/bits/stl_algo.h \
@@ -196,7 +197,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/c++/15/cerrno \
   /usr/include/c++/15/chrono \
   /usr/include/c++/15/clocale \
-  /usr/include/c++/15/cmath \
   /usr/include/c++/15/codecvt \
   /usr/include/c++/15/compare \
   /usr/include/c++/15/concepts \
@@ -222,7 +222,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/c++/15/iomanip \
   /usr/include/c++/15/ios \
   /usr/include/c++/15/iosfwd \
-  /usr/include/c++/15/iostream \
   /usr/include/c++/15/istream \
   /usr/include/c++/15/iterator \
   /usr/include/c++/15/limits \
@@ -242,18 +241,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/c++/15/string \
   /usr/include/c++/15/string_view \
   /usr/include/c++/15/system_error \
-  /usr/include/c++/15/tr1/bessel_function.tcc \
-  /usr/include/c++/15/tr1/beta_function.tcc \
-  /usr/include/c++/15/tr1/ell_integral.tcc \
-  /usr/include/c++/15/tr1/exp_integral.tcc \
-  /usr/include/c++/15/tr1/gamma.tcc \
-  /usr/include/c++/15/tr1/hypergeometric.tcc \
-  /usr/include/c++/15/tr1/legendre_function.tcc \
-  /usr/include/c++/15/tr1/modified_bessel_func.tcc \
-  /usr/include/c++/15/tr1/poly_hermite.tcc \
-  /usr/include/c++/15/tr1/poly_laguerre.tcc \
-  /usr/include/c++/15/tr1/riemann_zeta.tcc \
-  /usr/include/c++/15/tr1/special_function_util.h \
   /usr/include/c++/15/tuple \
   /usr/include/c++/15/type_traits \
   /usr/include/c++/15/typeinfo \
@@ -273,7 +260,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/linux/stddef.h \
   /usr/include/linux/types.h \
   /usr/include/locale.h \
-  /usr/include/math.h \
   /usr/include/pthread.h \
   /usr/include/sched.h \
   /usr/include/stdc-predef.h \
@@ -291,19 +277,9 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/include/x86_64-linux-gnu/bits/errno.h \
   /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
   /usr/include/x86_64-linux-gnu/bits/floatn.h \
-  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
-  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
-  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
-  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
   /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
-  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
   /usr/include/x86_64-linux-gnu/bits/locale.h \
   /usr/include/x86_64-linux-gnu/bits/long-double.h \
-  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
-  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
-  /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h \
-  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
-  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
   /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
   /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
@@ -376,6 +352,261 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: /home/eul3r/Desktop/Studia/Chess-proj
   /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
   /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h \
   /usr/lib/gcc/x86_64-linux-gnu/15/include/stdint.h \
+  /usr/lib/linux/uapi/x86/asm/bitsperlong.h \
+  /usr/lib/linux/uapi/x86/asm/errno.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types_64.h \
+  /usr/lib/linux/uapi/x86/asm/types.h
+
+CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.cpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Bishop.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/King.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Knight.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Pawn.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Queen.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Rook.hpp \
+  /usr/include/alloca.h \
+  /usr/include/asm-generic/bitsperlong.h \
+  /usr/include/asm-generic/errno-base.h \
+  /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/c++/15/array \
+  /usr/include/c++/15/backward/auto_ptr.h \
+  /usr/include/c++/15/backward/binders.h \
+  /usr/include/c++/15/bit \
+  /usr/include/c++/15/bits/align.h \
+  /usr/include/c++/15/bits/alloc_traits.h \
+  /usr/include/c++/15/bits/allocated_ptr.h \
+  /usr/include/c++/15/bits/allocator.h \
+  /usr/include/c++/15/bits/atomic_base.h \
+  /usr/include/c++/15/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/15/bits/basic_ios.h \
+  /usr/include/c++/15/bits/basic_ios.tcc \
+  /usr/include/c++/15/bits/basic_string.h \
+  /usr/include/c++/15/bits/basic_string.tcc \
+  /usr/include/c++/15/bits/char_traits.h \
+  /usr/include/c++/15/bits/charconv.h \
+  /usr/include/c++/15/bits/concept_check.h \
+  /usr/include/c++/15/bits/cpp_type_traits.h \
+  /usr/include/c++/15/bits/cxxabi_forced.h \
+  /usr/include/c++/15/bits/cxxabi_init_exception.h \
+  /usr/include/c++/15/bits/exception.h \
+  /usr/include/c++/15/bits/exception_defines.h \
+  /usr/include/c++/15/bits/exception_ptr.h \
+  /usr/include/c++/15/bits/functexcept.h \
+  /usr/include/c++/15/bits/functional_hash.h \
+  /usr/include/c++/15/bits/hash_bytes.h \
+  /usr/include/c++/15/bits/invoke.h \
+  /usr/include/c++/15/bits/ios_base.h \
+  /usr/include/c++/15/bits/istream.tcc \
+  /usr/include/c++/15/bits/locale_classes.h \
+  /usr/include/c++/15/bits/locale_classes.tcc \
+  /usr/include/c++/15/bits/locale_facets.h \
+  /usr/include/c++/15/bits/locale_facets.tcc \
+  /usr/include/c++/15/bits/localefwd.h \
+  /usr/include/c++/15/bits/memory_resource.h \
+  /usr/include/c++/15/bits/memoryfwd.h \
+  /usr/include/c++/15/bits/move.h \
+  /usr/include/c++/15/bits/nested_exception.h \
+  /usr/include/c++/15/bits/new_allocator.h \
+  /usr/include/c++/15/bits/ostream.h \
+  /usr/include/c++/15/bits/ostream.tcc \
+  /usr/include/c++/15/bits/ostream_insert.h \
+  /usr/include/c++/15/bits/postypes.h \
+  /usr/include/c++/15/bits/predefined_ops.h \
+  /usr/include/c++/15/bits/ptr_traits.h \
+  /usr/include/c++/15/bits/range_access.h \
+  /usr/include/c++/15/bits/refwrap.h \
+  /usr/include/c++/15/bits/requires_hosted.h \
+  /usr/include/c++/15/bits/shared_ptr.h \
+  /usr/include/c++/15/bits/shared_ptr_atomic.h \
+  /usr/include/c++/15/bits/shared_ptr_base.h \
+  /usr/include/c++/15/bits/specfun.h \
+  /usr/include/c++/15/bits/std_abs.h \
+  /usr/include/c++/15/bits/stl_algobase.h \
+  /usr/include/c++/15/bits/stl_construct.h \
+  /usr/include/c++/15/bits/stl_function.h \
+  /usr/include/c++/15/bits/stl_iterator.h \
+  /usr/include/c++/15/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/15/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15/bits/stl_pair.h \
+  /usr/include/c++/15/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15/bits/stl_tempbuf.h \
+  /usr/include/c++/15/bits/stl_uninitialized.h \
+  /usr/include/c++/15/bits/streambuf.tcc \
+  /usr/include/c++/15/bits/streambuf_iterator.h \
+  /usr/include/c++/15/bits/string_view.tcc \
+  /usr/include/c++/15/bits/stringfwd.h \
+  /usr/include/c++/15/bits/unique_ptr.h \
+  /usr/include/c++/15/bits/uses_allocator.h \
+  /usr/include/c++/15/bits/uses_allocator_args.h \
+  /usr/include/c++/15/bits/utility.h \
+  /usr/include/c++/15/bits/version.h \
+  /usr/include/c++/15/cctype \
+  /usr/include/c++/15/cerrno \
+  /usr/include/c++/15/clocale \
+  /usr/include/c++/15/cmath \
+  /usr/include/c++/15/compare \
+  /usr/include/c++/15/concepts \
+  /usr/include/c++/15/cstddef \
+  /usr/include/c++/15/cstdio \
+  /usr/include/c++/15/cstdlib \
+  /usr/include/c++/15/cwchar \
+  /usr/include/c++/15/cwctype \
+  /usr/include/c++/15/debug/assertions.h \
+  /usr/include/c++/15/debug/debug.h \
+  /usr/include/c++/15/exception \
+  /usr/include/c++/15/ext/aligned_buffer.h \
+  /usr/include/c++/15/ext/alloc_traits.h \
+  /usr/include/c++/15/ext/atomicity.h \
+  /usr/include/c++/15/ext/concurrence.h \
+  /usr/include/c++/15/ext/numeric_traits.h \
+  /usr/include/c++/15/ext/string_conversions.h \
+  /usr/include/c++/15/ext/type_traits.h \
+  /usr/include/c++/15/initializer_list \
+  /usr/include/c++/15/ios \
+  /usr/include/c++/15/iosfwd \
+  /usr/include/c++/15/iostream \
+  /usr/include/c++/15/istream \
+  /usr/include/c++/15/limits \
+  /usr/include/c++/15/memory \
+  /usr/include/c++/15/new \
+  /usr/include/c++/15/ostream \
+  /usr/include/c++/15/pstl/execution_defs.h \
+  /usr/include/c++/15/pstl/glue_memory_defs.h \
+  /usr/include/c++/15/pstl/pstl_config.h \
+  /usr/include/c++/15/stdexcept \
+  /usr/include/c++/15/streambuf \
+  /usr/include/c++/15/string \
+  /usr/include/c++/15/string_view \
+  /usr/include/c++/15/system_error \
+  /usr/include/c++/15/tr1/bessel_function.tcc \
+  /usr/include/c++/15/tr1/beta_function.tcc \
+  /usr/include/c++/15/tr1/ell_integral.tcc \
+  /usr/include/c++/15/tr1/exp_integral.tcc \
+  /usr/include/c++/15/tr1/gamma.tcc \
+  /usr/include/c++/15/tr1/hypergeometric.tcc \
+  /usr/include/c++/15/tr1/legendre_function.tcc \
+  /usr/include/c++/15/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/15/tr1/poly_hermite.tcc \
+  /usr/include/c++/15/tr1/poly_laguerre.tcc \
+  /usr/include/c++/15/tr1/riemann_zeta.tcc \
+  /usr/include/c++/15/tr1/special_function_util.h \
+  /usr/include/c++/15/tuple \
+  /usr/include/c++/15/type_traits \
+  /usr/include/c++/15/typeinfo \
+  /usr/include/ctype.h \
+  /usr/include/endian.h \
+  /usr/include/errno.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/linux/errno.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/sched/types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/linux/types.h \
+  /usr/include/locale.h \
+  /usr/include/math.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/time.h \
+  /usr/include/wchar.h \
+  /usr/include/wctype.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/locale.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/sched.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/time.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/timex.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/atomic_word.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++allocator.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++locale.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/cpu_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/ctype_base.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/ctype_inline.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/error_constants.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr-default.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h \
   /usr/lib/linux/uapi/x86/asm/bitsperlong.h \
   /usr/lib/linux/uapi/x86/asm/errno.h \
   /usr/lib/linux/uapi/x86/asm/posix_types.h \
@@ -734,9 +965,1335 @@ CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o: /home/eul3r/Desktop/Studia/Che
   /usr/lib/linux/uapi/x86/asm/posix_types_64.h \
   /usr/lib/linux/uapi/x86/asm/types.h
 
+CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Bishop.cpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Bishop.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
+  /usr/include/alloca.h \
+  /usr/include/asm-generic/bitsperlong.h \
+  /usr/include/asm-generic/errno-base.h \
+  /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/c++/15/array \
+  /usr/include/c++/15/backward/auto_ptr.h \
+  /usr/include/c++/15/backward/binders.h \
+  /usr/include/c++/15/bit \
+  /usr/include/c++/15/bits/align.h \
+  /usr/include/c++/15/bits/alloc_traits.h \
+  /usr/include/c++/15/bits/allocated_ptr.h \
+  /usr/include/c++/15/bits/allocator.h \
+  /usr/include/c++/15/bits/atomic_base.h \
+  /usr/include/c++/15/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/15/bits/basic_string.h \
+  /usr/include/c++/15/bits/basic_string.tcc \
+  /usr/include/c++/15/bits/char_traits.h \
+  /usr/include/c++/15/bits/charconv.h \
+  /usr/include/c++/15/bits/concept_check.h \
+  /usr/include/c++/15/bits/cpp_type_traits.h \
+  /usr/include/c++/15/bits/cxxabi_forced.h \
+  /usr/include/c++/15/bits/cxxabi_init_exception.h \
+  /usr/include/c++/15/bits/exception.h \
+  /usr/include/c++/15/bits/exception_defines.h \
+  /usr/include/c++/15/bits/exception_ptr.h \
+  /usr/include/c++/15/bits/functexcept.h \
+  /usr/include/c++/15/bits/functional_hash.h \
+  /usr/include/c++/15/bits/hash_bytes.h \
+  /usr/include/c++/15/bits/invoke.h \
+  /usr/include/c++/15/bits/localefwd.h \
+  /usr/include/c++/15/bits/memory_resource.h \
+  /usr/include/c++/15/bits/memoryfwd.h \
+  /usr/include/c++/15/bits/move.h \
+  /usr/include/c++/15/bits/nested_exception.h \
+  /usr/include/c++/15/bits/new_allocator.h \
+  /usr/include/c++/15/bits/ostream_insert.h \
+  /usr/include/c++/15/bits/postypes.h \
+  /usr/include/c++/15/bits/predefined_ops.h \
+  /usr/include/c++/15/bits/ptr_traits.h \
+  /usr/include/c++/15/bits/range_access.h \
+  /usr/include/c++/15/bits/refwrap.h \
+  /usr/include/c++/15/bits/requires_hosted.h \
+  /usr/include/c++/15/bits/shared_ptr.h \
+  /usr/include/c++/15/bits/shared_ptr_atomic.h \
+  /usr/include/c++/15/bits/shared_ptr_base.h \
+  /usr/include/c++/15/bits/specfun.h \
+  /usr/include/c++/15/bits/std_abs.h \
+  /usr/include/c++/15/bits/stl_algobase.h \
+  /usr/include/c++/15/bits/stl_construct.h \
+  /usr/include/c++/15/bits/stl_function.h \
+  /usr/include/c++/15/bits/stl_iterator.h \
+  /usr/include/c++/15/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/15/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15/bits/stl_pair.h \
+  /usr/include/c++/15/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15/bits/stl_tempbuf.h \
+  /usr/include/c++/15/bits/stl_uninitialized.h \
+  /usr/include/c++/15/bits/string_view.tcc \
+  /usr/include/c++/15/bits/stringfwd.h \
+  /usr/include/c++/15/bits/unique_ptr.h \
+  /usr/include/c++/15/bits/uses_allocator.h \
+  /usr/include/c++/15/bits/uses_allocator_args.h \
+  /usr/include/c++/15/bits/utility.h \
+  /usr/include/c++/15/bits/version.h \
+  /usr/include/c++/15/cctype \
+  /usr/include/c++/15/cerrno \
+  /usr/include/c++/15/clocale \
+  /usr/include/c++/15/cmath \
+  /usr/include/c++/15/compare \
+  /usr/include/c++/15/concepts \
+  /usr/include/c++/15/cstddef \
+  /usr/include/c++/15/cstdio \
+  /usr/include/c++/15/cstdlib \
+  /usr/include/c++/15/cwchar \
+  /usr/include/c++/15/debug/assertions.h \
+  /usr/include/c++/15/debug/debug.h \
+  /usr/include/c++/15/exception \
+  /usr/include/c++/15/ext/aligned_buffer.h \
+  /usr/include/c++/15/ext/alloc_traits.h \
+  /usr/include/c++/15/ext/atomicity.h \
+  /usr/include/c++/15/ext/concurrence.h \
+  /usr/include/c++/15/ext/numeric_traits.h \
+  /usr/include/c++/15/ext/string_conversions.h \
+  /usr/include/c++/15/ext/type_traits.h \
+  /usr/include/c++/15/initializer_list \
+  /usr/include/c++/15/iosfwd \
+  /usr/include/c++/15/limits \
+  /usr/include/c++/15/memory \
+  /usr/include/c++/15/new \
+  /usr/include/c++/15/pstl/execution_defs.h \
+  /usr/include/c++/15/pstl/glue_memory_defs.h \
+  /usr/include/c++/15/pstl/pstl_config.h \
+  /usr/include/c++/15/string \
+  /usr/include/c++/15/string_view \
+  /usr/include/c++/15/tr1/bessel_function.tcc \
+  /usr/include/c++/15/tr1/beta_function.tcc \
+  /usr/include/c++/15/tr1/ell_integral.tcc \
+  /usr/include/c++/15/tr1/exp_integral.tcc \
+  /usr/include/c++/15/tr1/gamma.tcc \
+  /usr/include/c++/15/tr1/hypergeometric.tcc \
+  /usr/include/c++/15/tr1/legendre_function.tcc \
+  /usr/include/c++/15/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/15/tr1/poly_hermite.tcc \
+  /usr/include/c++/15/tr1/poly_laguerre.tcc \
+  /usr/include/c++/15/tr1/riemann_zeta.tcc \
+  /usr/include/c++/15/tr1/special_function_util.h \
+  /usr/include/c++/15/tuple \
+  /usr/include/c++/15/type_traits \
+  /usr/include/c++/15/typeinfo \
+  /usr/include/ctype.h \
+  /usr/include/endian.h \
+  /usr/include/errno.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/linux/errno.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/sched/types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/linux/types.h \
+  /usr/include/locale.h \
+  /usr/include/math.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/time.h \
+  /usr/include/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/locale.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/sched.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/time.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/timex.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/atomic_word.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++allocator.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++locale.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/cpu_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr-default.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h \
+  /usr/lib/linux/uapi/x86/asm/bitsperlong.h \
+  /usr/lib/linux/uapi/x86/asm/errno.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types_64.h \
+  /usr/lib/linux/uapi/x86/asm/types.h
+
+CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/King.cpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/King.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
+  /usr/include/alloca.h \
+  /usr/include/asm-generic/bitsperlong.h \
+  /usr/include/asm-generic/errno-base.h \
+  /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/c++/15/array \
+  /usr/include/c++/15/backward/auto_ptr.h \
+  /usr/include/c++/15/backward/binders.h \
+  /usr/include/c++/15/bit \
+  /usr/include/c++/15/bits/align.h \
+  /usr/include/c++/15/bits/alloc_traits.h \
+  /usr/include/c++/15/bits/allocated_ptr.h \
+  /usr/include/c++/15/bits/allocator.h \
+  /usr/include/c++/15/bits/atomic_base.h \
+  /usr/include/c++/15/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/15/bits/basic_string.h \
+  /usr/include/c++/15/bits/basic_string.tcc \
+  /usr/include/c++/15/bits/char_traits.h \
+  /usr/include/c++/15/bits/charconv.h \
+  /usr/include/c++/15/bits/concept_check.h \
+  /usr/include/c++/15/bits/cpp_type_traits.h \
+  /usr/include/c++/15/bits/cxxabi_forced.h \
+  /usr/include/c++/15/bits/cxxabi_init_exception.h \
+  /usr/include/c++/15/bits/exception.h \
+  /usr/include/c++/15/bits/exception_defines.h \
+  /usr/include/c++/15/bits/exception_ptr.h \
+  /usr/include/c++/15/bits/functexcept.h \
+  /usr/include/c++/15/bits/functional_hash.h \
+  /usr/include/c++/15/bits/hash_bytes.h \
+  /usr/include/c++/15/bits/invoke.h \
+  /usr/include/c++/15/bits/localefwd.h \
+  /usr/include/c++/15/bits/memory_resource.h \
+  /usr/include/c++/15/bits/memoryfwd.h \
+  /usr/include/c++/15/bits/move.h \
+  /usr/include/c++/15/bits/nested_exception.h \
+  /usr/include/c++/15/bits/new_allocator.h \
+  /usr/include/c++/15/bits/ostream_insert.h \
+  /usr/include/c++/15/bits/postypes.h \
+  /usr/include/c++/15/bits/predefined_ops.h \
+  /usr/include/c++/15/bits/ptr_traits.h \
+  /usr/include/c++/15/bits/range_access.h \
+  /usr/include/c++/15/bits/refwrap.h \
+  /usr/include/c++/15/bits/requires_hosted.h \
+  /usr/include/c++/15/bits/shared_ptr.h \
+  /usr/include/c++/15/bits/shared_ptr_atomic.h \
+  /usr/include/c++/15/bits/shared_ptr_base.h \
+  /usr/include/c++/15/bits/specfun.h \
+  /usr/include/c++/15/bits/std_abs.h \
+  /usr/include/c++/15/bits/stl_algobase.h \
+  /usr/include/c++/15/bits/stl_construct.h \
+  /usr/include/c++/15/bits/stl_function.h \
+  /usr/include/c++/15/bits/stl_iterator.h \
+  /usr/include/c++/15/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/15/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15/bits/stl_pair.h \
+  /usr/include/c++/15/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15/bits/stl_tempbuf.h \
+  /usr/include/c++/15/bits/stl_uninitialized.h \
+  /usr/include/c++/15/bits/string_view.tcc \
+  /usr/include/c++/15/bits/stringfwd.h \
+  /usr/include/c++/15/bits/unique_ptr.h \
+  /usr/include/c++/15/bits/uses_allocator.h \
+  /usr/include/c++/15/bits/uses_allocator_args.h \
+  /usr/include/c++/15/bits/utility.h \
+  /usr/include/c++/15/bits/version.h \
+  /usr/include/c++/15/cctype \
+  /usr/include/c++/15/cerrno \
+  /usr/include/c++/15/clocale \
+  /usr/include/c++/15/cmath \
+  /usr/include/c++/15/compare \
+  /usr/include/c++/15/concepts \
+  /usr/include/c++/15/cstddef \
+  /usr/include/c++/15/cstdio \
+  /usr/include/c++/15/cstdlib \
+  /usr/include/c++/15/cwchar \
+  /usr/include/c++/15/debug/assertions.h \
+  /usr/include/c++/15/debug/debug.h \
+  /usr/include/c++/15/exception \
+  /usr/include/c++/15/ext/aligned_buffer.h \
+  /usr/include/c++/15/ext/alloc_traits.h \
+  /usr/include/c++/15/ext/atomicity.h \
+  /usr/include/c++/15/ext/concurrence.h \
+  /usr/include/c++/15/ext/numeric_traits.h \
+  /usr/include/c++/15/ext/string_conversions.h \
+  /usr/include/c++/15/ext/type_traits.h \
+  /usr/include/c++/15/initializer_list \
+  /usr/include/c++/15/iosfwd \
+  /usr/include/c++/15/limits \
+  /usr/include/c++/15/memory \
+  /usr/include/c++/15/new \
+  /usr/include/c++/15/pstl/execution_defs.h \
+  /usr/include/c++/15/pstl/glue_memory_defs.h \
+  /usr/include/c++/15/pstl/pstl_config.h \
+  /usr/include/c++/15/string \
+  /usr/include/c++/15/string_view \
+  /usr/include/c++/15/tr1/bessel_function.tcc \
+  /usr/include/c++/15/tr1/beta_function.tcc \
+  /usr/include/c++/15/tr1/ell_integral.tcc \
+  /usr/include/c++/15/tr1/exp_integral.tcc \
+  /usr/include/c++/15/tr1/gamma.tcc \
+  /usr/include/c++/15/tr1/hypergeometric.tcc \
+  /usr/include/c++/15/tr1/legendre_function.tcc \
+  /usr/include/c++/15/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/15/tr1/poly_hermite.tcc \
+  /usr/include/c++/15/tr1/poly_laguerre.tcc \
+  /usr/include/c++/15/tr1/riemann_zeta.tcc \
+  /usr/include/c++/15/tr1/special_function_util.h \
+  /usr/include/c++/15/tuple \
+  /usr/include/c++/15/type_traits \
+  /usr/include/c++/15/typeinfo \
+  /usr/include/ctype.h \
+  /usr/include/endian.h \
+  /usr/include/errno.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/linux/errno.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/sched/types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/linux/types.h \
+  /usr/include/locale.h \
+  /usr/include/math.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/time.h \
+  /usr/include/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/locale.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/sched.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/time.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/timex.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/atomic_word.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++allocator.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++locale.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/cpu_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr-default.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h \
+  /usr/lib/linux/uapi/x86/asm/bitsperlong.h \
+  /usr/lib/linux/uapi/x86/asm/errno.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types_64.h \
+  /usr/lib/linux/uapi/x86/asm/types.h
+
+CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Knight.cpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Knight.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
+  /usr/include/alloca.h \
+  /usr/include/asm-generic/bitsperlong.h \
+  /usr/include/asm-generic/errno-base.h \
+  /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/c++/15/array \
+  /usr/include/c++/15/backward/auto_ptr.h \
+  /usr/include/c++/15/backward/binders.h \
+  /usr/include/c++/15/bit \
+  /usr/include/c++/15/bits/align.h \
+  /usr/include/c++/15/bits/alloc_traits.h \
+  /usr/include/c++/15/bits/allocated_ptr.h \
+  /usr/include/c++/15/bits/allocator.h \
+  /usr/include/c++/15/bits/atomic_base.h \
+  /usr/include/c++/15/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/15/bits/basic_string.h \
+  /usr/include/c++/15/bits/basic_string.tcc \
+  /usr/include/c++/15/bits/char_traits.h \
+  /usr/include/c++/15/bits/charconv.h \
+  /usr/include/c++/15/bits/concept_check.h \
+  /usr/include/c++/15/bits/cpp_type_traits.h \
+  /usr/include/c++/15/bits/cxxabi_forced.h \
+  /usr/include/c++/15/bits/cxxabi_init_exception.h \
+  /usr/include/c++/15/bits/exception.h \
+  /usr/include/c++/15/bits/exception_defines.h \
+  /usr/include/c++/15/bits/exception_ptr.h \
+  /usr/include/c++/15/bits/functexcept.h \
+  /usr/include/c++/15/bits/functional_hash.h \
+  /usr/include/c++/15/bits/hash_bytes.h \
+  /usr/include/c++/15/bits/invoke.h \
+  /usr/include/c++/15/bits/localefwd.h \
+  /usr/include/c++/15/bits/memory_resource.h \
+  /usr/include/c++/15/bits/memoryfwd.h \
+  /usr/include/c++/15/bits/move.h \
+  /usr/include/c++/15/bits/nested_exception.h \
+  /usr/include/c++/15/bits/new_allocator.h \
+  /usr/include/c++/15/bits/ostream_insert.h \
+  /usr/include/c++/15/bits/postypes.h \
+  /usr/include/c++/15/bits/predefined_ops.h \
+  /usr/include/c++/15/bits/ptr_traits.h \
+  /usr/include/c++/15/bits/range_access.h \
+  /usr/include/c++/15/bits/refwrap.h \
+  /usr/include/c++/15/bits/requires_hosted.h \
+  /usr/include/c++/15/bits/shared_ptr.h \
+  /usr/include/c++/15/bits/shared_ptr_atomic.h \
+  /usr/include/c++/15/bits/shared_ptr_base.h \
+  /usr/include/c++/15/bits/specfun.h \
+  /usr/include/c++/15/bits/std_abs.h \
+  /usr/include/c++/15/bits/stl_algobase.h \
+  /usr/include/c++/15/bits/stl_construct.h \
+  /usr/include/c++/15/bits/stl_function.h \
+  /usr/include/c++/15/bits/stl_iterator.h \
+  /usr/include/c++/15/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/15/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15/bits/stl_pair.h \
+  /usr/include/c++/15/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15/bits/stl_tempbuf.h \
+  /usr/include/c++/15/bits/stl_uninitialized.h \
+  /usr/include/c++/15/bits/string_view.tcc \
+  /usr/include/c++/15/bits/stringfwd.h \
+  /usr/include/c++/15/bits/unique_ptr.h \
+  /usr/include/c++/15/bits/uses_allocator.h \
+  /usr/include/c++/15/bits/uses_allocator_args.h \
+  /usr/include/c++/15/bits/utility.h \
+  /usr/include/c++/15/bits/version.h \
+  /usr/include/c++/15/cctype \
+  /usr/include/c++/15/cerrno \
+  /usr/include/c++/15/clocale \
+  /usr/include/c++/15/cmath \
+  /usr/include/c++/15/compare \
+  /usr/include/c++/15/concepts \
+  /usr/include/c++/15/cstddef \
+  /usr/include/c++/15/cstdio \
+  /usr/include/c++/15/cstdlib \
+  /usr/include/c++/15/cwchar \
+  /usr/include/c++/15/debug/assertions.h \
+  /usr/include/c++/15/debug/debug.h \
+  /usr/include/c++/15/exception \
+  /usr/include/c++/15/ext/aligned_buffer.h \
+  /usr/include/c++/15/ext/alloc_traits.h \
+  /usr/include/c++/15/ext/atomicity.h \
+  /usr/include/c++/15/ext/concurrence.h \
+  /usr/include/c++/15/ext/numeric_traits.h \
+  /usr/include/c++/15/ext/string_conversions.h \
+  /usr/include/c++/15/ext/type_traits.h \
+  /usr/include/c++/15/initializer_list \
+  /usr/include/c++/15/iosfwd \
+  /usr/include/c++/15/limits \
+  /usr/include/c++/15/memory \
+  /usr/include/c++/15/new \
+  /usr/include/c++/15/pstl/execution_defs.h \
+  /usr/include/c++/15/pstl/glue_memory_defs.h \
+  /usr/include/c++/15/pstl/pstl_config.h \
+  /usr/include/c++/15/string \
+  /usr/include/c++/15/string_view \
+  /usr/include/c++/15/tr1/bessel_function.tcc \
+  /usr/include/c++/15/tr1/beta_function.tcc \
+  /usr/include/c++/15/tr1/ell_integral.tcc \
+  /usr/include/c++/15/tr1/exp_integral.tcc \
+  /usr/include/c++/15/tr1/gamma.tcc \
+  /usr/include/c++/15/tr1/hypergeometric.tcc \
+  /usr/include/c++/15/tr1/legendre_function.tcc \
+  /usr/include/c++/15/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/15/tr1/poly_hermite.tcc \
+  /usr/include/c++/15/tr1/poly_laguerre.tcc \
+  /usr/include/c++/15/tr1/riemann_zeta.tcc \
+  /usr/include/c++/15/tr1/special_function_util.h \
+  /usr/include/c++/15/tuple \
+  /usr/include/c++/15/type_traits \
+  /usr/include/c++/15/typeinfo \
+  /usr/include/ctype.h \
+  /usr/include/endian.h \
+  /usr/include/errno.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/linux/errno.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/sched/types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/linux/types.h \
+  /usr/include/locale.h \
+  /usr/include/math.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/time.h \
+  /usr/include/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/locale.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/sched.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/time.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/timex.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/atomic_word.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++allocator.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++locale.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/cpu_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr-default.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h \
+  /usr/lib/linux/uapi/x86/asm/bitsperlong.h \
+  /usr/lib/linux/uapi/x86/asm/errno.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types_64.h \
+  /usr/lib/linux/uapi/x86/asm/types.h
+
+CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Pawn.cpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Pawn.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
+  /usr/include/alloca.h \
+  /usr/include/asm-generic/bitsperlong.h \
+  /usr/include/asm-generic/errno-base.h \
+  /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/c++/15/array \
+  /usr/include/c++/15/backward/auto_ptr.h \
+  /usr/include/c++/15/backward/binders.h \
+  /usr/include/c++/15/bit \
+  /usr/include/c++/15/bits/align.h \
+  /usr/include/c++/15/bits/alloc_traits.h \
+  /usr/include/c++/15/bits/allocated_ptr.h \
+  /usr/include/c++/15/bits/allocator.h \
+  /usr/include/c++/15/bits/atomic_base.h \
+  /usr/include/c++/15/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/15/bits/basic_string.h \
+  /usr/include/c++/15/bits/basic_string.tcc \
+  /usr/include/c++/15/bits/char_traits.h \
+  /usr/include/c++/15/bits/charconv.h \
+  /usr/include/c++/15/bits/concept_check.h \
+  /usr/include/c++/15/bits/cpp_type_traits.h \
+  /usr/include/c++/15/bits/cxxabi_forced.h \
+  /usr/include/c++/15/bits/cxxabi_init_exception.h \
+  /usr/include/c++/15/bits/exception.h \
+  /usr/include/c++/15/bits/exception_defines.h \
+  /usr/include/c++/15/bits/exception_ptr.h \
+  /usr/include/c++/15/bits/functexcept.h \
+  /usr/include/c++/15/bits/functional_hash.h \
+  /usr/include/c++/15/bits/hash_bytes.h \
+  /usr/include/c++/15/bits/invoke.h \
+  /usr/include/c++/15/bits/localefwd.h \
+  /usr/include/c++/15/bits/memory_resource.h \
+  /usr/include/c++/15/bits/memoryfwd.h \
+  /usr/include/c++/15/bits/move.h \
+  /usr/include/c++/15/bits/nested_exception.h \
+  /usr/include/c++/15/bits/new_allocator.h \
+  /usr/include/c++/15/bits/ostream_insert.h \
+  /usr/include/c++/15/bits/postypes.h \
+  /usr/include/c++/15/bits/predefined_ops.h \
+  /usr/include/c++/15/bits/ptr_traits.h \
+  /usr/include/c++/15/bits/range_access.h \
+  /usr/include/c++/15/bits/refwrap.h \
+  /usr/include/c++/15/bits/requires_hosted.h \
+  /usr/include/c++/15/bits/shared_ptr.h \
+  /usr/include/c++/15/bits/shared_ptr_atomic.h \
+  /usr/include/c++/15/bits/shared_ptr_base.h \
+  /usr/include/c++/15/bits/specfun.h \
+  /usr/include/c++/15/bits/std_abs.h \
+  /usr/include/c++/15/bits/stl_algobase.h \
+  /usr/include/c++/15/bits/stl_construct.h \
+  /usr/include/c++/15/bits/stl_function.h \
+  /usr/include/c++/15/bits/stl_iterator.h \
+  /usr/include/c++/15/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/15/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15/bits/stl_pair.h \
+  /usr/include/c++/15/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15/bits/stl_tempbuf.h \
+  /usr/include/c++/15/bits/stl_uninitialized.h \
+  /usr/include/c++/15/bits/string_view.tcc \
+  /usr/include/c++/15/bits/stringfwd.h \
+  /usr/include/c++/15/bits/unique_ptr.h \
+  /usr/include/c++/15/bits/uses_allocator.h \
+  /usr/include/c++/15/bits/uses_allocator_args.h \
+  /usr/include/c++/15/bits/utility.h \
+  /usr/include/c++/15/bits/version.h \
+  /usr/include/c++/15/cctype \
+  /usr/include/c++/15/cerrno \
+  /usr/include/c++/15/clocale \
+  /usr/include/c++/15/cmath \
+  /usr/include/c++/15/compare \
+  /usr/include/c++/15/concepts \
+  /usr/include/c++/15/cstddef \
+  /usr/include/c++/15/cstdio \
+  /usr/include/c++/15/cstdlib \
+  /usr/include/c++/15/cwchar \
+  /usr/include/c++/15/debug/assertions.h \
+  /usr/include/c++/15/debug/debug.h \
+  /usr/include/c++/15/exception \
+  /usr/include/c++/15/ext/aligned_buffer.h \
+  /usr/include/c++/15/ext/alloc_traits.h \
+  /usr/include/c++/15/ext/atomicity.h \
+  /usr/include/c++/15/ext/concurrence.h \
+  /usr/include/c++/15/ext/numeric_traits.h \
+  /usr/include/c++/15/ext/string_conversions.h \
+  /usr/include/c++/15/ext/type_traits.h \
+  /usr/include/c++/15/initializer_list \
+  /usr/include/c++/15/iosfwd \
+  /usr/include/c++/15/limits \
+  /usr/include/c++/15/memory \
+  /usr/include/c++/15/new \
+  /usr/include/c++/15/pstl/execution_defs.h \
+  /usr/include/c++/15/pstl/glue_memory_defs.h \
+  /usr/include/c++/15/pstl/pstl_config.h \
+  /usr/include/c++/15/string \
+  /usr/include/c++/15/string_view \
+  /usr/include/c++/15/tr1/bessel_function.tcc \
+  /usr/include/c++/15/tr1/beta_function.tcc \
+  /usr/include/c++/15/tr1/ell_integral.tcc \
+  /usr/include/c++/15/tr1/exp_integral.tcc \
+  /usr/include/c++/15/tr1/gamma.tcc \
+  /usr/include/c++/15/tr1/hypergeometric.tcc \
+  /usr/include/c++/15/tr1/legendre_function.tcc \
+  /usr/include/c++/15/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/15/tr1/poly_hermite.tcc \
+  /usr/include/c++/15/tr1/poly_laguerre.tcc \
+  /usr/include/c++/15/tr1/riemann_zeta.tcc \
+  /usr/include/c++/15/tr1/special_function_util.h \
+  /usr/include/c++/15/tuple \
+  /usr/include/c++/15/type_traits \
+  /usr/include/c++/15/typeinfo \
+  /usr/include/ctype.h \
+  /usr/include/endian.h \
+  /usr/include/errno.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/linux/errno.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/sched/types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/linux/types.h \
+  /usr/include/locale.h \
+  /usr/include/math.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/time.h \
+  /usr/include/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/locale.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/sched.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/time.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/timex.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/atomic_word.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++allocator.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++locale.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/cpu_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr-default.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h \
+  /usr/lib/linux/uapi/x86/asm/bitsperlong.h \
+  /usr/lib/linux/uapi/x86/asm/errno.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types_64.h \
+  /usr/lib/linux/uapi/x86/asm/types.h
+
+CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Queen.cpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Queen.hpp \
+  /usr/include/alloca.h \
+  /usr/include/asm-generic/bitsperlong.h \
+  /usr/include/asm-generic/errno-base.h \
+  /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/c++/15/array \
+  /usr/include/c++/15/backward/auto_ptr.h \
+  /usr/include/c++/15/backward/binders.h \
+  /usr/include/c++/15/bit \
+  /usr/include/c++/15/bits/align.h \
+  /usr/include/c++/15/bits/alloc_traits.h \
+  /usr/include/c++/15/bits/allocated_ptr.h \
+  /usr/include/c++/15/bits/allocator.h \
+  /usr/include/c++/15/bits/atomic_base.h \
+  /usr/include/c++/15/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/15/bits/basic_string.h \
+  /usr/include/c++/15/bits/basic_string.tcc \
+  /usr/include/c++/15/bits/char_traits.h \
+  /usr/include/c++/15/bits/charconv.h \
+  /usr/include/c++/15/bits/concept_check.h \
+  /usr/include/c++/15/bits/cpp_type_traits.h \
+  /usr/include/c++/15/bits/cxxabi_forced.h \
+  /usr/include/c++/15/bits/cxxabi_init_exception.h \
+  /usr/include/c++/15/bits/exception.h \
+  /usr/include/c++/15/bits/exception_defines.h \
+  /usr/include/c++/15/bits/exception_ptr.h \
+  /usr/include/c++/15/bits/functexcept.h \
+  /usr/include/c++/15/bits/functional_hash.h \
+  /usr/include/c++/15/bits/hash_bytes.h \
+  /usr/include/c++/15/bits/invoke.h \
+  /usr/include/c++/15/bits/localefwd.h \
+  /usr/include/c++/15/bits/memory_resource.h \
+  /usr/include/c++/15/bits/memoryfwd.h \
+  /usr/include/c++/15/bits/move.h \
+  /usr/include/c++/15/bits/nested_exception.h \
+  /usr/include/c++/15/bits/new_allocator.h \
+  /usr/include/c++/15/bits/ostream_insert.h \
+  /usr/include/c++/15/bits/postypes.h \
+  /usr/include/c++/15/bits/predefined_ops.h \
+  /usr/include/c++/15/bits/ptr_traits.h \
+  /usr/include/c++/15/bits/range_access.h \
+  /usr/include/c++/15/bits/refwrap.h \
+  /usr/include/c++/15/bits/requires_hosted.h \
+  /usr/include/c++/15/bits/shared_ptr.h \
+  /usr/include/c++/15/bits/shared_ptr_atomic.h \
+  /usr/include/c++/15/bits/shared_ptr_base.h \
+  /usr/include/c++/15/bits/specfun.h \
+  /usr/include/c++/15/bits/std_abs.h \
+  /usr/include/c++/15/bits/stl_algobase.h \
+  /usr/include/c++/15/bits/stl_construct.h \
+  /usr/include/c++/15/bits/stl_function.h \
+  /usr/include/c++/15/bits/stl_iterator.h \
+  /usr/include/c++/15/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/15/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15/bits/stl_pair.h \
+  /usr/include/c++/15/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15/bits/stl_tempbuf.h \
+  /usr/include/c++/15/bits/stl_uninitialized.h \
+  /usr/include/c++/15/bits/string_view.tcc \
+  /usr/include/c++/15/bits/stringfwd.h \
+  /usr/include/c++/15/bits/unique_ptr.h \
+  /usr/include/c++/15/bits/uses_allocator.h \
+  /usr/include/c++/15/bits/uses_allocator_args.h \
+  /usr/include/c++/15/bits/utility.h \
+  /usr/include/c++/15/bits/version.h \
+  /usr/include/c++/15/cctype \
+  /usr/include/c++/15/cerrno \
+  /usr/include/c++/15/clocale \
+  /usr/include/c++/15/cmath \
+  /usr/include/c++/15/compare \
+  /usr/include/c++/15/concepts \
+  /usr/include/c++/15/cstddef \
+  /usr/include/c++/15/cstdio \
+  /usr/include/c++/15/cstdlib \
+  /usr/include/c++/15/cwchar \
+  /usr/include/c++/15/debug/assertions.h \
+  /usr/include/c++/15/debug/debug.h \
+  /usr/include/c++/15/exception \
+  /usr/include/c++/15/ext/aligned_buffer.h \
+  /usr/include/c++/15/ext/alloc_traits.h \
+  /usr/include/c++/15/ext/atomicity.h \
+  /usr/include/c++/15/ext/concurrence.h \
+  /usr/include/c++/15/ext/numeric_traits.h \
+  /usr/include/c++/15/ext/string_conversions.h \
+  /usr/include/c++/15/ext/type_traits.h \
+  /usr/include/c++/15/initializer_list \
+  /usr/include/c++/15/iosfwd \
+  /usr/include/c++/15/limits \
+  /usr/include/c++/15/memory \
+  /usr/include/c++/15/new \
+  /usr/include/c++/15/pstl/execution_defs.h \
+  /usr/include/c++/15/pstl/glue_memory_defs.h \
+  /usr/include/c++/15/pstl/pstl_config.h \
+  /usr/include/c++/15/string \
+  /usr/include/c++/15/string_view \
+  /usr/include/c++/15/tr1/bessel_function.tcc \
+  /usr/include/c++/15/tr1/beta_function.tcc \
+  /usr/include/c++/15/tr1/ell_integral.tcc \
+  /usr/include/c++/15/tr1/exp_integral.tcc \
+  /usr/include/c++/15/tr1/gamma.tcc \
+  /usr/include/c++/15/tr1/hypergeometric.tcc \
+  /usr/include/c++/15/tr1/legendre_function.tcc \
+  /usr/include/c++/15/tr1/modified_bessel_func.tcc \
+  /usr/include/c++/15/tr1/poly_hermite.tcc \
+  /usr/include/c++/15/tr1/poly_laguerre.tcc \
+  /usr/include/c++/15/tr1/riemann_zeta.tcc \
+  /usr/include/c++/15/tr1/special_function_util.h \
+  /usr/include/c++/15/tuple \
+  /usr/include/c++/15/type_traits \
+  /usr/include/c++/15/typeinfo \
+  /usr/include/ctype.h \
+  /usr/include/endian.h \
+  /usr/include/errno.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/linux/errno.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/sched/types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/linux/types.h \
+  /usr/include/locale.h \
+  /usr/include/math.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/time.h \
+  /usr/include/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
+  /usr/include/x86_64-linux-gnu/bits/fp-logb.h \
+  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h \
+  /usr/include/x86_64-linux-gnu/bits/locale.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/math-vector.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
+  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/sched.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/time.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/timex.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/atomic_word.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++allocator.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++locale.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/cpu_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr-default.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h \
+  /usr/lib/linux/uapi/x86/asm/bitsperlong.h \
+  /usr/lib/linux/uapi/x86/asm/errno.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types_64.h \
+  /usr/lib/linux/uapi/x86/asm/types.h
+
+CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Rook.cpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Rook.hpp \
+  /usr/include/alloca.h \
+  /usr/include/asm-generic/bitsperlong.h \
+  /usr/include/asm-generic/errno-base.h \
+  /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/int-ll64.h \
+  /usr/include/asm-generic/posix_types.h \
+  /usr/include/asm-generic/types.h \
+  /usr/include/c++/15/array \
+  /usr/include/c++/15/backward/auto_ptr.h \
+  /usr/include/c++/15/backward/binders.h \
+  /usr/include/c++/15/bit \
+  /usr/include/c++/15/bits/align.h \
+  /usr/include/c++/15/bits/alloc_traits.h \
+  /usr/include/c++/15/bits/allocated_ptr.h \
+  /usr/include/c++/15/bits/allocator.h \
+  /usr/include/c++/15/bits/atomic_base.h \
+  /usr/include/c++/15/bits/atomic_lockfree_defines.h \
+  /usr/include/c++/15/bits/basic_string.h \
+  /usr/include/c++/15/bits/basic_string.tcc \
+  /usr/include/c++/15/bits/char_traits.h \
+  /usr/include/c++/15/bits/charconv.h \
+  /usr/include/c++/15/bits/concept_check.h \
+  /usr/include/c++/15/bits/cpp_type_traits.h \
+  /usr/include/c++/15/bits/cxxabi_forced.h \
+  /usr/include/c++/15/bits/cxxabi_init_exception.h \
+  /usr/include/c++/15/bits/exception.h \
+  /usr/include/c++/15/bits/exception_defines.h \
+  /usr/include/c++/15/bits/exception_ptr.h \
+  /usr/include/c++/15/bits/functexcept.h \
+  /usr/include/c++/15/bits/functional_hash.h \
+  /usr/include/c++/15/bits/hash_bytes.h \
+  /usr/include/c++/15/bits/invoke.h \
+  /usr/include/c++/15/bits/localefwd.h \
+  /usr/include/c++/15/bits/memory_resource.h \
+  /usr/include/c++/15/bits/memoryfwd.h \
+  /usr/include/c++/15/bits/move.h \
+  /usr/include/c++/15/bits/nested_exception.h \
+  /usr/include/c++/15/bits/new_allocator.h \
+  /usr/include/c++/15/bits/ostream_insert.h \
+  /usr/include/c++/15/bits/postypes.h \
+  /usr/include/c++/15/bits/predefined_ops.h \
+  /usr/include/c++/15/bits/ptr_traits.h \
+  /usr/include/c++/15/bits/range_access.h \
+  /usr/include/c++/15/bits/refwrap.h \
+  /usr/include/c++/15/bits/requires_hosted.h \
+  /usr/include/c++/15/bits/shared_ptr.h \
+  /usr/include/c++/15/bits/shared_ptr_atomic.h \
+  /usr/include/c++/15/bits/shared_ptr_base.h \
+  /usr/include/c++/15/bits/std_abs.h \
+  /usr/include/c++/15/bits/stl_algobase.h \
+  /usr/include/c++/15/bits/stl_construct.h \
+  /usr/include/c++/15/bits/stl_function.h \
+  /usr/include/c++/15/bits/stl_iterator.h \
+  /usr/include/c++/15/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/15/bits/stl_iterator_base_types.h \
+  /usr/include/c++/15/bits/stl_pair.h \
+  /usr/include/c++/15/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/15/bits/stl_tempbuf.h \
+  /usr/include/c++/15/bits/stl_uninitialized.h \
+  /usr/include/c++/15/bits/string_view.tcc \
+  /usr/include/c++/15/bits/stringfwd.h \
+  /usr/include/c++/15/bits/unique_ptr.h \
+  /usr/include/c++/15/bits/uses_allocator.h \
+  /usr/include/c++/15/bits/uses_allocator_args.h \
+  /usr/include/c++/15/bits/utility.h \
+  /usr/include/c++/15/bits/version.h \
+  /usr/include/c++/15/cctype \
+  /usr/include/c++/15/cerrno \
+  /usr/include/c++/15/clocale \
+  /usr/include/c++/15/compare \
+  /usr/include/c++/15/concepts \
+  /usr/include/c++/15/cstddef \
+  /usr/include/c++/15/cstdio \
+  /usr/include/c++/15/cstdlib \
+  /usr/include/c++/15/cwchar \
+  /usr/include/c++/15/debug/assertions.h \
+  /usr/include/c++/15/debug/debug.h \
+  /usr/include/c++/15/exception \
+  /usr/include/c++/15/ext/aligned_buffer.h \
+  /usr/include/c++/15/ext/alloc_traits.h \
+  /usr/include/c++/15/ext/atomicity.h \
+  /usr/include/c++/15/ext/concurrence.h \
+  /usr/include/c++/15/ext/numeric_traits.h \
+  /usr/include/c++/15/ext/string_conversions.h \
+  /usr/include/c++/15/ext/type_traits.h \
+  /usr/include/c++/15/initializer_list \
+  /usr/include/c++/15/iosfwd \
+  /usr/include/c++/15/memory \
+  /usr/include/c++/15/new \
+  /usr/include/c++/15/pstl/execution_defs.h \
+  /usr/include/c++/15/pstl/glue_memory_defs.h \
+  /usr/include/c++/15/pstl/pstl_config.h \
+  /usr/include/c++/15/string \
+  /usr/include/c++/15/string_view \
+  /usr/include/c++/15/tuple \
+  /usr/include/c++/15/type_traits \
+  /usr/include/c++/15/typeinfo \
+  /usr/include/ctype.h \
+  /usr/include/endian.h \
+  /usr/include/errno.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/linux/errno.h \
+  /usr/include/linux/posix_types.h \
+  /usr/include/linux/sched/types.h \
+  /usr/include/linux/stddef.h \
+  /usr/include/linux/types.h \
+  /usr/include/locale.h \
+  /usr/include/pthread.h \
+  /usr/include/sched.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdio.h \
+  /usr/include/stdlib.h \
+  /usr/include/time.h \
+  /usr/include/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/cpu-set.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/errno.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/locale.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/sched.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/setjmp.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdio_lim.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/time.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/timex.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/atomic_word.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++allocator.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++config.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/c++locale.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/cpu_defines.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr-default.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/gthr.h \
+  /usr/include/x86_64-linux-gnu/c++/15/bits/os_defines.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/sys/single_threaded.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h \
+  /usr/lib/gcc/x86_64-linux-gnu/15/include/stddef.h \
+  /usr/lib/linux/uapi/x86/asm/bitsperlong.h \
+  /usr/lib/linux/uapi/x86/asm/errno.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types.h \
+  /usr/lib/linux/uapi/x86/asm/posix_types_64.h \
+  /usr/lib/linux/uapi/x86/asm/types.h
+
 CMakeFiles/SFML_CHESS.dir/src/main.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/main.cpp \
   /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Board.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
   /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.hpp \
+  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
   /usr/include/SFML/Config.hpp \
   /usr/include/SFML/Graphics.hpp \
   /usr/include/SFML/Graphics/BlendMode.hpp \
@@ -1115,30 +2672,9 @@ CMakeFiles/SFML_CHESS.dir/src/main.cpp.o: /home/eul3r/Desktop/Studia/Chess-proje
   /usr/lib/linux/uapi/x86/asm/posix_types_64.h \
   /usr/lib/linux/uapi/x86/asm/types.h
 
-SFML_CHESS: /lib/x86_64-linux-gnu/libX11.so.6 \
-  /lib/x86_64-linux-gnu/libXau.so.6 \
-  /lib/x86_64-linux-gnu/libXcursor.so.1 \
-  /lib/x86_64-linux-gnu/libXdmcp.so.6 \
-  /lib/x86_64-linux-gnu/libXext.so.6 \
-  /lib/x86_64-linux-gnu/libXfixes.so.3 \
-  /lib/x86_64-linux-gnu/libXi.so.6 \
-  /lib/x86_64-linux-gnu/libXrandr.so.2 \
-  /lib/x86_64-linux-gnu/libXrender.so.1 \
-  /lib/x86_64-linux-gnu/libbrotlicommon.so.1 \
-  /lib/x86_64-linux-gnu/libbrotlidec.so.1 \
-  /lib/x86_64-linux-gnu/libbsd.so.0 \
-  /lib/x86_64-linux-gnu/libbz2.so.1.0 \
-  /lib/x86_64-linux-gnu/libc.so.6 \
-  /lib/x86_64-linux-gnu/libcap.so.2 \
-  /lib/x86_64-linux-gnu/libfreetype.so.6 \
+SFML_CHESS: /lib/x86_64-linux-gnu/libc.so.6 \
   /lib/x86_64-linux-gnu/libm.so.6 \
-  /lib/x86_64-linux-gnu/libmd.so.0 \
   /lib/x86_64-linux-gnu/libmvec.so.1 \
-  /lib/x86_64-linux-gnu/libpng16.so.16 \
-  /lib/x86_64-linux-gnu/libstb.so.0 \
-  /lib/x86_64-linux-gnu/libudev.so.1 \
-  /lib/x86_64-linux-gnu/libxcb.so.1 \
-  /lib/x86_64-linux-gnu/libz.so.1 \
   /lib64/ld-linux-x86-64.so.2 \
   /usr/lib/x86_64-linux-gnu/Scrt1.o \
   /usr/lib/x86_64-linux-gnu/crti.o \
@@ -1151,30 +2687,90 @@ SFML_CHESS: /lib/x86_64-linux-gnu/libX11.so.6 \
   /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a \
   /usr/lib/gcc/x86_64-linux-gnu/15/libgcc_s.so \
   /usr/lib/gcc/x86_64-linux-gnu/15/libstdc++.so \
+  /usr/lib/x86_64-linux-gnu/libX11.so.6 \
+  /usr/lib/x86_64-linux-gnu/libXau.so.6 \
+  /usr/lib/x86_64-linux-gnu/libXcursor.so.1 \
+  /usr/lib/x86_64-linux-gnu/libXdmcp.so.6 \
+  /usr/lib/x86_64-linux-gnu/libXext.so.6 \
+  /usr/lib/x86_64-linux-gnu/libXfixes.so.3 \
+  /usr/lib/x86_64-linux-gnu/libXi.so.6 \
+  /usr/lib/x86_64-linux-gnu/libXrandr.so.2 \
+  /usr/lib/x86_64-linux-gnu/libXrender.so.1 \
+  /usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1 \
+  /usr/lib/x86_64-linux-gnu/libbrotlidec.so.1 \
+  /usr/lib/x86_64-linux-gnu/libbsd.so.0 \
+  /usr/lib/x86_64-linux-gnu/libbz2.so.1.0 \
   /usr/lib/x86_64-linux-gnu/libc_nonshared.a \
+  /usr/lib/x86_64-linux-gnu/libcap.so.2 \
+  /usr/lib/x86_64-linux-gnu/libfreetype.so.6 \
+  /usr/lib/x86_64-linux-gnu/libmd.so.0 \
+  /usr/lib/x86_64-linux-gnu/libpng16.so.16 \
   /usr/lib/x86_64-linux-gnu/libsfml-audio.so.3.0.2 \
   /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.3.0.2 \
   /usr/lib/x86_64-linux-gnu/libsfml-system.so.3.0.2 \
   /usr/lib/x86_64-linux-gnu/libsfml-window.so.3.0.2 \
+  /usr/lib/x86_64-linux-gnu/libstb.so.0 \
+  /usr/lib/x86_64-linux-gnu/libudev.so.1 \
+  /usr/lib/x86_64-linux-gnu/libxcb.so.1 \
+  /usr/lib/x86_64-linux-gnu/libz.so.1 \
   CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o \
+  CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o \
+  CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o \
+  CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o \
+  CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o \
+  CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o \
+  CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o \
+  CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/main.cpp.o
 
 
 CMakeFiles/SFML_CHESS.dir/src/main.cpp.o:
 
+CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o:
+
 CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o:
 
 CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o:
 
+CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o:
+
 CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
+
+/usr/lib/x86_64-linux-gnu/libz.so.1:
+
+/usr/lib/x86_64-linux-gnu/libstb.so.0:
 
 /usr/lib/x86_64-linux-gnu/libsfml-system.so.3.0.2:
 
 /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.3.0.2:
 
+/usr/lib/x86_64-linux-gnu/libpng16.so.16:
+
+/usr/lib/x86_64-linux-gnu/libmd.so.0:
+
+/usr/lib/x86_64-linux-gnu/libfreetype.so.6:
+
+/usr/lib/x86_64-linux-gnu/libcap.so.2:
+
+/usr/lib/x86_64-linux-gnu/libbrotlicommon.so.1:
+
+/usr/lib/x86_64-linux-gnu/libXrender.so.1:
+
+/usr/lib/x86_64-linux-gnu/libbz2.so.1.0:
+
+/usr/lib/x86_64-linux-gnu/libXi.so.6:
+
+/usr/lib/x86_64-linux-gnu/libXext.so.6:
+
 /usr/lib/x86_64-linux-gnu/libc_nonshared.a:
+
+/usr/lib/x86_64-linux-gnu/libXdmcp.so.6:
+
+/usr/lib/x86_64-linux-gnu/libXcursor.so.1:
+
+/usr/lib/x86_64-linux-gnu/libX11.so.6:
 
 /usr/lib/x86_64-linux-gnu/libgcc_s.so.1:
 
@@ -1186,33 +2782,49 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /lib64/ld-linux-x86-64.so.2:
 
-/lib/x86_64-linux-gnu/libxcb.so.1:
-
-/lib/x86_64-linux-gnu/libmd.so.0:
-
-/lib/x86_64-linux-gnu/libfreetype.so.6:
-
-/lib/x86_64-linux-gnu/libbz2.so.1.0:
-
-/lib/x86_64-linux-gnu/libbsd.so.0:
-
-/lib/x86_64-linux-gnu/libbrotlicommon.so.1:
-
-/lib/x86_64-linux-gnu/libXrender.so.1:
-
-/lib/x86_64-linux-gnu/libXi.so.6:
-
-/lib/x86_64-linux-gnu/libXfixes.so.3:
-
-/lib/x86_64-linux-gnu/libudev.so.1:
-
-/lib/x86_64-linux-gnu/libXcursor.so.1:
-
-/lib/x86_64-linux-gnu/libX11.so.6:
-
-/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/main.cpp:
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Queen.cpp:
 
 /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.cpp:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
+
+/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
+
+/usr/include/x86_64-linux-gnu/bits/fp-logb.h:
+
+/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
+
+/usr/include/c++/15/tr1/modified_bessel_func.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
+
+/usr/include/c++/15/tr1/legendre_function.tcc:
+
+/usr/lib/x86_64-linux-gnu/Scrt1.o:
+
+/usr/include/c++/15/tr1/hypergeometric.tcc:
+
+/usr/include/c++/15/tr1/gamma.tcc:
+
+/usr/lib/x86_64-linux-gnu/libsfml-window.so.3.0.2:
+
+/usr/include/c++/15/tr1/exp_integral.tcc:
+
+/usr/include/c++/15/tr1/beta_function.tcc:
+
+/usr/include/c++/15/tr1/bessel_function.tcc:
+
+/usr/include/c++/15/cmath:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Rook.hpp:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Queen.hpp:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/King.hpp:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Bishop.hpp:
 
 /usr/lib/linux/uapi/x86/asm/types.h:
 
@@ -1223,6 +2835,10 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/lib/gcc/x86_64-linux-gnu/15/include/stdint.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/15/include/stdarg.h:
+
+/usr/include/c++/15/tr1/ell_integral.tcc:
+
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
@@ -1242,6 +2858,8 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/King.cpp:
+
 /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
@@ -1257,8 +2875,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 
@@ -1286,6 +2902,10 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/x86_64-linux-gnu/bits/time64.h:
 
+/usr/include/c++/15/tr1/special_function_util.h:
+
+/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/x86_64-linux-gnu/bits/timex.h:
@@ -1308,17 +2928,7 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/x86_64-linux-gnu/bits/pthread_stack_min-dynamic.h:
 
-/usr/include/x86_64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h:
-
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
-
-/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
-
-/usr/include/x86_64-linux-gnu/bits/fp-logb.h:
-
-/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
 
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
@@ -1328,6 +2938,8 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
+CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o:
+
 /usr/include/x86_64-linux-gnu/bits/cpu-set.h:
 
 /usr/lib/linux/uapi/x86/asm/posix_types_64.h:
@@ -1335,8 +2947,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/include/x86_64-linux-gnu/bits/byteswap.h:
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
-
-/lib/x86_64-linux-gnu/libXext.so.6:
 
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
 
@@ -1356,33 +2966,21 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/sched.h:
 
-/lib/x86_64-linux-gnu/libz.so.1:
-
 /usr/include/pthread.h:
 
 /usr/include/locale.h:
-
-/usr/include/features.h:
-
-/usr/include/features-time64.h:
-
-/usr/include/stdint.h:
-
-/usr/include/endian.h:
-
-/usr/include/ctype.h:
-
-/usr/include/c++/15/vector:
-
-/usr/include/c++/15/variant:
-
-/usr/include/c++/15/utility:
 
 /usr/include/c++/15/initializer_list:
 
 /usr/include/c++/15/bits/chrono.h:
 
 /usr/include/c++/15/bits/enable_special_members.h:
+
+CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/main.cpp:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp:
 
 /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Piece.cpp:
 
@@ -1398,6 +2996,8 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/cxxabi_init_exception.h:
 
+/usr/include/c++/15/variant:
+
 /usr/include/c++/15/bits/basic_string.h:
 
 /usr/include/c++/15/bits/cpp_type_traits.h:
@@ -1406,17 +3006,15 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/basic_ios.tcc:
 
-/lib/x86_64-linux-gnu/libpng16.so.16:
-
 /usr/include/c++/15/bits/atomic_lockfree_defines.h:
 
 /usr/include/c++/15/bits/atomic_base.h:
 
 /usr/include/c++/15/bits/alloc_traits.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
-
 /usr/include/math.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
 /usr/include/SFML/Graphics/Transform.hpp:
 
@@ -1426,8 +3024,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/stl_raw_storage_iter.h:
 
-/lib/x86_64-linux-gnu/libXrandr.so.2:
-
 /usr/include/asm-generic/errno-base.h:
 
 /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Board.hpp:
@@ -1436,7 +3032,7 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/memoryfwd.h:
 
-/usr/include/c++/15/tr1/beta_function.tcc:
+CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o:
 
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
 
@@ -1464,6 +3060,12 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Window/Joystick.hpp:
 
+/usr/include/c++/15/bits/specfun.h:
+
+/usr/include/c++/15/backward/binders.h:
+
+/usr/include/c++/15/utility:
+
 /usr/lib/gcc/x86_64-linux-gnu/15/crtbeginS.o:
 
 /usr/include/c++/15/bits/range_access.h:
@@ -1482,6 +3084,12 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/locale_facets_nonio.h:
 
+CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o:
+
+/usr/lib/x86_64-linux-gnu/libbsd.so.0:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Knight.hpp:
+
 /usr/include/c++/15/exception:
 
 /usr/include/SFML/System/String.inl:
@@ -1490,9 +3098,15 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Window/ContextSettings.hpp:
 
+/usr/lib/x86_64-linux-gnu/libxcb.so.1:
+
 /lib/x86_64-linux-gnu/libc.so.6:
 
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Bishop.cpp:
+
 /usr/include/c++/15/memory:
+
+/usr/include/c++/15/vector:
 
 /usr/include/c++/15/system_error:
 
@@ -1504,8 +3118,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Window/Clipboard.hpp:
 
-/lib/x86_64-linux-gnu/libstb.so.0:
-
 /usr/include/x86_64-linux-gnu/c++/15/bits/cpu_defines.h:
 
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
@@ -1516,15 +3128,17 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/codecvt:
 
+/usr/include/c++/15/ext/type_traits.h:
+
+/usr/include/SFML/System/Vector2.inl:
+
+/usr/include/c++/15/cerrno:
+
 /usr/include/SFML/Graphics/Texture.hpp:
 
 /usr/include/linux/errno.h:
 
 /usr/include/c++/15/new:
-
-/usr/include/SFML/Graphics/Sprite.hpp:
-
-/usr/include/SFML/Graphics/Export.hpp:
 
 /usr/include/SFML/Graphics/RenderTarget.hpp:
 
@@ -1534,16 +3148,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Config.hpp:
 
-/usr/include/c++/15/bits/hashtable.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
-
-/usr/include/SFML/Graphics/RectangleShape.hpp:
-
-/usr/include/c++/15/iterator:
-
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
 /usr/include/c++/15/bits/stl_pair.h:
@@ -1552,35 +3156,15 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Graphics/Glyph.hpp:
 
-/usr/include/c++/15/backward/binders.h:
-
-/usr/include/c++/15/bits/specfun.h:
-
 /usr/include/c++/15/bits/unique_ptr.h:
 
 /usr/include/SFML/Graphics/Shader.hpp:
-
-/usr/include/x86_64-linux-gnu/c++/15/bits/os_defines.h:
-
-/usr/include/c++/15/bits/new_allocator.h:
-
-/usr/include/c++/15/bits/uses_allocator.h:
-
-/lib/x86_64-linux-gnu/libbrotlidec.so.1:
 
 /usr/include/x86_64-linux-gnu/c++/15/bits/ctype_base.h:
 
 /usr/include/SFML/Window/Sensor.hpp:
 
 /usr/include/SFML/System/Angle.hpp:
-
-/usr/include/c++/15/bits/hashtable_policy.h:
-
-/usr/include/c++/15/ext/string_conversions.h:
-
-/usr/include/libintl.h:
-
-/usr/include/SFML/System/String.hpp:
 
 /usr/include/c++/15/cctype:
 
@@ -1594,13 +3178,35 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/System/Exception.hpp:
 
-/usr/include/c++/15/cmath:
+/usr/include/stdint.h:
+
+/usr/include/endian.h:
 
 /usr/include/SFML/Window/Vulkan.hpp:
 
-/usr/include/x86_64-linux-gnu/c++/15/bits/time_members.h:
+/usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
+
+/usr/include/SFML/Graphics/RectangleShape.hpp:
+
+/usr/include/c++/15/bits/hashtable.h:
+
+/usr/include/c++/15/iterator:
+
+/usr/include/c++/15/bits/codecvt.h:
+
+/usr/include/SFML/Graphics/CoordinateType.hpp:
+
+/usr/include/SFML/Graphics/Shape.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
+
+/usr/include/asm-generic/errno.h:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
+
+/usr/include/x86_64-linux-gnu/c++/15/bits/time_members.h:
 
 /usr/include/c++/15/algorithm:
 
@@ -1612,13 +3218,93 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/System/Err.hpp:
 
+/usr/include/c++/15/clocale:
+
+/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
+
+/usr/include/SFML/Graphics/PrimitiveType.hpp:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Knight.cpp:
+
+/usr/include/SFML/System/Sleep.hpp:
+
+/usr/include/features.h:
+
 /usr/include/x86_64-linux-gnu/bits/mathcalls-macros.h:
 
 /usr/include/SFML/Graphics/Glsl.inl:
 
 /usr/include/SFML/System/Vector3.inl:
 
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Pawn.cpp:
+
+/usr/include/SFML/System/String.hpp:
+
+/usr/include/libintl.h:
+
 /usr/include/SFML/Graphics/VertexBuffer.hpp:
+
+/usr/include/SFML/Graphics/Rect.hpp:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/time_t.h:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp:
+
+/usr/lib/x86_64-linux-gnu/libsfml-audio.so.3.0.2:
+
+/usr/include/c++/15/bits/ostream_insert.h:
+
+/usr/include/c++/15/bits/algorithmfwd.h:
+
+/usr/include/c++/15/tr1/poly_laguerre.tcc:
+
+/usr/include/c++/15/bits/charconv.h:
+
+/usr/include/c++/15/pstl/glue_algorithm_defs.h:
+
+/usr/include/SFML/Graphics/Export.hpp:
+
+/usr/lib/x86_64-linux-gnu/libXau.so.6:
+
+/usr/include/SFML/Graphics/Sprite.hpp:
+
+/usr/include/c++/15/bits/fs_fwd.h:
+
+/usr/include/errno.h:
+
+/usr/include/c++/15/cstddef:
+
+/usr/include/c++/15/bits/allocator.h:
+
+/usr/include/asm-generic/posix_types.h:
+
+/usr/include/c++/15/bit:
+
+/usr/include/SFML/Graphics/ConvexShape.hpp:
+
+/usr/include/c++/15/tr1/riemann_zeta.tcc:
+
+/usr/include/SFML/System.hpp:
+
+/usr/include/SFML/Graphics/Color.hpp:
+
+/usr/include/c++/15/tr1/poly_hermite.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
+
+/usr/include/SFML/Window/Export.hpp:
+
+/usr/include/SFML/System/Vector3.hpp:
+
+/usr/include/c++/15/bits/quoted_string.h:
+
+/usr/include/c++/15/ext/numeric_traits.h:
+
+/usr/include/SFML/Graphics/Color.inl:
 
 /usr/include/c++/15/bits/fs_path.h:
 
@@ -1627,10 +3313,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/include/c++/15/bits/erase_if.h:
 
 /usr/include/c++/15/bits/stringfwd.h:
-
-/usr/include/SFML/Graphics/Shape.hpp:
-
-/usr/include/SFML/Graphics/CoordinateType.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
@@ -1644,38 +3326,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/System/MemoryInputStream.hpp:
 
-/usr/include/c++/15/tr1/modified_bessel_func.tcc:
-
-/usr/include/SFML/Graphics/Rect.hpp:
-
-/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.hpp:
-
-/usr/include/c++/15/bits/algorithmfwd.h:
-
-/usr/include/errno.h:
-
-/usr/include/c++/15/bits/fs_fwd.h:
-
-/usr/include/c++/15/cstddef:
-
-/usr/include/c++/15/bits/allocator.h:
-
-/usr/include/asm-generic/posix_types.h:
-
-/usr/include/c++/15/bit:
-
-/usr/include/SFML/Graphics/ConvexShape.hpp:
-
-/usr/include/c++/15/ext/numeric_traits.h:
-
-/usr/include/SFML/Graphics/Color.inl:
-
-/usr/include/c++/15/bits/codecvt.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
-
-/usr/include/asm-generic/errno.h:
-
 /usr/include/x86_64-linux-gnu/bits/locale.h:
 
 /usr/include/c++/15/bits/basic_ios.h:
@@ -1688,17 +3338,15 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/stl_heap.h:
 
-/usr/include/linux/posix_types.h:
-
-/usr/include/SFML/Graphics/Text.hpp:
-
 /usr/include/SFML/Graphics/Transform.inl:
 
 /usr/include/c++/15/bits/istream.tcc:
 
 /usr/include/c++/15/bits/allocated_ptr.h:
 
-/lib/x86_64-linux-gnu/libXau.so.6:
+/usr/include/c++/15/iostream:
+
+/usr/include/c++/15/bits/vector.tcc:
 
 /usr/include/c++/15/bits/monostate.h:
 
@@ -1716,6 +3364,8 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/pstl/glue_memory_defs.h:
 
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Pawn.hpp:
+
 /usr/include/SFML/Graphics/Vertex.hpp:
 
 /usr/include/SFML/System/Utf.inl:
@@ -1724,29 +3374,13 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Graphics/VertexArray.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
-
-/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
-
-/usr/include/SFML/Graphics/PrimitiveType.hpp:
-
-/usr/include/SFML/System/Sleep.hpp:
-
-/usr/include/c++/15/bits/quoted_string.h:
-
-/usr/include/SFML/System/Vector3.hpp:
-
-/usr/include/c++/15/clocale:
+/usr/lib/x86_64-linux-gnu/libXfixes.so.3:
 
 /usr/include/SFML/System/Angle.inl:
 
 /usr/include/SFML/Window/Window.hpp:
 
 /usr/include/c++/15/bits/streambuf_iterator.h:
-
-/usr/lib/x86_64-linux-gnu/libsfml-window.so.3.0.2:
-
-/usr/include/c++/15/tr1/exp_integral.tcc:
 
 /usr/lib/gcc/x86_64-linux-gnu/15/libgcc.a:
 
@@ -1782,17 +3416,13 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/Graphics/RenderWindow.hpp:
 
+CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o:
+
 /usr/include/wchar.h:
 
 /usr/include/SFML/Window/WindowBase.inl:
 
 /usr/include/c++/15/sstream:
-
-/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
-
-/usr/include/SFML/Window/Export.hpp:
-
-/usr/include/c++/15/tr1/poly_hermite.tcc:
 
 /usr/include/SFML/System/Time.hpp:
 
@@ -1800,19 +3430,23 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/SFML/System/Vector2.hpp:
 
-/usr/include/c++/15/ext/type_traits.h:
+/usr/include/c++/15/ext/string_conversions.h:
 
-/usr/include/SFML/System/Vector2.inl:
+/usr/include/c++/15/bits/hashtable_policy.h:
 
-/usr/include/c++/15/cerrno:
+/usr/include/x86_64-linux-gnu/c++/15/bits/os_defines.h:
 
-/usr/include/linux/stddef.h:
+/usr/include/c++/15/bits/new_allocator.h:
 
-/usr/include/c++/15/bits/locale_classes.h:
+/usr/include/c++/15/bits/uses_allocator.h:
 
 /usr/include/c++/15/bits/locale_conv.h:
 
 /usr/include/c++/15/bits/locale_facets.tcc:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Rook.cpp:
+
+/usr/include/ctype.h:
 
 /usr/include/c++/15/bits/locale_facets.h:
 
@@ -1839,10 +3473,6 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/include/c++/15/bits/ostream.h:
 
 /usr/include/c++/15/bits/ostream.tcc:
-
-/usr/lib/x86_64-linux-gnu/libsfml-audio.so.3.0.2:
-
-/usr/include/c++/15/bits/ostream_insert.h:
 
 /usr/include/SFML/Graphics/Rect.inl:
 
@@ -1882,6 +3512,8 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/bits/stl_construct.h:
 
+/usr/lib/x86_64-linux-gnu/libbrotlidec.so.1:
+
 /usr/include/c++/15/bits/fs_dir.h:
 
 /usr/include/c++/15/bits/stl_function.h:
@@ -1912,11 +3544,11 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/cassert:
 
-/lib/x86_64-linux-gnu/libcap.so.2:
-
 /usr/include/c++/15/bits/string_view.tcc:
 
 /usr/include/c++/15/bits/uniform_int_dist.h:
+
+/usr/include/features-time64.h:
 
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
@@ -1931,6 +3563,8 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 /usr/include/c++/15/concepts:
 
 /usr/include/c++/15/cstdint:
+
+/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.cpp:
 
 /usr/include/c++/15/cstdio:
 
@@ -1952,13 +3586,11 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/iosfwd:
 
+/usr/lib/x86_64-linux-gnu/libXrandr.so.2:
+
 /usr/include/x86_64-linux-gnu/c++/15/bits/gthr-default.h:
 
 /usr/include/c++/15/limits:
-
-/usr/include/c++/15/bits/vector.tcc:
-
-/usr/include/c++/15/iostream:
 
 /usr/include/c++/15/istream:
 
@@ -1984,36 +3616,12 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o:
 
 /usr/include/c++/15/string:
 
-/usr/include/c++/15/tr1/bessel_function.tcc:
+/usr/lib/x86_64-linux-gnu/libudev.so.1:
 
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+/usr/include/SFML/Graphics/Text.hpp:
 
-/usr/include/c++/15/tr1/ell_integral.tcc:
+/usr/include/linux/posix_types.h:
 
-/lib/x86_64-linux-gnu/libXdmcp.so.6:
+/usr/include/c++/15/bits/locale_classes.h:
 
-/usr/include/c++/15/tr1/gamma.tcc:
-
-/usr/lib/x86_64-linux-gnu/Scrt1.o:
-
-/usr/include/c++/15/tr1/hypergeometric.tcc:
-
-/usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
-
-/usr/include/c++/15/tr1/legendre_function.tcc:
-
-/usr/include/c++/15/bits/charconv.h:
-
-/usr/include/c++/15/pstl/glue_algorithm_defs.h:
-
-/usr/include/c++/15/tr1/poly_laguerre.tcc:
-
-/usr/include/SFML/Graphics/Color.hpp:
-
-/usr/include/SFML/System.hpp:
-
-/usr/include/c++/15/tr1/riemann_zeta.tcc:
-
-/usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
-
-/usr/include/c++/15/tr1/special_function_util.h:
+/usr/include/linux/stddef.h:

@@ -1,62 +1,17 @@
 #include "Board.hpp"
 #include "PieceManager.hpp"
+#include "GameLogic.hpp"
+#include "Pieces/Piece.hpp"
 #include <array>
 #include <algorithm>
 #include <string>
-#include <cmath>
-#include <iostream>
-#include <cstdint>
 
 Board::Board(float tileSize, const sf::Vector2f& origin)
-    : m_tileSize(tileSize), m_origin(origin), m_currentStyle("maestro")
+    : m_tileSize(tileSize), m_origin(origin),
+      m_light(240, 217, 181), // typical light square
+      m_dark(181, 136, 99),   // typical dark square
+      m_currentStyle("maestro") // default style
 {
-    // populate a small set of pleasing contrasting palettes (light,dark)
-    m_palettes = {
-        { {240,217,181}, {181,136,99} },   // classic / maestro
-        { {238,238,210}, {118,150,86} },   // green classic
-        { {245,245,245}, {60,60,60} },     // light/charcoal
-        { {200,230,255}, {40,70,110} },    // pale blue / dark blue
-        { {255,250,240}, {100,70,50} },    // warm beige / brown
-
-        { {230,230,255}, {90,90,130} },    // lavender / deep indigo
-        { {255,240,240}, {160,60,60} },    // very light rose / burgundy
-        { {235,255,235}, {90,130,90} },    // mint / forest green
-        { {255,255,220}, {140,120,60} },   // light sand / khaki brown
-        { {225,240,245}, {70,100,120} },   // cold grey-blue / steel blue
-        { {250,250,255}, {110,110,160} },  // ice white / slate violet
-        { {245,240,230}, {120,90,70} }     // oatmeal / coffee brown
-    };
-
-
-    m_currentPaletteIndex = 0;
-    // apply first palette to sf::Color members
-    const auto &p = m_palettes[m_currentPaletteIndex];
-    m_light = sf::Color(static_cast<uint8_t>(p.first[0]), static_cast<uint8_t>(p.first[1]), static_cast<uint8_t>(p.first[2]));
-    m_dark  = sf::Color(static_cast<uint8_t>(p.second[0]), static_cast<uint8_t>(p.second[1]), static_cast<uint8_t>(p.second[2]));
-}
-
-// convert RGB triplet (0-255 ints) to sf::Color with clamping
-static sf::Color rgbToColor(const Board::RGB &c) {
-    auto clamp = [](int v){ return static_cast<uint8_t>(std::max(0, std::min(255, v))); };
-    return sf::Color(clamp(c[0]), clamp(c[1]), clamp(c[2]));
-}
-
-// compute a simple luminance (0-255 range)
-static float luminance(const Board::RGB &c) {
-    return 0.2126f * c[0] + 0.7152f * c[1] + 0.0722f * c[2];
-}
-
-// If two RGB triplets are not contrasting enough, this returns a
-// contrasting dark color (inverts and clamps).
-static Board::RGB ensureContrasting(const Board::RGB &light, const Board::RGB &dark) {
-    float l1 = luminance(light);
-    float l2 = luminance(dark);
-    if (std::fabs(l1 - l2) >= 100.f) return dark; // good enough
-    // otherwise generate a contrasting dark color by inverting light
-    Board::RGB alt = { 255 - light[0], 255 - light[1], 255 - light[2] };
-    // if alt is still too light, force a near-black
-    if (luminance(alt) > 128.f) alt = {30,30,30};
-    return alt;
 }
 
 void Board::setPosition(const sf::Vector2f& pos) {
@@ -77,37 +32,6 @@ float Board::getTileSize() const {
 
 void Board::setPieceManager(const PieceManager* pm) {
     m_pieceManager = pm;
-}
-
-void Board::setColorsRGB(const RGB& light, const RGB& dark) {
-    Board::RGB safeDark = ensureContrasting(light, dark);
-    m_light = rgbToColor(light);
-    m_dark = rgbToColor(safeDark);
-    // also add/replace at current palette index so cycling preserves it
-    if (m_currentPaletteIndex >= 0 && m_currentPaletteIndex < static_cast<int>(m_palettes.size())) {
-        m_palettes[m_currentPaletteIndex] = {light, safeDark};
-    }
-}
-
-std::pair<Board::RGB, Board::RGB> Board::getColorsRGB() const {
-    if (m_currentPaletteIndex >= 0 && m_currentPaletteIndex < static_cast<int>(m_palettes.size())) {
-        return m_palettes[m_currentPaletteIndex];
-    }
-    Board::RGB l = {m_light.r, m_light.g, m_light.b};
-    Board::RGB d = {m_dark.r, m_dark.g, m_dark.b};
-    return {l,d};
-}
-
-void Board::cyclePalette(int delta) {
-    if (m_palettes.empty()) return;
-    int n = static_cast<int>(m_palettes.size());
-    m_currentPaletteIndex = (m_currentPaletteIndex + delta) % n;
-    if (m_currentPaletteIndex < 0) m_currentPaletteIndex += n;
-    const auto &p = m_palettes[m_currentPaletteIndex];
-    // ensure contrast before applying
-    Board::RGB safeDark = ensureContrasting(p.first, p.second);
-    m_light = rgbToColor(p.first);
-    m_dark = rgbToColor(safeDark);
 }
 
 void Board::setInitialPosition() {
@@ -169,8 +93,64 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         }
     }
 }
-
+void Board::flipBoard() {
+    // Create temporary board to store flipped positions
+    std::array<std::array<std::string, 8>, 8> temp;
+    
+    // Mirror all pieces: (row, col) -> (7-row, 7-col)
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            temp[7 - row][7 - col] = m_pieces[row][col];
+        }
+    }
+    
+    // Copy flipped board back
+    m_pieces = temp;
+}
 void Board::setStyle(const std::string& styleName) {
     m_currentStyle = styleName;
     // Reload pieces with new style (main.cpp will handle PieceManager creation)
+}
+
+void Board::updateFromGame(const GameLogic& game) {
+    // Clear current board
+    for (auto& r : m_pieces) for (auto& c : r) c.clear();
+
+    // Update board with pieces from GameLogic
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            const Piece* piece = game.getPiece(row, col);
+            if (piece) {
+                m_pieces[row][col] = piece->getCode();
+            }
+        }
+    }
+}
+
+// Color palettes for chess boards
+void Board::setColorsRGB(const RGB& light, const RGB& dark) {
+    m_light = sf::Color(light[0], light[1], light[2]);
+    m_dark = sf::Color(dark[0], dark[1], dark[2]);
+}
+
+std::pair<Board::RGB, Board::RGB> Board::getColorsRGB() const {
+    Board::RGB light = {m_light.r, m_light.g, m_light.b};
+    Board::RGB dark = {m_dark.r, m_dark.g, m_dark.b};
+    return {light, dark};
+}
+
+void Board::cyclePalette(int delta) {
+    // Initialize palettes if empty
+    if (m_palettes.empty()) {
+        m_palettes = {
+            {{240, 217, 181}, {181, 136, 99}},   // Maestro
+            {{240, 217, 181}, {117, 101, 70}},   // Classic
+            {{230, 230, 230}, {60, 60, 60}},     // Gray
+            {{255, 250, 205}, {102, 102, 102}},  // Light
+            {{219, 195, 152}, {130, 98, 58}},    // Wood
+        };
+    }
+
+    m_currentPaletteIndex = (m_currentPaletteIndex + delta + m_palettes.size()) % m_palettes.size();
+    setColorsRGB(m_palettes[m_currentPaletteIndex].first, m_palettes[m_currentPaletteIndex].second);
 }
