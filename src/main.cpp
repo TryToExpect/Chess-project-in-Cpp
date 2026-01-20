@@ -7,12 +7,58 @@
 #include <memory>
 #include <iostream>
 #include <vector>
+#include <iomanip>
+#include <sstream>
+
+// Format seconds as MM:SS for the side clocks
+static std::string formatClockTime(double seconds) {
+    double clamped = std::max(0.0, seconds);
+    int totalSeconds = static_cast<int>(clamped);
+    int minutes = totalSeconds / 60;
+    int secs = totalSeconds % 60;
+
+    std::ostringstream oss;
+    oss << std::setw(2) << std::setfill('0') << minutes << ":"
+        << std::setw(2) << std::setfill('0') << secs;
+    return oss.str();
+}
+
+enum class GameState {
+    MENU,
+    PLAYING
+};
+
+struct TimeControl {
+    std::string name;
+    double seconds;
+};
 
 int main() {
+    // Game state management
+    GameState gameState = GameState::MENU;
+    
+    // Time control options
+    std::vector<TimeControl> timeControls = {
+        {"Bullet 1min", 60.0},
+        {"Blitz 3min", 180.0},
+        {"Blitz 5min", 300.0},
+        {"Rapid 10min", 600.0},
+        {"Rapid 15min", 900.0}
+    };
+    int selectedTimeControl = 2; // Default: Blitz 5min
+    
     // Dynamic tile size — will scale based on window size
     float tileSize = 60.f;
     Board board(tileSize);
     GameLogic game;
+
+    // Simple time control (per side, in seconds)
+    double initialClockSeconds = timeControls[selectedTimeControl].seconds;
+    double whiteTimeSeconds = initialClockSeconds;
+    double blackTimeSeconds = initialClockSeconds;
+    bool timeExpired = false;
+    Color timeOutSide = Color::NONE;
+    sf::Clock deltaClock;
 
     // Window layout: left side for move history, right side for board (centered)
     float boardSize = tileSize * 8.f;  // Will be recalculated on resize
@@ -80,6 +126,9 @@ int main() {
     // Move history
     std::vector<std::string> moveHistory;
 
+    // Don't start clock until game begins
+    // deltaClock will be restarted when entering PLAYING state
+
     while (window.isOpen()) {
         while (auto evt = window.pollEvent()) {
             // SFML 3 uses an event object as a variant — helpers are provided to
@@ -87,6 +136,44 @@ int main() {
             if (evt->is<sf::Event::Closed>()) {
                 window.close();
                 break;
+            }
+
+            // Handle mouse button press for menu
+            if (gameState == GameState::MENU && evt->is<sf::Event::MouseButtonPressed>()) {
+                const auto* mouseBtn = evt->getIf<sf::Event::MouseButtonPressed>();
+                if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left) {
+                    float mx = static_cast<float>(mouseBtn->position.x);
+                    float my = static_cast<float>(mouseBtn->position.y);
+                    
+                    // Menu layout centered
+                    float menuX = windowWidth / 2.f - 150.f;
+                    float menuY = 150.f;
+                    float buttonWidth = 300.f;
+                    float buttonHeight = 50.f;
+                    float spacing = 60.f;
+                    
+                    // Check time control buttons
+                    for (size_t i = 0; i < timeControls.size(); ++i) {
+                        float btnY = menuY + i * spacing;
+                        if (mx >= menuX && mx <= menuX + buttonWidth &&
+                            my >= btnY && my <= btnY + buttonHeight) {
+                            selectedTimeControl = i;
+                        }
+                    }
+                    
+                    // Check START button
+                    float startBtnY = menuY + timeControls.size() * spacing + 30.f;
+                    if (mx >= menuX && mx <= menuX + buttonWidth &&
+                        my >= startBtnY && my <= startBtnY + buttonHeight) {
+                        // Start game
+                        gameState = GameState::PLAYING;
+                        initialClockSeconds = timeControls[selectedTimeControl].seconds;
+                        whiteTimeSeconds = initialClockSeconds;
+                        blackTimeSeconds = initialClockSeconds;
+                        deltaClock.restart(); // Start timing now
+                        std::cout << "Game started with time control: " << timeControls[selectedTimeControl].name << "\n";
+                    }
+                }
             }
 
             // Handle window resize
@@ -120,14 +207,14 @@ int main() {
             }
 
             // Handle mouse button press (start drag or promotion choice)
-            if (evt->is<sf::Event::MouseButtonPressed>()) {
+            if (gameState == GameState::PLAYING && evt->is<sf::Event::MouseButtonPressed>()) {
                 const auto* mouseBtn = evt->getIf<sf::Event::MouseButtonPressed>();
                 if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left) {
                     float mx = static_cast<float>(mouseBtn->position.x);
                     float my = static_cast<float>(mouseBtn->position.y);
 
                     // If promotion is pending, check for promotion button clicks
-                    if (isPromotionPending) {
+                    if (isPromotionPending && !timeExpired) {
                         float popupCenterX = boardX + promotionCol * tileSize + tileSize / 2.f;
                         float popupCenterY = boardY + promotionRow * tileSize + tileSize / 2.f;
                         float buttonSize = 35.f;
@@ -175,7 +262,7 @@ int main() {
                         }
                     }
                     // Normal piece dragging
-                    else if (mx >= boardX && mx < boardX + boardSize && my >= boardY && my < boardY + boardSize) {
+                    else if (!timeExpired && mx >= boardX && mx < boardX + boardSize && my >= boardY && my < boardY + boardSize) {
                         int col = static_cast<int>((mx - boardX) / tileSize);
                         int row = static_cast<int>((my - boardY) / tileSize);
 
@@ -198,7 +285,7 @@ int main() {
             }
 
             // Handle mouse button release (end drag and execute move)
-            if (evt->is<sf::Event::MouseButtonReleased>()) {
+            if (gameState == GameState::PLAYING && evt->is<sf::Event::MouseButtonReleased>()) {
                 const auto* mouseBtn = evt->getIf<sf::Event::MouseButtonReleased>();
                 if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left && isDragging) {
                     isDragging = false;
@@ -301,7 +388,7 @@ int main() {
             }
 
             // Handle mouse move (for drag preview)
-            if (evt->is<sf::Event::MouseMoved>()) {
+            if (gameState == GameState::PLAYING && evt->is<sf::Event::MouseMoved>()) {
                 const auto* mouseMov = evt->getIf<sf::Event::MouseMoved>();
                 if (mouseMov && isDragging) {
                     float mx = static_cast<float>(mouseMov->position.x);
@@ -361,17 +448,96 @@ int main() {
             }
         }
 
+        // Advance active side clock (stop when a side flags or the game ends)
+        float deltaSeconds = deltaClock.restart().asSeconds();
+        if (gameState == GameState::PLAYING && !game.isGameOver() && !timeExpired) {
+            double delta = static_cast<double>(deltaSeconds);
+            if (game.getTurn() == Color::WHITE) {
+                whiteTimeSeconds = std::max(0.0, whiteTimeSeconds - delta);
+                if (whiteTimeSeconds <= 0.0) {
+                    timeExpired = true;
+                    timeOutSide = Color::WHITE;
+                }
+            } else {
+                blackTimeSeconds = std::max(0.0, blackTimeSeconds - delta);
+                if (blackTimeSeconds <= 0.0) {
+                    timeExpired = true;
+                    timeOutSide = Color::BLACK;
+                }
+            }
+        }
+
         window.clear(sf::Color(50, 50, 50));
 
-        // Draw history panel background (left side)
-        sf::RectangleShape historyPanel({historyPanelWidth, windowHeight});
-        historyPanel.setPosition({0.f, 0.f});
-        historyPanel.setFillColor(sf::Color(30, 30, 30));
-        window.draw(historyPanel);
+        if (gameState == GameState::MENU) {
+            // Draw menu
+            if (font.getInfo().family.size() > 0) {
+                // Title
+                sf::Text title(font, "CHESS", 48);
+                title.setPosition({windowWidth / 2.f - 100.f, 50.f});
+                title.setFillColor(sf::Color(255, 255, 255));
+                window.draw(title);
 
-        // Draw separator line between history panel and board
-        sf::RectangleShape separator({2.f, windowHeight});
-        separator.setPosition({historyPanelWidth, 0.f});
+                sf::Text subtitle(font, "Select Time Control", 24);
+                subtitle.setPosition({windowWidth / 2.f - 130.f, 110.f});
+                subtitle.setFillColor(sf::Color(200, 200, 200));
+                window.draw(subtitle);
+
+                // Time control buttons
+                float menuX = windowWidth / 2.f - 150.f;
+                float menuY = 150.f;
+                float buttonWidth = 300.f;
+                float buttonHeight = 50.f;
+                float spacing = 60.f;
+
+                for (size_t i = 0; i < timeControls.size(); ++i) {
+                    float btnY = menuY + i * spacing;
+                    
+                    sf::RectangleShape button({buttonWidth, buttonHeight});
+                    button.setPosition({menuX, btnY});
+                    
+                    if (static_cast<int>(i) == selectedTimeControl) {
+                        button.setFillColor(sf::Color(80, 120, 180));
+                        button.setOutlineThickness(3.f);
+                        button.setOutlineColor(sf::Color(120, 180, 255));
+                    } else {
+                        button.setFillColor(sf::Color(60, 60, 80));
+                        button.setOutlineThickness(2.f);
+                        button.setOutlineColor(sf::Color(100, 100, 120));
+                    }
+                    window.draw(button);
+
+                    sf::Text btnText(font, timeControls[i].name, 20);
+                    btnText.setPosition({menuX + 20.f, btnY + 12.f});
+                    btnText.setFillColor(sf::Color(255, 255, 255));
+                    window.draw(btnText);
+                }
+
+                // START button
+                float startBtnY = menuY + timeControls.size() * spacing + 30.f;
+                sf::RectangleShape startButton({buttonWidth, buttonHeight});
+                startButton.setPosition({menuX, startBtnY});
+                startButton.setFillColor(sf::Color(50, 150, 50));
+                startButton.setOutlineThickness(3.f);
+                startButton.setOutlineColor(sf::Color(100, 200, 100));
+                window.draw(startButton);
+
+                sf::Text startText(font, "START GAME", 24);
+                startText.setPosition({menuX + 70.f, startBtnY + 10.f});
+                startText.setFillColor(sf::Color(255, 255, 255));
+                window.draw(startText);
+            }
+        } else {
+            // Draw game (existing code)
+            // Draw history panel background (left side)
+            sf::RectangleShape historyPanel({historyPanelWidth, windowHeight});
+            historyPanel.setPosition({0.f, 0.f});
+            historyPanel.setFillColor(sf::Color(30, 30, 30));
+            window.draw(historyPanel);
+
+            // Draw separator line between history panel and board
+            sf::RectangleShape separator({2.f, windowHeight});
+            separator.setPosition({historyPanelWidth, 0.f});
         separator.setFillColor(sf::Color(100, 100, 100));
         window.draw(separator);
 
@@ -408,39 +574,74 @@ int main() {
                 window.draw(statusLabel);
             }
 
+            if (timeExpired) {
+                std::string loser = (timeOutSide == Color::WHITE) ? "White" : "Black";
+                sf::Text timeLabel(font, loser + " out of time", 14);
+                timeLabel.setPosition({10.f, 90.f});
+                timeLabel.setFillColor(sf::Color(255, 120, 120));
+                window.draw(timeLabel);
+            }
+
+            // Clocks for both sides
+            const float clockWidth = historyPanelWidth - 20.f;
+            const float clockHeight = 50.f;
+            auto drawClock = [&](const std::string& label, double seconds, float y, bool isActive, const sf::Color& faceColor) {
+                sf::RectangleShape clockShape({clockWidth, clockHeight});
+                clockShape.setPosition({10.f, y});
+                clockShape.setFillColor(faceColor);
+                clockShape.setOutlineThickness(isActive ? 3.f : 1.5f);
+                clockShape.setOutlineColor(isActive ? sf::Color(120, 180, 255) : sf::Color(90, 90, 90));
+                window.draw(clockShape);
+
+                sf::Text labelText(font, label, 12);
+                labelText.setPosition({clockShape.getPosition().x + 10.f, y + 8.f});
+                labelText.setFillColor(sf::Color(40, 40, 40));
+                window.draw(labelText);
+
+                sf::Text timeText(font, formatClockTime(seconds), 22);
+                timeText.setPosition({clockShape.getPosition().x + clockWidth - 90.f, y + 10.f});
+                timeText.setFillColor(sf::Color(20, 20, 20));
+                window.draw(timeText);
+            };
+
+            bool whiteActive = (game.getTurn() == Color::WHITE) && !game.isGameOver() && !timeExpired;
+            bool blackActive = (game.getTurn() == Color::BLACK) && !game.isGameOver() && !timeExpired;
+            drawClock("White", whiteTimeSeconds, 110.f, whiteActive, sf::Color(230, 230, 240));
+            drawClock("Black", blackTimeSeconds, 170.f, blackActive, sf::Color(60, 60, 80));
+
             // Controls
             sf::Text controlsLabel(font, "Controls:", 12);
-            controlsLabel.setPosition({10.f, 120.f});
+            controlsLabel.setPosition({10.f, 240.f});
             controlsLabel.setFillColor(sf::Color(200, 200, 200));
             window.draw(controlsLabel);
 
             sf::Text controls1(font, "Click & drag to move", 10);
-            controls1.setPosition({10.f, 140.f});
+            controls1.setPosition({10.f, 260.f});
             controls1.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls1);
 
             sf::Text controls2(font, "R: Cancel drag", 10);
-            controls2.setPosition({10.f, 155.f});
+            controls2.setPosition({10.f, 275.f});
             controls2.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls2);
 
             sf::Text controls3(font, "Left/Right: Styles", 10);
-            controls3.setPosition({10.f, 170.f});
+            controls3.setPosition({10.f, 290.f});
             controls3.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls3);
 
             sf::Text controls4(font, "Up/Down: Colors", 10);
-            controls4.setPosition({10.f, 185.f});
+            controls4.setPosition({10.f, 305.f});
             controls4.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls4);
 
             // Move history
             sf::Text historyLabel(font, "Moves:", 12);
-            historyLabel.setPosition({10.f, 210.f});
+            historyLabel.setPosition({10.f, 335.f});
             historyLabel.setFillColor(sf::Color(200, 200, 200));
             window.draw(historyLabel);
 
-            int moveY = 230;
+            int moveY = 355;
             for (size_t i = 0; i < moveHistory.size() && i < 12; i++) {
                 std::string moveNum = std::to_string(i / 2 + 1) + ". " + moveHistory[i];
                 sf::Text moveText(font, moveNum, 10);
@@ -535,6 +736,7 @@ int main() {
                 window.draw(queenLabel);
             }
         }
+        } // End of gameState == PLAYING
 
         window.display();
     }
