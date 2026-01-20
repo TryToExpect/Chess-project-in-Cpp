@@ -197,11 +197,30 @@ void GameLogic::makeMove(Move m) {
         lastMoveWasDoublePawnPush = false;
     }
 
-    // Pawn promotion (auto-Queen for simplicity)
+    // Pawn promotion
     if (p->type == PieceType::PAWN && (m.r2 == 0 || m.r2 == 7)) {
-        std::cout << "PROMOTION! Pawn promoted to Queen.\n";
         Color pieceColor = p->color;
-        grid[m.r2][m.c2] = std::make_unique<Queen>(pieceColor);
+        std::cout << "PROMOTION! Pawn promoted to " << static_cast<int>(m.promotionPiece) << "\n";
+        
+        switch (m.promotionPiece) {
+            case PieceType::KNIGHT:
+                grid[m.r2][m.c2] = std::make_unique<Knight>(pieceColor);
+                std::cout << "Promoted to Knight\n";
+                break;
+            case PieceType::BISHOP:
+                grid[m.r2][m.c2] = std::make_unique<Bishop>(pieceColor);
+                std::cout << "Promoted to Bishop\n";
+                break;
+            case PieceType::ROOK:
+                grid[m.r2][m.c2] = std::make_unique<Rook>(pieceColor);
+                std::cout << "Promoted to Rook\n";
+                break;
+            case PieceType::QUEEN:
+            default:
+                grid[m.r2][m.c2] = std::make_unique<Queen>(pieceColor);
+                std::cout << "Promoted to Queen\n";
+                break;
+        }
         p = grid[m.r2][m.c2].get();
     }
 

@@ -9,20 +9,21 @@
 #include <vector>
 
 int main() {
-    // Fixed tile size — board won't scale on window resize
-    const float tileSize = 60.f;
+    // Dynamic tile size — will scale based on window size
+    float tileSize = 60.f;
     Board board(tileSize);
     GameLogic game;
 
     // Window layout: left side for move history, right side for board (centered)
-    const float boardSize = tileSize * 8.f;  // 480.f
+    float boardSize = tileSize * 8.f;  // Will be recalculated on resize
     const float historyPanelWidth = 300.f;   // space on the left for move history
-    const float windowWidth = historyPanelWidth + boardSize + 40.f;  // 820.f (with margin)
-    const float windowHeight = boardSize + 40.f;  // 520.f (with vertical margin)
+    float windowWidth = historyPanelWidth + boardSize + 40.f;  // 820.f (with margin)
+    float windowHeight = boardSize + 40.f;  // 520.f (with vertical margin)
 
-    // Center board vertically, position it on the right with margin
-    const float boardX = historyPanelWidth + 20.f;
-    const float boardY = 20.f;
+    // Center board in the available space (right of history panel)
+    float availableWidth = windowWidth - historyPanelWidth;
+    float boardX = historyPanelWidth + (availableWidth - boardSize) / 2.f;
+    float boardY = (windowHeight - boardSize) / 2.f;
     board.setPosition({boardX, boardY});
 
     // Mouse selection state
@@ -32,6 +33,11 @@ int main() {
     bool isDragging = false;
     int dragStartRow = -1, dragStartCol = -1;
     sf::CircleShape dragPreview(0.f);  // Visual feedback for dragging
+
+    // Pawn promotion state
+    bool isPromotionPending = false;
+    int promotionRow = -1, promotionCol = -1;
+    Move promotionMove = {-1, -1, -1, -1};
 
     sf::RenderWindow window(sf::VideoMode(sf::Vector2u(static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight))), "Chess - SFML 3");
     window.setVerticalSyncEnabled(true);
@@ -83,15 +89,93 @@ int main() {
                 break;
             }
 
-            // Handle mouse button press (start drag)
+            // Handle window resize
+            if (evt->is<sf::Event::Resized>()) {
+                const auto* resized = evt->getIf<sf::Event::Resized>();
+                if (resized) {
+                    windowWidth = static_cast<float>(resized->size.x);
+                    windowHeight = static_cast<float>(resized->size.y);
+                    
+                    // Recalculate tile size based on available space
+                    // Leave margins: 20px on each side of the board
+                    float availableWidth = windowWidth - historyPanelWidth - 40.f;   // 40 = 20px margins
+                    float availableHeight = windowHeight - 40.f;                      // 40 = 20px margins
+                    
+                    // Tile size must fit 8x8 board in available space
+                    tileSize = std::min(availableWidth / 8.f, availableHeight / 8.f);
+                    board.setTileSize(tileSize);
+                    
+                    // Update board size and position
+                    boardSize = tileSize * 8.f;
+                    availableWidth = windowWidth - historyPanelWidth;
+                    boardX = historyPanelWidth + (availableWidth - boardSize) / 2.f;
+                    boardY = (windowHeight - boardSize) / 2.f;
+                    board.setPosition({boardX, boardY});
+                    
+                    // Update camera view to match new window size
+                    sf::View view(sf::Vector2f(windowWidth / 2.f, windowHeight / 2.f), 
+                                 sf::Vector2f(windowWidth, windowHeight));
+                    window.setView(view);
+                }
+            }
+
+            // Handle mouse button press (start drag or promotion choice)
             if (evt->is<sf::Event::MouseButtonPressed>()) {
                 const auto* mouseBtn = evt->getIf<sf::Event::MouseButtonPressed>();
                 if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left) {
                     float mx = static_cast<float>(mouseBtn->position.x);
                     float my = static_cast<float>(mouseBtn->position.y);
 
-                    // Check if click is within board bounds
-                    if (mx >= boardX && mx < boardX + boardSize && my >= boardY && my < boardY + boardSize) {
+                    // If promotion is pending, check for promotion button clicks
+                    if (isPromotionPending) {
+                        float popupCenterX = boardX + promotionCol * tileSize + tileSize / 2.f;
+                        float popupCenterY = boardY + promotionRow * tileSize + tileSize / 2.f;
+                        float buttonSize = 35.f;
+                        float spacing = 50.f;
+
+                        // Knight button
+                        if (mx >= popupCenterX - spacing - buttonSize/2 && mx <= popupCenterX - spacing + buttonSize/2 &&
+                            my >= popupCenterY - buttonSize/2 && my <= popupCenterY + buttonSize/2) {
+                            promotionMove.promotionPiece = PieceType::KNIGHT;
+                            game.makeMove(promotionMove);
+                            board.updateFromGame(game);
+                            moveHistory.push_back("promotion to Knight");
+                            isPromotionPending = false;
+                            std::cout << "Promoted to Knight\n";
+                        }
+                        // Bishop button
+                        else if (mx >= popupCenterX - buttonSize/2 && mx <= popupCenterX + buttonSize/2 &&
+                                my >= popupCenterY - spacing - buttonSize/2 && my <= popupCenterY - spacing + buttonSize/2) {
+                            promotionMove.promotionPiece = PieceType::BISHOP;
+                            game.makeMove(promotionMove);
+                            board.updateFromGame(game);
+                            moveHistory.push_back("promotion to Bishop");
+                            isPromotionPending = false;
+                            std::cout << "Promoted to Bishop\n";
+                        }
+                        // Rook button
+                        else if (mx >= popupCenterX + spacing - buttonSize/2 && mx <= popupCenterX + spacing + buttonSize/2 &&
+                                my >= popupCenterY - buttonSize/2 && my <= popupCenterY + buttonSize/2) {
+                            promotionMove.promotionPiece = PieceType::ROOK;
+                            game.makeMove(promotionMove);
+                            board.updateFromGame(game);
+                            moveHistory.push_back("promotion to Rook");
+                            isPromotionPending = false;
+                            std::cout << "Promoted to Rook\n";
+                        }
+                        // Queen button
+                        else if (mx >= popupCenterX - buttonSize/2 && mx <= popupCenterX + buttonSize/2 &&
+                                my >= popupCenterY + spacing - buttonSize/2 && my <= popupCenterY + spacing + buttonSize/2) {
+                            promotionMove.promotionPiece = PieceType::QUEEN;
+                            game.makeMove(promotionMove);
+                            board.updateFromGame(game);
+                            moveHistory.push_back("promotion to Queen");
+                            isPromotionPending = false;
+                            std::cout << "Promoted to Queen\n";
+                        }
+                    }
+                    // Normal piece dragging
+                    else if (mx >= boardX && mx < boardX + boardSize && my >= boardY && my < boardY + boardSize) {
                         int col = static_cast<int>((mx - boardX) / tileSize);
                         int row = static_cast<int>((my - boardY) / tileSize);
 
@@ -161,32 +245,45 @@ int main() {
 
                                     // Simulate move to check king safety
                                     if (game.tryMove(m)) {
-                                        game.makeMove(m);
+                                        // Check for pawn promotion
+                                        if (piece->type == PieceType::PAWN && (row == 0 || row == 7)) {
+                                            m.isPromotion = true;
+                                            isPromotionPending = true;
+                                            promotionRow = row;
+                                            promotionCol = col;
+                                            promotionMove = m;
+                                            std::cout << "Pawn promotion required at " << static_cast<char>('a' + col) << (8 - row) << "\n";
+                                            dragStartRow = -1;
+                                            dragStartCol = -1;
+                                        } else {
+                                            // Normal move (no promotion)
+                                            game.makeMove(m);
 
-                                        // Update board display from game state
-                                        board.updateFromGame(game);
+                                            // Update board display from game state
+                                            board.updateFromGame(game);
 
-                                        // NO FLIP - keeps board orientation consistent
+                                            // NO FLIP - keeps board orientation consistent
 
-                                        // Add to history
-                                        char colChar = 'a' + dragStartCol;
-                                        char toCol = 'a' + col;
-                                        moveHistory.push_back(std::string(1, colChar) + std::to_string(8 - dragStartRow) + 
-                                                             std::string(1, toCol) + std::to_string(8 - row));
+                                            // Add to history
+                                            char colChar = 'a' + dragStartCol;
+                                            char toCol = 'a' + col;
+                                            moveHistory.push_back(std::string(1, colChar) + std::to_string(8 - dragStartRow) + 
+                                                                 std::string(1, toCol) + std::to_string(8 - row));
 
-                                        std::cout << "Move: " << static_cast<char>('a' + dragStartCol) << (8 - dragStartRow) 
-                                                  << " to " << static_cast<char>('a' + col) << (8 - row) << "\n";
+                                            std::cout << "Move: " << static_cast<char>('a' + dragStartCol) << (8 - dragStartRow) 
+                                                      << " to " << static_cast<char>('a' + col) << (8 - row) << "\n";
 
-                                        if (game.isCheckmate()) {
-                                            std::cout << "CHECKMATE! " << (game.getWinner() == Color::WHITE ? "White" : "Black") << " wins!\n";
-                                        } else if (game.isStalemate()) {
-                                            std::cout << "STALEMATE - Draw!\n";
-                                        } else if (game.isInCheck(game.getTurn())) {
-                                            std::cout << "CHECK!\n";
+                                            if (game.isCheckmate()) {
+                                                std::cout << "CHECKMATE! " << (game.getWinner() == Color::WHITE ? "White" : "Black") << " wins!\n";
+                                            } else if (game.isStalemate()) {
+                                                std::cout << "STALEMATE - Draw!\n";
+                                            } else if (game.isInCheck(game.getTurn())) {
+                                                std::cout << "CHECK!\n";
+                                            }
+
+                                            dragStartRow = -1;
+                                            dragStartCol = -1;
                                         }
-
-                                        dragStartRow = -1;
-                                        dragStartCol = -1;
                                     } else {
                                         std::cout << "Illegal Move! Your King would be in check.\n";
                                         dragStartRow = -1;
@@ -367,6 +464,76 @@ int main() {
         // Draw drag preview circle while dragging
         if (isDragging && dragPreview.getRadius() > 0) {
             window.draw(dragPreview);
+        }
+
+        // Draw promotion popup if pending
+        if (isPromotionPending) {
+            float popupCenterX = boardX + promotionCol * tileSize + tileSize / 2.f;
+            float popupCenterY = boardY + promotionRow * tileSize + tileSize / 2.f;
+            float buttonSize = 35.f;
+            float spacing = 50.f;
+
+            // Semi-transparent overlay
+            sf::RectangleShape overlay({boardSize, boardSize});
+            overlay.setPosition({boardX, boardY});
+            overlay.setFillColor(sf::Color(0, 0, 0, 100));
+            window.draw(overlay);
+
+            // Title
+            if (font.getInfo().family.size() > 0) {
+                sf::Text promoteLabel(font, "Choose promotion:", 14);
+                promoteLabel.setPosition({popupCenterX - 60.f, popupCenterY - 80.f});
+                promoteLabel.setFillColor(sf::Color(255, 255, 255));
+                window.draw(promoteLabel);
+            }
+
+            // Knight button (left)
+            sf::RectangleShape knightBtn({buttonSize, buttonSize});
+            knightBtn.setPosition({popupCenterX - spacing - buttonSize/2.f, popupCenterY - buttonSize/2.f});
+            knightBtn.setFillColor(sf::Color(100, 150, 200));
+            window.draw(knightBtn);
+            if (font.getInfo().family.size() > 0) {
+                sf::Text knightLabel(font, "N", 16);
+                knightLabel.setPosition({popupCenterX - spacing - 8.f, popupCenterY - 12.f});
+                knightLabel.setFillColor(sf::Color(255, 255, 255));
+                window.draw(knightLabel);
+            }
+
+            // Bishop button (top)
+            sf::RectangleShape bishopBtn({buttonSize, buttonSize});
+            bishopBtn.setPosition({popupCenterX - buttonSize/2.f, popupCenterY - spacing - buttonSize/2.f});
+            bishopBtn.setFillColor(sf::Color(150, 100, 200));
+            window.draw(bishopBtn);
+            if (font.getInfo().family.size() > 0) {
+                sf::Text bishopLabel(font, "B", 16);
+                bishopLabel.setPosition({popupCenterX - 8.f, popupCenterY - spacing - 12.f});
+                bishopLabel.setFillColor(sf::Color(255, 255, 255));
+                window.draw(bishopLabel);
+            }
+
+            // Rook button (right)
+            sf::RectangleShape rookBtn({buttonSize, buttonSize});
+            rookBtn.setPosition({popupCenterX + spacing - buttonSize/2.f, popupCenterY - buttonSize/2.f});
+            rookBtn.setFillColor(sf::Color(200, 150, 100));
+            window.draw(rookBtn);
+            if (font.getInfo().family.size() > 0) {
+                sf::Text rookLabel(font, "R", 16);
+                rookLabel.setPosition({popupCenterX + spacing - 8.f, popupCenterY - 12.f});
+                rookLabel.setFillColor(sf::Color(255, 255, 255));
+                window.draw(rookLabel);
+            }
+
+            // Queen button (bottom)
+            sf::RectangleShape queenBtn({buttonSize, buttonSize});
+            queenBtn.setPosition({popupCenterX - buttonSize/2.f, popupCenterY + spacing - buttonSize/2.f});
+            queenBtn.setFillColor(sf::Color(200, 200, 100));
+            window.draw(queenBtn);
+            if (font.getInfo().family.size() > 0) {
+                sf::Text queenLabel(font, "Q", 16);
+                queenLabel.setPosition({popupCenterX - 8.f, popupCenterY + spacing - 12.f});
+                queenLabel.setFillColor(sf::Color(0, 0, 0));
+                window.draw(queenLabel);
+            }
         }
 
         window.display();
