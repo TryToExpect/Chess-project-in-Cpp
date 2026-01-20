@@ -24,9 +24,12 @@ bool Pawn::isPseudoLegal(int r1, int c1, int r2, int c2, const GameLogic& game) 
         }
 
         // EN PASSANT CHECK: Target is empty, but opponent's pawn did double push
+        // The opponent pawn should be on the SAME row as us, at c2 column
         if (target == nullptr && game.isLastMoveDoublePawnPush()) {
-            // Check if opponent's pawn is adjacent to us
-            if (game.getLastMove().r2 == r1 && game.getLastMove().c2 == c2) {
+            const Piece* victim = game.getPiece(r1, c2);  // Victim on same row, different column
+            // Verify victim is opponent's pawn and just did double push to this square
+            if (victim && victim->type == PieceType::PAWN && victim->color != color &&
+                game.getLastMove().c2 == c2) {  // Opponent moved to this column
                 return true;
             }
         }

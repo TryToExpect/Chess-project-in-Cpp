@@ -109,15 +109,16 @@ bool GameLogic::isInCheck(Color c) const {
 
 bool GameLogic::tryMove(const Move& m) {
     Piece* srcP = grid[m.r1][m.c1].get();
+    if (!srcP) return false;
+    
     Piece* destP = grid[m.r2][m.c2].get();
 
     // Handle En Passant simulation
-    Piece* enPassantVictim = nullptr;
+    std::unique_ptr<Piece> enPassantVictim = nullptr;
     int epR = m.r1, epC = m.c2;
 
     if (m.isEnPassant) {
-        enPassantVictim = grid[epR][epC].get();
-        grid[epR][epC] = nullptr;
+        enPassantVictim = std::move(grid[epR][epC]);
     }
 
     // Apply move temporarily
@@ -131,20 +132,35 @@ bool GameLogic::tryMove(const Move& m) {
     grid[m.r1][m.c1] = std::move(grid[m.r2][m.c2]);
     grid[m.r2][m.c2] = std::move(temp);
 
-    if (m.isEnPassant && enPassantVictim) {
-        grid[epR][epC].reset(enPassantVictim);
+    if (m.isEnPassant) {
+        grid[epR][epC] = std::move(enPassantVictim);
     }
 
     return kingSafe;
 }
 
 void GameLogic::makeMove(Move m) {
+    // Validate bounds
+    if (m.r1 < 0 || m.r1 >= 8 || m.c1 < 0 || m.c1 >= 8 ||
+        m.r2 < 0 || m.r2 >= 8 || m.c2 < 0 || m.c2 >= 8) {
+        std::cout << "ERROR: Move out of bounds!\n";
+        return;
+    }
+    
     Piece* p = grid[m.r1][m.c1].get();
+    if (!p) return;
 
     // Handle En Passant capture
     if (m.isEnPassant) {
         int epRow = m.r1;
         int epCol = m.c2;
+        
+        // Validate en passant victim coordinates
+        if (epRow < 0 || epRow >= 8 || epCol < 0 || epCol >= 8) {
+            std::cout << "ERROR: En Passant victim out of bounds!\n";
+            return;
+        }
+        
         grid[epRow][epCol] = nullptr;
         std::cout << "--- En Passant Capture! ---\n";
     }
@@ -169,7 +185,10 @@ void GameLogic::makeMove(Move m) {
 
     // Move the piece
     grid[m.r2][m.c2] = std::move(grid[m.r1][m.c1]);
+    
+    // Re-get pointer after move (since we moved the unique_ptr)
     p = grid[m.r2][m.c2].get();
+    if (!p) return;  // Safety check
 
     // Flag for En Passant in next turn
     if (p->type == PieceType::PAWN && std::abs(m.r2 - m.r1) == 2) {
