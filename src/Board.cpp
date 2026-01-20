@@ -93,20 +93,6 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         }
     }
 }
-void Board::flipBoard() {
-    // Create temporary board to store flipped positions
-    std::array<std::array<std::string, 8>, 8> temp;
-    
-    // Mirror all pieces: (row, col) -> (7-row, 7-col)
-    for (int row = 0; row < 8; ++row) {
-        for (int col = 0; col < 8; ++col) {
-            temp[7 - row][7 - col] = m_pieces[row][col];
-        }
-    }
-    
-    // Copy flipped board back
-    m_pieces = temp;
-}
 void Board::setStyle(const std::string& styleName) {
     m_currentStyle = styleName;
     // Reload pieces with new style (main.cpp will handle PieceManager creation)

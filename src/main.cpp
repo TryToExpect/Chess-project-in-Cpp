@@ -27,6 +27,11 @@ int main() {
 
     // Mouse selection state
     int selectedRow = -1, selectedCol = -1;  // -1 means no selection
+    
+    // Drag-and-drop state
+    bool isDragging = false;
+    int dragStartRow = -1, dragStartCol = -1;
+    sf::CircleShape dragPreview(0.f);  // Visual feedback for dragging
 
     sf::RenderWindow window(sf::VideoMode(sf::Vector2u(static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight))), "Chess - SFML 3");
     window.setVerticalSyncEnabled(true);
@@ -78,7 +83,7 @@ int main() {
                 break;
             }
 
-            // Handle mouse clicks
+            // Handle mouse button press (start drag)
             if (evt->is<sf::Event::MouseButtonPressed>()) {
                 const auto* mouseBtn = evt->getIf<sf::Event::MouseButtonPressed>();
                 if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left) {
@@ -94,86 +99,117 @@ int main() {
                         if (row >= 0 && row < 8 && col >= 0 && col < 8) {
                             Piece* clickedPiece = game.getPiece(row, col);
 
-                            if (selectedRow == -1) {
-                                // First click: select a piece if it belongs to current player
-                                if (clickedPiece && clickedPiece->color == game.getTurn()) {
-                                    selectedRow = row;
-                                    selectedCol = col;
-                                    std::cout << "Selected piece at: " << static_cast<char>('a' + col) << (8 - row) << "\n";
-                                }
+                            // Start drag only if clicking on own piece
+                            if (clickedPiece && clickedPiece->color == game.getTurn()) {
+                                isDragging = true;
+                                dragStartRow = row;
+                                dragStartCol = col;
+                                dragPreview.setRadius(tileSize / 2.f);
+                                dragPreview.setFillColor(sf::Color(100, 200, 100, 150));
+                                std::cout << "Dragging piece from: " << static_cast<char>('a' + col) << (8 - row) << "\n";
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Handle mouse button release (end drag and execute move)
+            if (evt->is<sf::Event::MouseButtonReleased>()) {
+                const auto* mouseBtn = evt->getIf<sf::Event::MouseButtonReleased>();
+                if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left && isDragging) {
+                    isDragging = false;
+                    
+                    float mx = static_cast<float>(mouseBtn->position.x);
+                    float my = static_cast<float>(mouseBtn->position.y);
+
+                    // Check if release is within board bounds
+                    if (mx >= boardX && mx < boardX + boardSize && my >= boardY && my < boardY + boardSize) {
+                        int col = static_cast<int>((mx - boardX) / tileSize);
+                        int row = static_cast<int>((my - boardY) / tileSize);
+
+                        // Validate bounds
+                        if (row >= 0 && row < 8 && col >= 0 && col < 8) {
+                            // Same square - deselect or highlight
+                            if (dragStartRow == row && dragStartCol == col) {
+                                std::cout << "Piece released on same square.\n";
                             } else {
-                                // Second click: try to make a move
-                                if (selectedRow == row && selectedCol == col) {
-                                    // Deselect if clicking same square
-                                    selectedRow = -1;
-                                    selectedCol = -1;
-                                } else {
-                                    // Attempt move
-                                    Move m = {selectedRow, selectedCol, row, col};
-                                    Piece* piece = game.getPiece(selectedRow, selectedCol);
+                                // Attempt move
+                                Move m = {dragStartRow, dragStartCol, row, col};
+                                Piece* piece = game.getPiece(dragStartRow, dragStartCol);
 
-                                    if (!piece || piece->isPseudoLegal(selectedRow, selectedCol, row, col, game)) {
-                                        // Check for en passant
-                                        if (piece->type == PieceType::PAWN && std::abs(selectedCol - col) == 1 && 
-                                            game.getPiece(row, col) == nullptr) {
-                                            m.isEnPassant = true;
-                                        }
-
-                                        // Check for castling
-                                        if (piece->type == PieceType::KING && std::abs(selectedCol - col) == 2) {
-                                            m.isCastling = true;
-                                        }
-
-                                        // Check path for sliders
-                                        if (piece->type == PieceType::ROOK || piece->type == PieceType::BISHOP || piece->type == PieceType::QUEEN) {
-                                            if (!game.isPathClear(selectedRow, selectedCol, row, col)) {
-                                                std::cout << "Error: Path is blocked!\n";
-                                                selectedRow = -1;
-                                                selectedCol = -1;
-                                                continue;
-                                            }
-                                        }
-
-                                        // Simulate move to check king safety
-                                        if (game.tryMove(m)) {
-                                            game.makeMove(m);
-
-                                            // Update board display from game state
-                                            board.updateFromGame(game);
-
-                                            // Flip board for next player
-                                            board.flipBoard();
-
-                                            // Add to history
-                                            char colChar = 'a' + selectedCol;
-                                            char toCol = 'a' + col;
-                                            moveHistory.push_back(std::string(1, colChar) + std::to_string(8 - selectedRow) + 
-                                                                 std::string(1, toCol) + std::to_string(8 - row));
-
-                                            if (game.isCheckmate()) {
-                                                std::cout << "CHECKMATE! " << (game.getWinner() == Color::WHITE ? "White" : "Black") << " wins!\n";
-                                            } else if (game.isStalemate()) {
-                                                std::cout << "STALEMATE - Draw!\n";
-                                            } else if (game.isInCheck(game.getTurn())) {
-                                                std::cout << "CHECK!\n";
-                                            }
-
-                                            selectedRow = -1;
-                                            selectedCol = -1;
-                                        } else {
-                                            std::cout << "Illegal Move! Your King would be in check.\n";
-                                            selectedRow = -1;
-                                            selectedCol = -1;
-                                        }
-                                    } else {
-                                        std::cout << "Error: Invalid move for this piece type.\n";
-                                        selectedRow = -1;
-                                        selectedCol = -1;
+                                if (piece && piece->isPseudoLegal(dragStartRow, dragStartCol, row, col, game)) {
+                                    // Check for en passant
+                                    if (piece->type == PieceType::PAWN && std::abs(dragStartCol - col) == 1 && 
+                                        game.getPiece(row, col) == nullptr) {
+                                        m.isEnPassant = true;
                                     }
+
+                                    // Check for castling
+                                    if (piece->type == PieceType::KING && std::abs(dragStartCol - col) == 2) {
+                                        m.isCastling = true;
+                                    }
+
+                                    // Check path for sliders
+                                    if (piece->type == PieceType::ROOK || piece->type == PieceType::BISHOP || piece->type == PieceType::QUEEN) {
+                                        if (!game.isPathClear(dragStartRow, dragStartCol, row, col)) {
+                                            std::cout << "Error: Path is blocked!\n";
+                                            dragStartRow = -1;
+                                            dragStartCol = -1;
+                                            continue;
+                                        }
+                                    }
+
+                                    // Simulate move to check king safety
+                                    if (game.tryMove(m)) {
+                                        game.makeMove(m);
+
+                                        // Update board display from game state
+                                        board.updateFromGame(game);
+
+                                        // NO FLIP - keeps board orientation consistent
+
+                                        // Add to history
+                                        char colChar = 'a' + dragStartCol;
+                                        char toCol = 'a' + col;
+                                        moveHistory.push_back(std::string(1, colChar) + std::to_string(8 - dragStartRow) + 
+                                                             std::string(1, toCol) + std::to_string(8 - row));
+
+                                        std::cout << "Move: " << static_cast<char>('a' + dragStartCol) << (8 - dragStartRow) 
+                                                  << " to " << static_cast<char>('a' + col) << (8 - row) << "\n";
+
+                                        if (game.isCheckmate()) {
+                                            std::cout << "CHECKMATE! " << (game.getWinner() == Color::WHITE ? "White" : "Black") << " wins!\n";
+                                        } else if (game.isStalemate()) {
+                                            std::cout << "STALEMATE - Draw!\n";
+                                        } else if (game.isInCheck(game.getTurn())) {
+                                            std::cout << "CHECK!\n";
+                                        }
+
+                                        dragStartRow = -1;
+                                        dragStartCol = -1;
+                                    } else {
+                                        std::cout << "Illegal Move! Your King would be in check.\n";
+                                        dragStartRow = -1;
+                                        dragStartCol = -1;
+                                    }
+                                } else {
+                                    std::cout << "Error: Invalid move for this piece type.\n";
+                                    dragStartRow = -1;
+                                    dragStartCol = -1;
                                 }
                             }
                         }
                     }
+                }
+            }
+
+            // Handle mouse move (for drag preview)
+            if (evt->is<sf::Event::MouseMoved>()) {
+                const auto* mouseMov = evt->getIf<sf::Event::MouseMoved>();
+                if (mouseMov && isDragging) {
+                    float mx = static_cast<float>(mouseMov->position.x);
+                    float my = static_cast<float>(mouseMov->position.y);
+                    dragPreview.setPosition({mx - dragPreview.getRadius(), my - dragPreview.getRadius()});
                 }
             }
 
@@ -184,11 +220,12 @@ int main() {
                         window.close();
                         break;
                     }
-                    // Reset selection with R key
+                    // Cancel drag with R key
                     if (key->code == sf::Keyboard::Key::R) {
-                        selectedRow = -1;
-                        selectedCol = -1;
-                        std::cout << "Selection cleared.\n";
+                        isDragging = false;
+                        dragStartRow = -1;
+                        dragStartCol = -1;
+                        std::cout << "Drag cancelled.\n";
                     }
                     // Cycle through piece styles with Left/Right
                     if (key->code == sf::Keyboard::Key::Right && !allStyles.empty()) {
@@ -280,12 +317,12 @@ int main() {
             controlsLabel.setFillColor(sf::Color(200, 200, 200));
             window.draw(controlsLabel);
 
-            sf::Text controls1(font, "Click to select/move", 10);
+            sf::Text controls1(font, "Click & drag to move", 10);
             controls1.setPosition({10.f, 140.f});
             controls1.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls1);
 
-            sf::Text controls2(font, "R: Clear selection", 10);
+            sf::Text controls2(font, "R: Cancel drag", 10);
             controls2.setPosition({10.f, 155.f});
             controls2.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls2);
@@ -327,14 +364,9 @@ int main() {
         // Draw the board
         window.draw(board);
 
-        // Draw selection highlight if piece is selected
-        if (selectedRow != -1 && selectedCol != -1) {
-            sf::RectangleShape highlight({tileSize, tileSize});
-            highlight.setPosition({boardX + selectedCol * tileSize, boardY + selectedRow * tileSize});
-            highlight.setFillColor(sf::Color(0, 255, 0, 100));
-            highlight.setOutlineThickness(2.f);
-            highlight.setOutlineColor(sf::Color(0, 255, 0, 200));
-            window.draw(highlight);
+        // Draw drag preview circle while dragging
+        if (isDragging && dragPreview.getRadius() > 0) {
+            window.draw(dragPreview);
         }
 
         window.display();
