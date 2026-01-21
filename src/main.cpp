@@ -59,6 +59,7 @@ int main() {
     bool timeExpired = false;
     Color timeOutSide = Color::NONE;
     sf::Clock deltaClock;
+    bool gameStarted = false; // Track if first move has been made
 
     // Window layout: left side for move history, right side for board (centered)
     float boardSize = tileSize * 8.f;  // Will be recalculated on resize
@@ -225,6 +226,7 @@ int main() {
                             my >= popupCenterY - buttonSize/2 && my <= popupCenterY + buttonSize/2) {
                             promotionMove.promotionPiece = PieceType::KNIGHT;
                             game.makeMove(promotionMove);
+                            gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
                             moveHistory.push_back("promotion to Knight");
                             isPromotionPending = false;
@@ -235,6 +237,7 @@ int main() {
                                 my >= popupCenterY - spacing - buttonSize/2 && my <= popupCenterY - spacing + buttonSize/2) {
                             promotionMove.promotionPiece = PieceType::BISHOP;
                             game.makeMove(promotionMove);
+                            gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
                             moveHistory.push_back("promotion to Bishop");
                             isPromotionPending = false;
@@ -245,6 +248,7 @@ int main() {
                                 my >= popupCenterY - buttonSize/2 && my <= popupCenterY + buttonSize/2) {
                             promotionMove.promotionPiece = PieceType::ROOK;
                             game.makeMove(promotionMove);
+                            gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
                             moveHistory.push_back("promotion to Rook");
                             isPromotionPending = false;
@@ -255,6 +259,7 @@ int main() {
                                 my >= popupCenterY + spacing - buttonSize/2 && my <= popupCenterY + spacing + buttonSize/2) {
                             promotionMove.promotionPiece = PieceType::QUEEN;
                             game.makeMove(promotionMove);
+                            gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
                             moveHistory.push_back("promotion to Queen");
                             isPromotionPending = false;
@@ -345,6 +350,7 @@ int main() {
                                         } else {
                                             // Normal move (no promotion)
                                             game.makeMove(m);
+                                            gameStarted = true; // Start timing on first move
 
                                             // Update board display from game state
                                             board.updateFromGame(game);
@@ -450,7 +456,7 @@ int main() {
 
         // Advance active side clock (stop when a side flags or the game ends)
         float deltaSeconds = deltaClock.restart().asSeconds();
-        if (gameState == GameState::PLAYING && !game.isGameOver() && !timeExpired) {
+        if (gameState == GameState::PLAYING && gameStarted && !game.isGameOver() && !timeExpired) {
             double delta = static_cast<double>(deltaSeconds);
             if (game.getTurn() == Color::WHITE) {
                 whiteTimeSeconds = std::max(0.0, whiteTimeSeconds - delta);
