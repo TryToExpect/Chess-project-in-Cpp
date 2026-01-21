@@ -150,6 +150,10 @@ void GameLogic::makeMove(Move m) {
     Piece* p = grid[m.r1][m.c1].get();
     if (!p) return;
 
+    // Track if this is a pawn move and if there's a capture
+    bool isPawnMove = (p->type == PieceType::PAWN);
+    bool isCapture = (grid[m.r2][m.c2] != nullptr) || m.isEnPassant;
+
     // Handle En Passant capture
     if (m.isEnPassant) {
         int epRow = m.r1;
@@ -227,6 +231,11 @@ void GameLogic::makeMove(Move m) {
     p->hasMoved = true;
     lastMove = m;
     turn = (turn == Color::WHITE) ? Color::BLACK : Color::WHITE;
+
+    // Trigger sound callback if set
+    if (soundCallback) {
+        soundCallback(isPawnMove, isCapture);
+    }
 
     // Update game state
     updateGameState();

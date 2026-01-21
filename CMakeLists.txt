@@ -17,6 +17,7 @@ add_executable(SFML_CHESS
 	src/Piece.cpp
 	src/PieceManager.cpp
 	src/GameLogic.cpp
+	src/SoundManager.cpp
 	src/Pieces/Rook.cpp
 	src/Pieces/Pawn.cpp
 	src/Pieces/Knight.cpp
