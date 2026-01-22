@@ -209,4 +209,7 @@ CMakeFiles/SFML_CHESS.dir/src/GameRecorder.cpp.o: \
  /usr/include/c++/15/bits/sstream.tcc /usr/include/c++/15/fstream \
  /usr/include/x86_64-linux-gnu/c++/15/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/15/bits/c++io.h \
- /usr/include/c++/15/bits/fstream.tcc /usr/include/c++/15/iostream
+ /usr/include/c++/15/bits/fstream.tcc /usr/include/c++/15/iostream \
+ /usr/include/c++/15/filesystem /usr/include/c++/15/bits/fs_fwd.h \
+ /usr/include/c++/15/bits/fs_path.h /usr/include/c++/15/codecvt \
+ /usr/include/c++/15/bits/fs_dir.h /usr/include/c++/15/bits/fs_ops.h

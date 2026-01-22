@@ -5,6 +5,17 @@
 #include <chrono>
 #include "GameLogic.hpp"
 
+// Game result types
+enum class GameResult {
+    WHITE_WIN_CHECKMATE,
+    BLACK_WIN_CHECKMATE,
+    STALEMATE,
+    WHITE_TIMEOUT,
+    BLACK_TIMEOUT,
+    DRAW_BY_AGREEMENT,
+    UNKNOWN
+};
+
 // Represents recorded move data
 struct RecordedMove {
     Move move;
@@ -18,9 +29,14 @@ class GameRecorder {
 private:
     std::vector<RecordedMove> moves; // All recorded moves
     std::string filename;
+    GameResult gameResult;
+    std::string endReason; // "checkmate", "timeout", "stalemate", etc.
     
     // Helper methods
     std::string getCurrentDateTime();
+    std::string generateFilename(GameResult result, const std::string& reason);
+    std::string resultToString(GameResult result) const;
+    std::string getResultSymbol(GameResult result) const;
     
     // Convert board coordinates to algebraic notation (e.g., e4)
     std::string coordinatesToAlgebraic(int row, int col) const;
@@ -34,8 +50,11 @@ public:
     // Record a move with game state information
     void recordMove(const Move& move, PieceType movingPiece, bool isCheckmate, bool isCheck, bool isCapture);
     
+    // End game with result and reason
+    void endGame(GameResult result, const std::string& reason);
+    
     // Save all recorded moves to a .txt file with result
-    void saveToFile(const std::string& result = "1/2-1/2"); // Default to draw, can be "1-0", "0-1", "1/2-1/2"
+    void saveToFile();
     
     // Clear all recorded moves
     void clear();

@@ -321,3 +321,10 @@ void GameLogic::display() const {
 
     std::cout << "Turn: " << (turn == Color::WHITE ? "WHITE" : "BLACK") << "\n";
 }
+
+void GameLogic::endGameWithResult(GameResult result, const std::string& reason) {
+    if (gameRecorder) {
+        gameRecorder->endGame(result, reason);
+        gameRecorder->saveToFile();
+    }
+}

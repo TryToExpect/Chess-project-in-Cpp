@@ -394,15 +394,15 @@ int main() {
                                             if (game.isCheckmate()) {
                                                 std::cout << "CHECKMATE! " << (game.getWinner() == Color::WHITE ? "White" : "Black") << " wins!\n";
                                                 // Save game with result
-                                                std::string result = (game.getWinner() == Color::WHITE) ? "1-0" : "0-1";
-                                                gameRecorder.saveToFile(result);
+                                                GameResult result = (game.getWinner() == Color::WHITE) ? GameResult::WHITE_WIN_CHECKMATE : GameResult::BLACK_WIN_CHECKMATE;
+                                                game.endGameWithResult(result, "checkmate");
                                                 if (!endSoundPlayed) {
                                                     soundManager.playEndSound();
                                                     endSoundPlayed = true;
                                                 }
                                             } else if (game.isStalemate()) {
                                                 std::cout << "STALEMATE - Draw!\n";
-                                                gameRecorder.saveToFile("1/2-1/2");
+                                                game.endGameWithResult(GameResult::STALEMATE, "stalemate");
                                                 if (!endSoundPlayed) {
                                                     soundManager.playEndSound();
                                                     endSoundPlayed = true;

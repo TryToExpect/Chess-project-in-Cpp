@@ -5,8 +5,9 @@
 #include <functional>
 #include "Pieces/Piece.hpp"
 
-// Forward declaration
+// Forward declarations
 class GameRecorder;
+enum class GameResult;
 
 struct Move {
     int r1, c1, r2, c2;         // Source and Destination coordinates
@@ -76,6 +77,9 @@ public:
 
     // Game recorder
     void setGameRecorder(GameRecorder* recorder) { gameRecorder = recorder; }
+    
+    // End game with result and reason
+    void endGameWithResult(GameResult result, const std::string& reason);
 
 private:
     Grid grid;
