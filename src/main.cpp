@@ -224,6 +224,14 @@ int main() {
                         initialClockSeconds = timeControls[selectedTimeControl].seconds;
                         whiteTimeSeconds = initialClockSeconds;
                         blackTimeSeconds = initialClockSeconds;
+                        timeExpired = false;
+                        timeOutSide = Color::NONE;
+                        endSoundPlayed = false;
+                        gameStarted = false;
+                        moveHistory.clear();
+                        gameRecorder.clear();
+                        board.clearMarkedSquares();
+                        board.clearArrows();
                         deltaClock.restart(); // Start timing now
                         soundManager.playBackgroundMusic(); // Start background music
                         
@@ -626,6 +634,7 @@ int main() {
                         soundManager.playEndSound();
                         endSoundPlayed = true;
                     }
+                    game.endGameWithResult(GameResult::WHITE_TIMEOUT, "timeout");
                 }
             } else {
                 blackTimeSeconds = std::max(0.0, blackTimeSeconds - delta);
@@ -636,6 +645,7 @@ int main() {
                         soundManager.playEndSound();
                         endSoundPlayed = true;
                     }
+                    game.endGameWithResult(GameResult::BLACK_TIMEOUT, "timeout");
                 }
             }
         }
@@ -840,42 +850,42 @@ int main() {
 
             // Controls
             sf::Text controlsLabel(font, "Controls:", 12);
-            controlsLabel.setPosition({10.f, 240.f});
+            controlsLabel.setPosition({10.f, 300.f});
             controlsLabel.setFillColor(sf::Color(200, 200, 200));
             window.draw(controlsLabel);
 
             sf::Text controls1(font, "Click & drag to move", 10);
-            controls1.setPosition({10.f, 260.f});
+            controls1.setPosition({10.f, 320.f});
             controls1.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls1);
 
             sf::Text controls2(font, "R: Cancel drag", 10);
-            controls2.setPosition({10.f, 275.f});
+            controls2.setPosition({10.f, 335.f});
             controls2.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls2);
 
             sf::Text controls3(font, "Left/Right: Styles", 10);
-            controls3.setPosition({10.f, 290.f});
+            controls3.setPosition({10.f, 350.f});
             controls3.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls3);
 
             sf::Text controls4(font, "Up/Down: Colors", 10);
-            controls4.setPosition({10.f, 305.f});
+            controls4.setPosition({10.f, 365.f});
             controls4.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls4);
 
             sf::Text controls5(font, std::string("M: Sound ") + (soundManager.isSoundEnabled() ? "ON" : "OFF"), 10);
-            controls5.setPosition({10.f, 320.f});
+            controls5.setPosition({10.f, 380.f});
             controls5.setFillColor(soundManager.isSoundEnabled() ? sf::Color(150, 255, 150) : sf::Color(255, 150, 150));
             window.draw(controls5);
 
             // Move history
             sf::Text historyLabel(font, "Moves:", 12);
-            historyLabel.setPosition({10.f, 350.f});
+            historyLabel.setPosition({10.f, 410.f});
             historyLabel.setFillColor(sf::Color(200, 200, 200));
             window.draw(historyLabel);
 
-            int moveY = 370;
+            int moveY = 430;
             for (size_t i = 0; i < moveHistory.size() && i < 12; i++) {
                 std::string moveNum = std::to_string(i / 2 + 1) + ". " + moveHistory[i];
                 sf::Text moveText(font, moveNum, 10);
@@ -971,6 +981,63 @@ int main() {
             }
         }
         } // End of gameState == PLAYING
+
+        // Overlay with end-of-game statistics to keep them visible above clocks
+        if ((game.isGameOver() || timeExpired) && font.getInfo().family.size() > 0) {
+            size_t plyCount = gameRecorder.getMoveCount();
+            size_t whiteMoveCount = (plyCount + 1) / 2;
+            size_t blackMoveCount = plyCount / 2;
+
+            auto avgTimePerMove = [](double initial, double remaining, size_t moves) {
+                if (moves == 0) return 0.0;
+                double used = std::max(0.0, initial - remaining);
+                return used / static_cast<double>(moves);
+            };
+
+            double whiteAvg = avgTimePerMove(initialClockSeconds, whiteTimeSeconds, whiteMoveCount);
+            double blackAvg = avgTimePerMove(initialClockSeconds, blackTimeSeconds, blackMoveCount);
+
+            sf::RectangleShape dim({windowWidth, windowHeight});
+            dim.setPosition({0.f, 0.f});
+            dim.setFillColor(sf::Color(0, 0, 0, 170));
+            window.draw(dim);
+
+            float boxW = 360.f;
+            float boxH = 200.f;
+            sf::RectangleShape box({boxW, boxH});
+            box.setPosition({(windowWidth - boxW) / 2.f, (windowHeight - boxH) / 2.f});
+            box.setFillColor(sf::Color(35, 35, 45, 240));
+            box.setOutlineThickness(3.f);
+            box.setOutlineColor(sf::Color(120, 180, 255));
+            window.draw(box);
+
+            float textX = box.getPosition().x + 20.f;
+            float textY = box.getPosition().y + 20.f;
+
+            sf::Text title(font, "Koniec partii", 22);
+            title.setPosition({textX, textY});
+            title.setFillColor(sf::Color(230, 230, 255));
+            window.draw(title);
+
+            textY += 40.f;
+            sf::Text movesText(font, "Partia trwala " + std::to_string(plyCount) + " posuniec", 16);
+            movesText.setPosition({textX, textY});
+            movesText.setFillColor(sf::Color(200, 200, 200));
+            window.draw(movesText);
+
+            textY += 25.f;
+            sf::Text whiteAvgText(font, std::string("Sr. czas/ruch Biale: ") + formatClockTime(whiteAvg), 16);
+            whiteAvgText.setPosition({textX, textY});
+            whiteAvgText.setFillColor(sf::Color(190, 200, 255));
+            window.draw(whiteAvgText);
+
+            textY += 25.f;
+            sf::Text blackAvgText(font, std::string("Sr. czas/ruch Czarne: ") + formatClockTime(blackAvg), 16);
+            blackAvgText.setPosition({textX, textY});
+            blackAvgText.setFillColor(sf::Color(170, 180, 230));
+            window.draw(blackAvgText);
+
+        }
 
         window.display();
     }
