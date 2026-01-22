@@ -1,0 +1,48 @@
+1. e3 e5
+2. d4 exd4
+3. exd4 Bb4+
+4. c3 Bxc3+
+5. Nxc3 d5
+6. Qa4+ Nc6
+7. Nf3 Nf6
+8. Bg5 b5
+9. Bxb5 Bb7
+10. Bxc6+ Bxc6
+11. Qxc6+ Qd7
+12. Qxa8+ Ke7
+13. Qxh8 Qc6
+14. Qxg7 Qxc3+
+15. bxc3 Ke6
+16. Qxf6+ Kd7
+17. Qd6+ Kxd6
+18. Be7+ Kxe7
+19. Ng5 h6
+20. Nxf7 Kxf7
+21. Kd2 h5
+22. Re1 Kf6
+23. Re3 c6
+24. Re1 h4
+25. Re5 Kg6
+26. Re3 h3
+27. gxh3 Kg7
+28. Rf3 Kg6
+29. Rf8 Kg7
+30. Rf7+ Kxf7
+31. Rg5 Kf6
+32. f4 Kf7
+33. h4 c5
+34. h5 c4
+35. h6 a6
+36. h7 a5
+37. h8=Q Ke7
+38. Qf6+ Ke8
+39. Qg7 Kd8
+40. Qf7 Kc8
+41. Qe7 Kb8
+42. Qd7 Ka8
+43. Qc7 a4
+44. f5 a3
+45. f6 
+
+1/2-1/2
+Reason: stalemate
