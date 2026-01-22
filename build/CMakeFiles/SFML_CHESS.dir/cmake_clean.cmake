@@ -4,6 +4,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o.d"
   "CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o"
   "CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o.d"
+  "CMakeFiles/SFML_CHESS.dir/src/GameRecorder.cpp.o"
+  "CMakeFiles/SFML_CHESS.dir/src/GameRecorder.cpp.o.d"
   "CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o"
   "CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o.d"
   "CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o"

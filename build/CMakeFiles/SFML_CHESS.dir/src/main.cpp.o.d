@@ -295,6 +295,7 @@ CMakeFiles/SFML_CHESS.dir/src/main.cpp.o: \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
  /usr/include/c++/15/functional /usr/include/c++/15/bits/std_function.h \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
+ /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameRecorder.hpp \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/SoundManager.hpp \
  /usr/include/SFML/Audio.hpp /usr/include/SFML/Audio/InputSoundFile.hpp \
  /usr/include/SFML/Audio/Export.hpp \

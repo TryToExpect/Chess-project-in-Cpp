@@ -177,6 +177,30 @@ src/GameLogic.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.s
 .PHONY : src/GameLogic.cpp.s
 
+src/GameRecorder.o: src/GameRecorder.cpp.o
+.PHONY : src/GameRecorder.o
+
+# target to build an object file
+src/GameRecorder.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/GameRecorder.cpp.o
+.PHONY : src/GameRecorder.cpp.o
+
+src/GameRecorder.i: src/GameRecorder.cpp.i
+.PHONY : src/GameRecorder.i
+
+# target to preprocess a source file
+src/GameRecorder.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/GameRecorder.cpp.i
+.PHONY : src/GameRecorder.cpp.i
+
+src/GameRecorder.s: src/GameRecorder.cpp.s
+.PHONY : src/GameRecorder.s
+
+# target to generate assembly for a file
+src/GameRecorder.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/GameRecorder.cpp.s
+.PHONY : src/GameRecorder.cpp.s
+
 src/Piece.o: src/Piece.cpp.o
 .PHONY : src/Piece.o
 
@@ -432,6 +456,9 @@ help:
 	@echo "... src/GameLogic.o"
 	@echo "... src/GameLogic.i"
 	@echo "... src/GameLogic.s"
+	@echo "... src/GameRecorder.o"
+	@echo "... src/GameRecorder.i"
+	@echo "... src/GameRecorder.s"
 	@echo "... src/Piece.o"
 	@echo "... src/Piece.i"
 	@echo "... src/Piece.s"

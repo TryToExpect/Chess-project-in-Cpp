@@ -7,6 +7,7 @@ SFML_CHESS: \
   CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o \
+  CMakeFiles/SFML_CHESS.dir/src/GameRecorder.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o \
@@ -88,6 +89,8 @@ CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o:
 CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o:
 
 CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o:
+
+CMakeFiles/SFML_CHESS.dir/src/GameRecorder.cpp.o:
 
 CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o:
 
