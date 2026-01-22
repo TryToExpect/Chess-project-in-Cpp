@@ -68,6 +68,14 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             square.setFillColor(isDark ? m_dark : m_light);
             square.setPosition(sf::Vector2f(m_origin.x + col * m_tileSize, m_origin.y + row * m_tileSize));
             target.draw(square, states);
+            
+            // Draw marked square overlay (semi-transparent red)
+            if (isSquareMarked(row, col)) {
+                sf::RectangleShape markedOverlay({m_tileSize, m_tileSize});
+                markedOverlay.setFillColor(sf::Color(255, 0, 0, 80));  // Red with alpha=80
+                markedOverlay.setPosition(sf::Vector2f(m_origin.x + col * m_tileSize, m_origin.y + row * m_tileSize));
+                target.draw(markedOverlay, states);
+            }
         }
     }
 
@@ -149,4 +157,25 @@ void Board::cyclePalette(int delta) {
 
     m_currentPaletteIndex = (m_currentPaletteIndex + delta + m_palettes.size()) % m_palettes.size();
     setColorsRGB(m_palettes[m_currentPaletteIndex].first, m_palettes[m_currentPaletteIndex].second);
+}
+
+// Mark/unmark squares for highlighting
+void Board::toggleMarkSquare(int row, int col) {
+    // Check if square is already marked
+    auto it = std::find(m_markedSquares.begin(), m_markedSquares.end(), std::make_pair(row, col));
+    if (it != m_markedSquares.end()) {
+        // Square is marked, remove it
+        m_markedSquares.erase(it);
+    } else {
+        // Square is not marked, add it
+        m_markedSquares.push_back({row, col});
+    }
+}
+
+void Board::clearMarkedSquares() {
+    m_markedSquares.clear();
+}
+
+bool Board::isSquareMarked(int row, int col) const {
+    return std::find(m_markedSquares.begin(), m_markedSquares.end(), std::make_pair(row, col)) != m_markedSquares.end();
 }

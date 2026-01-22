@@ -46,6 +46,12 @@ public:
 
     // Update board display from GameLogic
     void updateFromGame(const class GameLogic& game);
+
+    // Mark/unmark squares (for right-click highlighting)
+    void toggleMarkSquare(int row, int col);
+    void clearMarkedSquares();
+    bool isSquareMarked(int row, int col) const;
+
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
@@ -64,4 +70,6 @@ private:
     int m_currentPaletteIndex = 0;
     // base directory for piece assets
     std::string m_assetDir = "../assets/pieces";
+    // marked squares for highlighting (set of (row, col) pairs)
+    std::vector<std::pair<int, int>> m_markedSquares;
 };

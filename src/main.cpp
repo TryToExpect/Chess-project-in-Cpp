@@ -271,7 +271,26 @@ int main() {
             // Handle mouse button press (start drag or promotion choice)
             if (gameState == GameState::PLAYING && evt->is<sf::Event::MouseButtonPressed>()) {
                 const auto* mouseBtn = evt->getIf<sf::Event::MouseButtonPressed>();
-                if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left) {
+                
+                // Right-click: mark/unmark square
+                if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Right) {
+                    float mx = static_cast<float>(mouseBtn->position.x);
+                    float my = static_cast<float>(mouseBtn->position.y);
+                    
+                    // Check if click is within board bounds
+                    if (mx >= boardX && mx < boardX + boardSize && my >= boardY && my < boardY + boardSize) {
+                        int col = static_cast<int>((mx - boardX) / tileSize);
+                        int row = static_cast<int>((my - boardY) / tileSize);
+                        
+                        // Validate bounds
+                        if (row >= 0 && row < 8 && col >= 0 && col < 8) {
+                            board.toggleMarkSquare(row, col);
+                            std::cout << "Marked/unmarked square: " << static_cast<char>('a' + col) << (8 - row) << "\n";
+                        }
+                    }
+                }
+                // Left-click: drag pieces and handle promotions
+                else if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left) {
                     float mx = static_cast<float>(mouseBtn->position.x);
                     float my = static_cast<float>(mouseBtn->position.y);
 
@@ -289,6 +308,7 @@ int main() {
                             game.makeMove(promotionMove);
                             gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
+                            board.clearMarkedSquares();
                             moveHistory.push_back("promotion to Knight");
                             isPromotionPending = false;
                             std::cout << "Promoted to Knight\n";
@@ -300,6 +320,7 @@ int main() {
                             game.makeMove(promotionMove);
                             gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
+                            board.clearMarkedSquares();
                             moveHistory.push_back("promotion to Bishop");
                             isPromotionPending = false;
                             std::cout << "Promoted to Bishop\n";
@@ -311,6 +332,7 @@ int main() {
                             game.makeMove(promotionMove);
                             gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
+                            board.clearMarkedSquares();
                             moveHistory.push_back("promotion to Rook");
                             isPromotionPending = false;
                             std::cout << "Promoted to Rook\n";
@@ -322,6 +344,7 @@ int main() {
                             game.makeMove(promotionMove);
                             gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
+                            board.clearMarkedSquares();
                             moveHistory.push_back("promotion to Queen");
                             isPromotionPending = false;
                             std::cout << "Promoted to Queen\n";
@@ -415,6 +438,9 @@ int main() {
 
                                             // Update board display from game state
                                             board.updateFromGame(game);
+                                            
+                                            // Clear marked squares after move
+                                            board.clearMarkedSquares();
 
                                             // NO FLIP - keeps board orientation consistent
 
