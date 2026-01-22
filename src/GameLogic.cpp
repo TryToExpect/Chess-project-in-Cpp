@@ -51,6 +51,47 @@ void GameLogic::setup() {
     grid[7][7] = std::make_unique<Rook>(Color::WHITE);
 }
 
+void GameLogic::setupDiagonal() {
+    // Clear grid
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            grid[i][j] = nullptr;
+        }
+    }
+    
+    grid[0][7] = std::make_unique<King>(Color::BLACK);
+    grid[0][6] = std::make_unique<Bishop>(Color::BLACK);
+    grid[0][5] = std::make_unique<Knight>(Color::BLACK);
+    grid[0][4] = std::make_unique<Rook>(Color::BLACK);
+    grid[0][3] = std::make_unique<Pawn>(Color::BLACK);
+    grid[1][7] = std::make_unique<Knight>(Color::BLACK);
+    grid[1][6] = std::make_unique<Queen>(Color::BLACK);
+    grid[1][5] = std::make_unique<Pawn>(Color::BLACK);
+    grid[1][4] = std::make_unique<Pawn>(Color::BLACK);
+    grid[2][7] = std::make_unique<Bishop>(Color::BLACK);
+    grid[2][6] = std::make_unique<Pawn>(Color::BLACK);
+    grid[2][5] = std::make_unique<Pawn>(Color::BLACK);
+    grid[3][7] = std::make_unique<Rook>(Color::BLACK);
+    grid[3][6] = std::make_unique<Pawn>(Color::BLACK);
+    grid[3][5] = std::make_unique<Pawn>(Color::BLACK);
+
+    grid[7][0] = std::make_unique<King>(Color::WHITE);
+    grid[7][1] = std::make_unique<Bishop>(Color::WHITE);
+    grid[7][2] = std::make_unique<Knight>(Color::WHITE);        
+    grid[7][3] = std::make_unique<Rook>(Color::WHITE);
+    grid[7][4] = std::make_unique<Pawn>(Color::WHITE);
+    grid[6][0] = std::make_unique<Knight>(Color::WHITE);
+    grid[6][1] = std::make_unique<Queen>(Color::WHITE);
+    grid[6][2] = std::make_unique<Pawn>(Color::WHITE);
+    grid[6][3] = std::make_unique<Pawn>(Color::WHITE);
+    grid[5][0] = std::make_unique<Bishop>(Color::WHITE);    
+    grid[5][1] = std::make_unique<Pawn>(Color::WHITE);
+    grid[5][2] = std::make_unique<Pawn>(Color::WHITE);
+    grid[4][0] = std::make_unique<Rook>(Color::WHITE);
+    grid[4][1] = std::make_unique<Pawn>(Color::WHITE);
+    grid[4][2] = std::make_unique<Pawn>(Color::WHITE);          
+
+}
 void GameLogic::setupFischer() {
     // Clear grid
     for (int i = 0; i < 8; i++) {

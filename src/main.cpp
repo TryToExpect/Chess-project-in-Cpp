@@ -32,7 +32,8 @@ enum class GameState {
 
 enum class ChessMode {
     STANDARD,
-    FISCHER_RANDOM  // Chess960
+    FISCHER_RANDOM,  // Chess960
+    DIAGONAL_CHESS
 };
 
 struct TimeControl {
@@ -186,6 +187,7 @@ int main() {
                     float modeY = 110.f;
                     float standardX = windowWidth / 2.f - 160.f;
                     float fischer960X = standardX + modeButtonWidth + 20.f;
+                    float diagonalX = fischer960X + modeButtonWidth + 20.f;
                     
                     // Standard Chess button
                     if (mx >= standardX && mx <= standardX + modeButtonWidth &&
@@ -197,6 +199,12 @@ int main() {
                     if (mx >= fischer960X && mx <= fischer960X + modeButtonWidth &&
                         my >= modeY && my <= modeY + modeButtonHeight) {
                         chessMode = ChessMode::FISCHER_RANDOM;
+                    }
+                    
+                    // Diagonal Chess button
+                    if (mx >= diagonalX && mx <= diagonalX + modeButtonWidth &&
+                        my >= modeY && my <= modeY + modeButtonHeight) {
+                        chessMode = ChessMode::DIAGONAL_CHESS;
                     }
                     
                     // Menu layout centered
@@ -239,6 +247,9 @@ int main() {
                         if (chessMode == ChessMode::FISCHER_RANDOM) {
                             game.setupFischer();
                             std::cout << "Game started: CHESS960 (Fischer Random)\n";
+                        } else if (chessMode == ChessMode::DIAGONAL_CHESS) {
+                            game.setupDiagonal();
+                            std::cout << "Game started: Diagonal Chess\n";
                         } else {
                             game.setup();
                             std::cout << "Game started: Standard Chess\n";
@@ -671,6 +682,7 @@ int main() {
                 float modeY = 110.f;
                 float standardX = windowWidth / 2.f - 160.f;
                 float fischer960X = standardX + modeButtonWidth + 20.f;
+                float diagonalX = fischer960X + modeButtonWidth + 20.f;
                 
                 // Standard Chess button
                 sf::RectangleShape standardButton({modeButtonWidth, modeButtonHeight});
@@ -709,6 +721,25 @@ int main() {
                 fischer960Text.setPosition({fischer960X + 15.f, modeY + 15.f});
                 fischer960Text.setFillColor(sf::Color(255, 255, 255));
                 window.draw(fischer960Text);
+
+                // Diagonal Chess button
+                sf::RectangleShape diagonalButton({modeButtonWidth, modeButtonHeight});
+                diagonalButton.setPosition({diagonalX, modeY});
+                if (chessMode == ChessMode::DIAGONAL_CHESS) {
+                    diagonalButton.setFillColor(sf::Color(120, 80, 180));
+                    diagonalButton.setOutlineThickness(3.f);
+                    diagonalButton.setOutlineColor(sf::Color(180, 120, 255));
+                } else {
+                    diagonalButton.setFillColor(sf::Color(60, 60, 80));
+                    diagonalButton.setOutlineThickness(2.f);
+                    diagonalButton.setOutlineColor(sf::Color(100, 100, 120));
+                }
+                window.draw(diagonalButton);
+                
+                sf::Text diagonalText(font, "Diagonal", 16);
+                diagonalText.setPosition({diagonalX + 20.f, modeY + 15.f});
+                diagonalText.setFillColor(sf::Color(255, 255, 255));
+                window.draw(diagonalText);
 
                 // Time control label
                 sf::Text timeSubtitle(font, "Select Time Control", 20);

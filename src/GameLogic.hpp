@@ -31,6 +31,9 @@ public:
     // Setup Chess960 (Fischer random chess) starting position
     void setupFischer();
 
+    // Setup Diagonal Chess starting position
+    void setupDiagonal();
+
     // Get piece at position
     Piece* getPiece(int r, int c) { return grid[r][c].get(); }
     const Piece* getPiece(int r, int c) const { return grid[r][c].get(); }
