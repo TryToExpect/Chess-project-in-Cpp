@@ -5,6 +5,10 @@
 #include <functional>
 #include "Pieces/Piece.hpp"
 
+// Forward declarations
+class GameRecorder;
+enum class GameResult;
+
 struct Move {
     int r1, c1, r2, c2;         // Source and Destination coordinates
     bool isEnPassant = false;   // Special move flag: En Passant
@@ -71,6 +75,12 @@ public:
     using SoundCallback = std::function<void(bool isPawnMove, bool isCapture)>;
     void setSoundCallback(SoundCallback callback) { soundCallback = callback; }
 
+    // Game recorder
+    void setGameRecorder(GameRecorder* recorder) { gameRecorder = recorder; }
+    
+    // End game with result and reason
+    void endGameWithResult(GameResult result, const std::string& reason);
+
 private:
     Grid grid;
     Color turn;
@@ -85,4 +95,7 @@ private:
 
     // Sound callback
     SoundCallback soundCallback;
+
+    // Game recorder pointer (not owned)
+    GameRecorder* gameRecorder = nullptr;
 };

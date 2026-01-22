@@ -1,4 +1,5 @@
 #include "GameLogic.hpp"
+#include "GameRecorder.hpp"
 #include "Pieces/Pawn.hpp"
 #include "Pieces/Rook.hpp"
 #include "Pieces/Knight.hpp"
@@ -153,6 +154,9 @@ void GameLogic::makeMove(Move m) {
     // Track if this is a pawn move and if there's a capture
     bool isPawnMove = (p->type == PieceType::PAWN);
     bool isCapture = (grid[m.r2][m.c2] != nullptr) || m.isEnPassant;
+    
+    // Store moving piece type BEFORE making the move (needed for game recording)
+    PieceType movingPieceType = p->type;
 
     // Handle En Passant capture
     if (m.isEnPassant) {
@@ -237,8 +241,15 @@ void GameLogic::makeMove(Move m) {
         soundCallback(isPawnMove, isCapture);
     }
 
-    // Update game state
+    // Update game state first to check for check/checkmate
     updateGameState();
+    
+    // Record move in game recorder if set
+    if (gameRecorder) {
+        bool isCheck = isInCheck(turn);
+        bool isCheckmate = checkmate;
+        gameRecorder->recordMove(m, movingPieceType, isCheckmate, isCheck, isCapture);
+    }
 }
 
 bool GameLogic::hasLegalMoves(Color c) {
@@ -309,4 +320,11 @@ void GameLogic::display() const {
     std::cout << "    a b c d e f g h\n\n";
 
     std::cout << "Turn: " << (turn == Color::WHITE ? "WHITE" : "BLACK") << "\n";
+}
+
+void GameLogic::endGameWithResult(GameResult result, const std::string& reason) {
+    if (gameRecorder) {
+        gameRecorder->endGame(result, reason);
+        gameRecorder->saveToFile();
+    }
 }

@@ -4,6 +4,7 @@
 #include "Board.hpp"
 #include "PieceManager.hpp"
 #include "GameLogic.hpp"
+#include "GameRecorder.hpp"
 #include "SoundManager.hpp"
 #include <memory>
 #include <iostream>
@@ -52,6 +53,10 @@ int main() {
     float tileSize = 60.f;
     Board board(tileSize);
     GameLogic game;
+
+    // Game recorder for saving moves to file
+    GameRecorder gameRecorder;
+    game.setGameRecorder(&gameRecorder);
 
     // Sound manager
     SoundManager soundManager;
@@ -388,12 +393,16 @@ int main() {
 
                                             if (game.isCheckmate()) {
                                                 std::cout << "CHECKMATE! " << (game.getWinner() == Color::WHITE ? "White" : "Black") << " wins!\n";
+                                                // Save game with result
+                                                GameResult result = (game.getWinner() == Color::WHITE) ? GameResult::WHITE_WIN_CHECKMATE : GameResult::BLACK_WIN_CHECKMATE;
+                                                game.endGameWithResult(result, "checkmate");
                                                 if (!endSoundPlayed) {
                                                     soundManager.playEndSound();
                                                     endSoundPlayed = true;
                                                 }
                                             } else if (game.isStalemate()) {
                                                 std::cout << "STALEMATE - Draw!\n";
+                                                game.endGameWithResult(GameResult::STALEMATE, "stalemate");
                                                 if (!endSoundPlayed) {
                                                     soundManager.playEndSound();
                                                     endSoundPlayed = true;

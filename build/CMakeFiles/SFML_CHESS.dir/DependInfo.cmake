@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Board.cpp" "CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o" "gcc" "CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o.d"
   "/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.cpp" "CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o" "gcc" "CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o.d"
+  "/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameRecorder.cpp" "CMakeFiles/SFML_CHESS.dir/src/GameRecorder.cpp.o" "gcc" "CMakeFiles/SFML_CHESS.dir/src/GameRecorder.cpp.o.d"
   "/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Piece.cpp" "CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o" "gcc" "CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o.d"
   "/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.cpp" "CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o" "gcc" "CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o.d"
   "/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Bishop.cpp" "CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o" "gcc" "CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o.d"
