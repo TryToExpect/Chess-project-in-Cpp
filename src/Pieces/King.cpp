@@ -14,26 +14,38 @@ bool King::isPseudoLegal(int r1, int c1, int r2, int c2, const GameLogic& game) 
     }
 
     // CASTLING Logic
-    // Conditions: King moves 2 squares sideways, never moved before
-    if (dr == 0 && dc == 2 && !hasMoved) {
-        // Cannot castle while in check
-        if (game.isInCheck(color)) return false;
+    // In standard chess: King moves 2 squares sideways, never moved before
+    // In Chess960: King can move any number of squares towards a Rook to castle
+    
+    // Check if we're attempting castling (Rook exists on destination square)
+    if (dr == 0 && !hasMoved) {
+        const Piece* targetSquare = game.getPiece(r2, c2);
+        if (targetSquare != nullptr && targetSquare->type == PieceType::ROOK && 
+            targetSquare->color == color && !targetSquare->hasMoved) {
+            
+            // Cannot castle while in check
+            if (game.isInCheck(color)) return false;
 
-        int rookCol = (c2 > c1) ? 7 : 0; // Rook at H (7) or A (0)
-        const Piece* rook = game.getPiece(r1, rookCol);
+            int rookCol = c2;
+            int direction = (rookCol > c1) ? 1 : -1;
 
-        // Rook must exist, be a Rook, and not have moved
-        if (rook == nullptr || rook->type != PieceType::ROOK || rook->hasMoved) return false;
+            // Path between King and Rook must be empty (excluding the rook)
+            int currentCol = c1 + direction;
+            while (currentCol != rookCol) {
+                if (game.getPiece(r1, currentCol) != nullptr) return false;
+                currentCol += direction;
+            }
 
-        // Path between King and Rook must be empty
-        if (!game.isPathClear(r1, c1, r1, rookCol)) return false;
+            // All squares the King crosses cannot be under attack
+            Color enemy = (color == Color::WHITE) ? Color::BLACK : Color::WHITE;
+            currentCol = c1 + direction;
+            while (currentCol != rookCol + direction) {
+                if (game.isSquareAttacked(r1, currentCol, enemy)) return false;
+                currentCol += direction;
+            }
 
-        // The square the King crosses cannot be under attack
-        int direction = (c2 > c1) ? 1 : -1;
-        Color enemy = (color == Color::WHITE) ? Color::BLACK : Color::WHITE;
-        if (game.isSquareAttacked(r1, c1 + direction, enemy)) return false;
-
-        return true;
+            return true;
+        }
     }
 
     return false;

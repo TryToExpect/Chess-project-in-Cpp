@@ -3,6 +3,7 @@
 #include <array>
 #include <memory>
 #include <functional>
+#include <random>
 #include "Pieces/Piece.hpp"
 
 // Forward declarations
@@ -26,6 +27,9 @@ public:
 
     // Setup standard chess starting position
     void setup();
+
+    // Setup Chess960 (Fischer random chess) starting position
+    void setupFischer();
 
     // Get piece at position
     Piece* getPiece(int r, int c) { return grid[r][c].get(); }
@@ -81,6 +85,9 @@ public:
     // End game with result and reason
     void endGameWithResult(GameResult result, const std::string& reason);
 
+    // Check if this is a Chess960 game
+    bool isChess960Game() const { return isChess960; }
+
 private:
     Grid grid;
     Color turn;
@@ -92,6 +99,9 @@ private:
     bool checkmate = false;
     bool stalemate = false;
     Color winner = Color::NONE;
+
+    // Chess960 flag
+    bool isChess960 = false;
 
     // Sound callback
     SoundCallback soundCallback;

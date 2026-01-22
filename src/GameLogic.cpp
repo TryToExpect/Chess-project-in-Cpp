@@ -8,6 +8,7 @@
 #include "Pieces/King.hpp"
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
 GameLogic::GameLogic() : turn(Color::WHITE), lastMoveWasDoublePawnPush(false) {
     setup();
@@ -48,6 +49,90 @@ void GameLogic::setup() {
     grid[7][5] = std::make_unique<Bishop>(Color::WHITE);
     grid[7][6] = std::make_unique<Knight>(Color::WHITE);
     grid[7][7] = std::make_unique<Rook>(Color::WHITE);
+}
+
+void GameLogic::setupFischer() {
+    // Clear grid
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            grid[i][j] = nullptr;
+        }
+    }
+
+    isChess960 = true;
+
+    // Setup Pawns (same as standard chess)
+    for (int i = 0; i < 8; i++) {
+        grid[1][i] = std::make_unique<Pawn>(Color::BLACK);
+        grid[6][i] = std::make_unique<Pawn>(Color::WHITE);
+    }
+
+    // Generate random back rank position
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    // We need to place: 2 Rooks, 2 Knights, 2 Bishops, 1 Queen, 1 King
+    // Rules:
+    // 1. King must be between the two Rooks
+    // 2. Bishops must be on opposite-colored squares
+    // 3. Both players have identical setup
+
+    auto generateBackRank = [&gen]() -> std::array<std::string, 8> {
+        std::array<std::string, 8> backRank = {{"R", "N", "B", "Q", "K", "B", "N", "R"}};
+        
+        while (true) {
+            std::shuffle(backRank.begin(), backRank.end(), gen);
+
+            // Find positions of King and Rooks
+            int kingPos = -1, leftRookPos = -1, rightRookPos = -1;
+            int leftBishopPos = -1, rightBishopPos = -1;
+
+            for (int i = 0; i < 8; i++) {
+                if (backRank[i] == "K") kingPos = i;
+                if (backRank[i] == "R") {
+                    if (leftRookPos == -1) leftRookPos = i;
+                    else rightRookPos = i;
+                }
+                if (backRank[i] == "B") {
+                    if (leftBishopPos == -1) leftBishopPos = i;
+                    else rightBishopPos = i;
+                }
+            }
+
+            // Check: King between Rooks
+            bool kingBetweenRooks = (leftRookPos < kingPos && kingPos < rightRookPos);
+
+            // Check: Bishops on opposite-colored squares
+            // Square color depends on (row + col) % 2
+            // We're placing on row 0 or 7, so color = col % 2
+            bool bishopsOppositeColors = (leftBishopPos % 2) != (rightBishopPos % 2);
+
+            if (kingBetweenRooks && bishopsOppositeColors) {
+                return backRank;
+            }
+        }
+    };
+
+    // Generate the back rank
+    auto backRank = generateBackRank();
+
+    // Place Black pieces (row 0)
+    for (int col = 0; col < 8; col++) {
+        if (backRank[col] == "R") grid[0][col] = std::make_unique<Rook>(Color::BLACK);
+        else if (backRank[col] == "N") grid[0][col] = std::make_unique<Knight>(Color::BLACK);
+        else if (backRank[col] == "B") grid[0][col] = std::make_unique<Bishop>(Color::BLACK);
+        else if (backRank[col] == "Q") grid[0][col] = std::make_unique<Queen>(Color::BLACK);
+        else if (backRank[col] == "K") grid[0][col] = std::make_unique<King>(Color::BLACK);
+    }
+
+    // Place White pieces (row 7) - same configuration
+    for (int col = 0; col < 8; col++) {
+        if (backRank[col] == "R") grid[7][col] = std::make_unique<Rook>(Color::WHITE);
+        else if (backRank[col] == "N") grid[7][col] = std::make_unique<Knight>(Color::WHITE);
+        else if (backRank[col] == "B") grid[7][col] = std::make_unique<Bishop>(Color::WHITE);
+        else if (backRank[col] == "Q") grid[7][col] = std::make_unique<Queen>(Color::WHITE);
+        else if (backRank[col] == "K") grid[7][col] = std::make_unique<King>(Color::WHITE);
+    }
 }
 
 bool GameLogic::isPathClear(int r1, int c1, int r2, int c2) const {
@@ -176,13 +261,45 @@ void GameLogic::makeMove(Move m) {
     // Handle Castling (move the Rook)
     if (m.isCastling) {
         int row = m.r1;
-        bool kingSide = (m.c2 > m.c1);
-        int rookSrcCol = kingSide ? 7 : 0;
-        int rookDestCol = kingSide ? 5 : 3;
+        
+        if (isChess960) {
+            // In Chess960, the Rook moves to the square the King crossed or the square between them
+            // Find the Rook being used for castling (it's at m.c2 in our move representation)
+            int rookSrcCol = m.c2;  // Rook is at destination square initially
+            
+            // Determine rook destination: the square the king crosses
+            int direction = (rookSrcCol > m.c1) ? 1 : -1;  // King side or Queen side
+            int rookDestCol = m.c1 + direction;  // Rook moves one square towards king
+            
+            // In some Chess960 positions, we need to be more careful
+            // The rook should move to where the king came from or between them
+            if (direction > 0) {
+                // King side castling: Rook goes to position left of king's destination
+                rookDestCol = m.c2 - 1;
+                while (rookDestCol > m.c1 && grid[row][rookDestCol] != nullptr) {
+                    rookDestCol--;
+                }
+            } else {
+                // Queen side castling: Rook goes to position right of king's destination  
+                rookDestCol = m.c2 + 1;
+                while (rookDestCol < m.c1 && grid[row][rookDestCol] != nullptr) {
+                    rookDestCol++;
+                }
+            }
+            
+            Piece* rook = grid[row][rookSrcCol].get();
+            grid[row][rookDestCol] = std::move(grid[row][rookSrcCol]);
+            if (rook) rook->hasMoved = true;
+        } else {
+            // Standard chess castling
+            bool kingSide = (m.c2 > m.c1);
+            int rookSrcCol = kingSide ? 7 : 0;
+            int rookDestCol = kingSide ? 5 : 3;
 
-        Piece* rook = grid[row][rookSrcCol].get();
-        grid[row][rookDestCol] = std::move(grid[row][rookSrcCol]);
-        if (rook) rook->hasMoved = true;
+            Piece* rook = grid[row][rookSrcCol].get();
+            grid[row][rookDestCol] = std::move(grid[row][rookSrcCol]);
+            if (rook) rook->hasMoved = true;
+        }
         std::cout << "--- Castling ---\n";
     }
 
