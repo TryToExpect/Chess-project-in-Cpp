@@ -35,6 +35,9 @@ public:
     // initialize pieces to standard chess starting position
     void setInitialPosition();
 
+    // initialize pieces to Chess960 (Fischer random chess) position
+    void setInitialFischerPosition();
+
     // get current piece style name
     std::string getCurrentStyle() const { return m_currentStyle; }
 

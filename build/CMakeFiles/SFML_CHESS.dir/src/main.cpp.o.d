@@ -294,6 +294,11 @@ CMakeFiles/SFML_CHESS.dir/src/main.cpp.o: \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.hpp \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
  /usr/include/c++/15/functional /usr/include/c++/15/bits/std_function.h \
+ /usr/include/c++/15/random /usr/include/c++/15/bits/random.h \
+ /usr/include/x86_64-linux-gnu/c++/15/bits/opt_random.h \
+ /usr/include/c++/15/bits/random.tcc /usr/include/c++/15/numeric \
+ /usr/include/c++/15/bits/stl_numeric.h \
+ /usr/include/c++/15/pstl/glue_numeric_defs.h \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameRecorder.hpp \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/SoundManager.hpp \

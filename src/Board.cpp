@@ -33,7 +33,17 @@ float Board::getTileSize() const {
 void Board::setPieceManager(const PieceManager* pm) {
     m_pieceManager = pm;
 }
-
+void Board::setInitialFischerPosition(){
+    // Clear the board
+    for (auto &r : m_pieces) for (auto &c : r) c.clear();
+    
+    // Place Pawns (rows 1 and 6) - same as standard chess
+    for (int col = 0; col < 8; ++col) m_pieces[1][col] = "bP";
+    for (int col = 0; col < 8; ++col) m_pieces[6][col] = "wP";
+    
+    // Note: The actual Chess960 position generation will be handled by GameLogic
+    // This method just provides the UI update mechanism
+}
 void Board::setInitialPosition() {
     // Clear
     for (auto &r : m_pieces) for (auto &c : r) c.clear();

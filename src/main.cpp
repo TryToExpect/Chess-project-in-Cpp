@@ -30,6 +30,11 @@ enum class GameState {
     PLAYING
 };
 
+enum class ChessMode {
+    STANDARD,
+    FISCHER_RANDOM  // Chess960
+};
+
 struct TimeControl {
     std::string name;
     double seconds;
@@ -38,6 +43,7 @@ struct TimeControl {
 int main() {
     // Game state management
     GameState gameState = GameState::MENU;
+    ChessMode chessMode = ChessMode::STANDARD;  // Default to standard chess
     
     // Time control options
     std::vector<TimeControl> timeControls = {
@@ -170,9 +176,28 @@ int main() {
                     float mx = static_cast<float>(mouseBtn->position.x);
                     float my = static_cast<float>(mouseBtn->position.y);
                     
+                    // Chess mode buttons
+                    float modeButtonWidth = 140.f;
+                    float modeButtonHeight = 50.f;
+                    float modeY = 110.f;
+                    float standardX = windowWidth / 2.f - 160.f;
+                    float fischer960X = standardX + modeButtonWidth + 20.f;
+                    
+                    // Standard Chess button
+                    if (mx >= standardX && mx <= standardX + modeButtonWidth &&
+                        my >= modeY && my <= modeY + modeButtonHeight) {
+                        chessMode = ChessMode::STANDARD;
+                    }
+                    
+                    // Chess960 button
+                    if (mx >= fischer960X && mx <= fischer960X + modeButtonWidth &&
+                        my >= modeY && my <= modeY + modeButtonHeight) {
+                        chessMode = ChessMode::FISCHER_RANDOM;
+                    }
+                    
                     // Menu layout centered
                     float menuX = windowWidth / 2.f - 150.f;
-                    float menuY = 150.f;
+                    float menuY = 210.f;  // Moved down to accommodate chess mode buttons
                     float buttonWidth = 300.f;
                     float buttonHeight = 50.f;
                     float spacing = 60.f;
@@ -197,7 +222,18 @@ int main() {
                         blackTimeSeconds = initialClockSeconds;
                         deltaClock.restart(); // Start timing now
                         soundManager.playBackgroundMusic(); // Start background music
-                        std::cout << "Game started with time control: " << timeControls[selectedTimeControl].name << "\n";
+                        
+                        // Setup game with selected mode
+                        if (chessMode == ChessMode::FISCHER_RANDOM) {
+                            game.setupFischer();
+                            std::cout << "Game started: CHESS960 (Fischer Random)\n";
+                        } else {
+                            game.setup();
+                            std::cout << "Game started: Standard Chess\n";
+                        }
+                        // Update board display with the new game state
+                        board.updateFromGame(game);
+                        std::cout << "Time control: " << timeControls[selectedTimeControl].name << "\n";
                     }
                 }
             }
@@ -528,20 +564,70 @@ int main() {
         if (gameState == GameState::MENU) {
             // Draw menu
             if (font.getInfo().family.size() > 0) {
-                // Title
-                sf::Text title(font, "CHESS", 48);
-                title.setPosition({windowWidth / 2.f - 100.f, 50.f});
-                title.setFillColor(sf::Color(255, 255, 255));
-                window.draw(title);
-
-                sf::Text subtitle(font, "Select Time Control", 24);
-                subtitle.setPosition({windowWidth / 2.f - 130.f, 110.f});
-                subtitle.setFillColor(sf::Color(200, 200, 200));
+                sf::Text subtitle(font, "CHESS", 48);
+                subtitle.setPosition({windowWidth / 2.f - 100.f, 50.f});
+                subtitle.setFillColor(sf::Color(255, 255, 255));
                 window.draw(subtitle);
+
+                sf::Text modeSubtitle(font, "Select Game Mode", 20);
+                modeSubtitle.setPosition({windowWidth / 2.f - 110.f, 70.f});
+                modeSubtitle.setFillColor(sf::Color(200, 200, 200));
+                window.draw(modeSubtitle);
+
+                // Chess mode buttons
+                float modeButtonWidth = 140.f;
+                float modeButtonHeight = 50.f;
+                float modeY = 110.f;
+                float standardX = windowWidth / 2.f - 160.f;
+                float fischer960X = standardX + modeButtonWidth + 20.f;
+                
+                // Standard Chess button
+                sf::RectangleShape standardButton({modeButtonWidth, modeButtonHeight});
+                standardButton.setPosition({standardX, modeY});
+                if (chessMode == ChessMode::STANDARD) {
+                    standardButton.setFillColor(sf::Color(80, 120, 180));
+                    standardButton.setOutlineThickness(3.f);
+                    standardButton.setOutlineColor(sf::Color(120, 180, 255));
+                } else {
+                    standardButton.setFillColor(sf::Color(60, 60, 80));
+                    standardButton.setOutlineThickness(2.f);
+                    standardButton.setOutlineColor(sf::Color(100, 100, 120));
+                }
+                window.draw(standardButton);
+                
+                sf::Text standardText(font, "Standard", 16);
+                standardText.setPosition({standardX + 20.f, modeY + 15.f});
+                standardText.setFillColor(sf::Color(255, 255, 255));
+                window.draw(standardText);
+                
+                // Chess960 button
+                sf::RectangleShape fischer960Button({modeButtonWidth, modeButtonHeight});
+                fischer960Button.setPosition({fischer960X, modeY});
+                if (chessMode == ChessMode::FISCHER_RANDOM) {
+                    fischer960Button.setFillColor(sf::Color(180, 120, 80));
+                    fischer960Button.setOutlineThickness(3.f);
+                    fischer960Button.setOutlineColor(sf::Color(255, 180, 120));
+                } else {
+                    fischer960Button.setFillColor(sf::Color(60, 60, 80));
+                    fischer960Button.setOutlineThickness(2.f);
+                    fischer960Button.setOutlineColor(sf::Color(100, 100, 120));
+                }
+                window.draw(fischer960Button);
+                
+                sf::Text fischer960Text(font, "Chess960", 16);
+                fischer960Text.setPosition({fischer960X + 15.f, modeY + 15.f});
+                fischer960Text.setFillColor(sf::Color(255, 255, 255));
+                window.draw(fischer960Text);
+
+                // Time control label
+                sf::Text timeSubtitle(font, "Select Time Control", 20);
+                timeSubtitle.setPosition({windowWidth / 2.f - 130.f, 175.f});
+                timeSubtitle.setFillColor(sf::Color(200, 200, 200));
+                window.draw(timeSubtitle);
 
                 // Time control buttons
                 float menuX = windowWidth / 2.f - 150.f;
-                float menuY = 150.f;
+                float menuY = 210.f;
                 float buttonWidth = 300.f;
                 float buttonHeight = 50.f;
                 float spacing = 60.f;
