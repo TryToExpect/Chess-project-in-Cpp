@@ -108,6 +108,10 @@ int main() {
     int dragStartRow = -1, dragStartCol = -1;
     sf::CircleShape dragPreview(0.f);  // Visual feedback for dragging
 
+    // Arrow drawing state (Shift+Right drag)
+    bool isDrawingArrow = false;
+    int arrowStartRow = -1, arrowStartCol = -1;
+
     // Pawn promotion state
     bool isPromotionPending = false;
     int promotionRow = -1, promotionCol = -1;
@@ -271,7 +275,45 @@ int main() {
             // Handle mouse button press (start drag or promotion choice)
             if (gameState == GameState::PLAYING && evt->is<sf::Event::MouseButtonPressed>()) {
                 const auto* mouseBtn = evt->getIf<sf::Event::MouseButtonPressed>();
-                if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left) {
+                
+                // Right-click: mark/unmark square OR draw arrow with Shift
+                if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Right) {
+                    float mx = static_cast<float>(mouseBtn->position.x);
+                    float my = static_cast<float>(mouseBtn->position.y);
+                    
+                    // Check if click is within board bounds
+                    if (mx >= boardX && mx < boardX + boardSize && my >= boardY && my < boardY + boardSize) {
+                        int col = static_cast<int>((mx - boardX) / tileSize);
+                        int row = static_cast<int>((my - boardY) / tileSize);
+                        
+                        // Validate bounds
+                        if (row >= 0 && row < 8 && col >= 0 && col < 8) {
+                            // Check if Shift or Ctrl is pressed
+                            bool shiftPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) || 
+                                               sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RShift);
+                            bool ctrlPressed = sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LControl) || 
+                                              sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RControl);
+                            
+                            if (shiftPressed) {
+                                // Start drawing arrow
+                                isDrawingArrow = true;
+                                arrowStartRow = row;
+                                arrowStartCol = col;
+                                std::cout << "Starting arrow from: " << static_cast<char>('a' + col) << (8 - row) << "\n";
+                            } else if (ctrlPressed) {
+                                // Clear all arrows
+                                board.clearArrows();
+                                std::cout << "Cleared all arrows\n";
+                            } else {
+                                // Normal: mark/unmark square
+                                board.toggleMarkSquare(row, col);
+                                std::cout << "Marked/unmarked square: " << static_cast<char>('a' + col) << (8 - row) << "\n";
+                            }
+                        }
+                    }
+                }
+                // Left-click: drag pieces and handle promotions
+                else if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left) {
                     float mx = static_cast<float>(mouseBtn->position.x);
                     float my = static_cast<float>(mouseBtn->position.y);
 
@@ -289,6 +331,8 @@ int main() {
                             game.makeMove(promotionMove);
                             gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
+                            board.clearMarkedSquares();
+                            board.clearArrows();
                             moveHistory.push_back("promotion to Knight");
                             isPromotionPending = false;
                             std::cout << "Promoted to Knight\n";
@@ -300,6 +344,8 @@ int main() {
                             game.makeMove(promotionMove);
                             gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
+                            board.clearMarkedSquares();
+                            board.clearArrows();
                             moveHistory.push_back("promotion to Bishop");
                             isPromotionPending = false;
                             std::cout << "Promoted to Bishop\n";
@@ -311,6 +357,8 @@ int main() {
                             game.makeMove(promotionMove);
                             gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
+                            board.clearMarkedSquares();
+                            board.clearArrows();
                             moveHistory.push_back("promotion to Rook");
                             isPromotionPending = false;
                             std::cout << "Promoted to Rook\n";
@@ -322,6 +370,8 @@ int main() {
                             game.makeMove(promotionMove);
                             gameStarted = true; // Start timing on first move
                             board.updateFromGame(game);
+                            board.clearMarkedSquares();
+                            board.clearArrows();
                             moveHistory.push_back("promotion to Queen");
                             isPromotionPending = false;
                             std::cout << "Promoted to Queen\n";
@@ -353,7 +403,34 @@ int main() {
             // Handle mouse button release (end drag and execute move)
             if (gameState == GameState::PLAYING && evt->is<sf::Event::MouseButtonReleased>()) {
                 const auto* mouseBtn = evt->getIf<sf::Event::MouseButtonReleased>();
-                if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left && isDragging) {
+                
+                // Right-click release: finish drawing arrow
+                if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Right && isDrawingArrow) {
+                    isDrawingArrow = false;
+                    
+                    float mx = static_cast<float>(mouseBtn->position.x);
+                    float my = static_cast<float>(mouseBtn->position.y);
+                    
+                    // Check if release is within board bounds
+                    if (mx >= boardX && mx < boardX + boardSize && my >= boardY && my < boardY + boardSize) {
+                        int col = static_cast<int>((mx - boardX) / tileSize);
+                        int row = static_cast<int>((my - boardY) / tileSize);
+                        
+                        // Validate bounds
+                        if (row >= 0 && row < 8 && col >= 0 && col < 8) {
+                            // Only add arrow if start and end squares are different
+                            if (arrowStartRow != row || arrowStartCol != col) {
+                                board.addArrow(arrowStartRow, arrowStartCol, row, col);
+                                std::cout << "Added arrow from: " << static_cast<char>('a' + arrowStartCol) << (8 - arrowStartRow)
+                                         << " to: " << static_cast<char>('a' + col) << (8 - row) << "\n";
+                            }
+                        }
+                    }
+                    arrowStartRow = -1;
+                    arrowStartCol = -1;
+                }
+                // Left-click release: end drag and execute move
+                else if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left && isDragging) {
                     isDragging = false;
                     
                     float mx = static_cast<float>(mouseBtn->position.x);
@@ -415,6 +492,10 @@ int main() {
 
                                             // Update board display from game state
                                             board.updateFromGame(game);
+                                            
+                                            // Clear marked squares and arrows after move
+                                            board.clearMarkedSquares();
+                                            board.clearArrows();
 
                                             // NO FLIP - keeps board orientation consistent
 

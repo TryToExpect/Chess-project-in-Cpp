@@ -68,6 +68,14 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             square.setFillColor(isDark ? m_dark : m_light);
             square.setPosition(sf::Vector2f(m_origin.x + col * m_tileSize, m_origin.y + row * m_tileSize));
             target.draw(square, states);
+            
+            // Draw marked square overlay (semi-transparent red)
+            if (isSquareMarked(row, col)) {
+                sf::RectangleShape markedOverlay({m_tileSize, m_tileSize});
+                markedOverlay.setFillColor(sf::Color(255, 0, 0, 80));  // Red with alpha=80
+                markedOverlay.setPosition(sf::Vector2f(m_origin.x + col * m_tileSize, m_origin.y + row * m_tileSize));
+                target.draw(markedOverlay, states);
+            }
         }
     }
 
@@ -102,6 +110,61 @@ void Board::draw(sf::RenderTarget& target, sf::RenderStates states) const {
             }
         }
     }
+
+    // Draw arrows (planned moves)
+    for (const auto& arrow : m_arrows) {
+        drawArrow(target, states, arrow);
+    }
+}
+
+void Board::drawArrow(sf::RenderTarget& target, sf::RenderStates states, const Arrow& arrow) const {
+    // Calculate center points of source and destination squares
+    float fromX = m_origin.x + arrow.fromCol * m_tileSize + m_tileSize / 2.f;
+    float fromY = m_origin.y + arrow.fromRow * m_tileSize + m_tileSize / 2.f;
+    float toX = m_origin.x + arrow.toCol * m_tileSize + m_tileSize / 2.f;
+    float toY = m_origin.y + arrow.toRow * m_tileSize + m_tileSize / 2.f;
+
+    // Direction vector
+    float dx = toX - fromX;
+    float dy = toY - fromY;
+    float length = std::sqrt(dx * dx + dy * dy);
+    
+    if (length < 0.1f) return; // Prevent division by zero
+    
+    // Normalize direction
+    float dirX = dx / length;
+    float dirY = dy / length;
+    
+    // Arrow shaft width
+    float shaftWidth = m_tileSize * 0.12f;
+    float arrowHeadSize = m_tileSize * 0.25f;
+    
+    // Arrow head point (shorten line so head doesn't overlap)
+    float endX = toX - dirX * arrowHeadSize * 0.7f;
+    float endY = toY - dirY * arrowHeadSize * 0.7f;
+    
+    // Perpendicular vector for shaft width
+    float perpX = -dirY;
+    float perpY = dirX;
+    
+    // Draw arrow shaft as a quadrilateral
+    sf::ConvexShape shaft(4);
+    shaft.setPoint(0, sf::Vector2f(fromX - perpX * shaftWidth / 2.f, fromY - perpY * shaftWidth / 2.f));
+    shaft.setPoint(1, sf::Vector2f(fromX + perpX * shaftWidth / 2.f, fromY + perpY * shaftWidth / 2.f));
+    shaft.setPoint(2, sf::Vector2f(endX + perpX * shaftWidth / 2.f, endY + perpY * shaftWidth / 2.f));
+    shaft.setPoint(3, sf::Vector2f(endX - perpX * shaftWidth / 2.f, endY - perpY * shaftWidth / 2.f));
+    shaft.setFillColor(arrow.color);
+    target.draw(shaft, states);
+    
+    // Draw arrow head (triangle)
+    sf::ConvexShape head(3);
+    float headPerpX = perpX * arrowHeadSize;
+    float headPerpY = perpY * arrowHeadSize;
+    head.setPoint(0, sf::Vector2f(toX, toY)); // tip
+    head.setPoint(1, sf::Vector2f(endX - headPerpX * 0.5f, endY - headPerpY * 0.5f));
+    head.setPoint(2, sf::Vector2f(endX + headPerpX * 0.5f, endY + headPerpY * 0.5f));
+    head.setFillColor(arrow.color);
+    target.draw(head, states);
 }
 void Board::setStyle(const std::string& styleName) {
     m_currentStyle = styleName;
@@ -149,4 +212,50 @@ void Board::cyclePalette(int delta) {
 
     m_currentPaletteIndex = (m_currentPaletteIndex + delta + m_palettes.size()) % m_palettes.size();
     setColorsRGB(m_palettes[m_currentPaletteIndex].first, m_palettes[m_currentPaletteIndex].second);
+}
+
+// Mark/unmark squares for highlighting
+void Board::toggleMarkSquare(int row, int col) {
+    // Check if square is already marked
+    auto it = std::find(m_markedSquares.begin(), m_markedSquares.end(), std::make_pair(row, col));
+    if (it != m_markedSquares.end()) {
+        // Square is marked, remove it
+        m_markedSquares.erase(it);
+    } else {
+        // Square is not marked, add it
+        m_markedSquares.push_back({row, col});
+    }
+}
+
+void Board::clearMarkedSquares() {
+    m_markedSquares.clear();
+}
+
+bool Board::isSquareMarked(int row, int col) const {
+    return std::find(m_markedSquares.begin(), m_markedSquares.end(), std::make_pair(row, col)) != m_markedSquares.end();
+}
+
+// Arrow management methods
+void Board::addArrow(int fromRow, int fromCol, int toRow, int toCol, const sf::Color& color) {
+    // Check if arrow already exists (to avoid duplicates)
+    for (const auto& arrow : m_arrows) {
+        if (arrow.fromRow == fromRow && arrow.fromCol == fromCol && 
+            arrow.toRow == toRow && arrow.toCol == toCol) {
+            return; // Arrow already exists
+        }
+    }
+    m_arrows.push_back(Arrow(fromRow, fromCol, toRow, toCol, color));
+}
+
+void Board::clearArrows() {
+    m_arrows.clear();
+}
+
+void Board::removeArrow(int fromRow, int fromCol, int toRow, int toCol) {
+    auto it = std::remove_if(m_arrows.begin(), m_arrows.end(),
+        [fromRow, fromCol, toRow, toCol](const Arrow& arrow) {
+            return arrow.fromRow == fromRow && arrow.fromCol == fromCol && 
+                   arrow.toRow == toRow && arrow.toCol == toCol;
+        });
+    m_arrows.erase(it, m_arrows.end());
 }
