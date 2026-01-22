@@ -20,6 +20,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o.d"
   "CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o"
   "CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o.d"
+  "CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o"
+  "CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o.d"
   "CMakeFiles/SFML_CHESS.dir/src/main.cpp.o"
   "CMakeFiles/SFML_CHESS.dir/src/main.cpp.o.d"
   "SFML_CHESS"

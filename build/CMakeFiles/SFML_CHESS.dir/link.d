@@ -7,6 +7,7 @@ SFML_CHESS: \
   CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o \
+  CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o \
   CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o \
@@ -52,6 +53,11 @@ SFML_CHESS: \
   /usr/lib/x86_64-linux-gnu/libXi.so.6 \
   /usr/lib/x86_64-linux-gnu/libudev.so.1 \
   /lib64/ld-linux-x86-64.so.2 \
+  /usr/lib/x86_64-linux-gnu/libvorbis.so.0 \
+  /usr/lib/x86_64-linux-gnu/libvorbisfile.so.3 \
+  /usr/lib/x86_64-linux-gnu/libvorbisenc.so.2 \
+  /usr/lib/x86_64-linux-gnu/libFLAC.so.14 \
+  /usr/lib/x86_64-linux-gnu/libogg.so.0 \
   /usr/lib/x86_64-linux-gnu/libz.so.1 \
   /usr/lib/x86_64-linux-gnu/libbz2.so.1.0 \
   /usr/lib/x86_64-linux-gnu/libpng16.so.16 \
@@ -82,6 +88,8 @@ CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o:
 CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o:
 
 CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o:
+
+CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o:
 
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o:
 
@@ -172,6 +180,16 @@ CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o:
 /usr/lib/x86_64-linux-gnu/libudev.so.1:
 
 /lib64/ld-linux-x86-64.so.2:
+
+/usr/lib/x86_64-linux-gnu/libvorbis.so.0:
+
+/usr/lib/x86_64-linux-gnu/libvorbisfile.so.3:
+
+/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2:
+
+/usr/lib/x86_64-linux-gnu/libFLAC.so.14:
+
+/usr/lib/x86_64-linux-gnu/libogg.so.0:
 
 /usr/lib/x86_64-linux-gnu/libz.so.1:
 

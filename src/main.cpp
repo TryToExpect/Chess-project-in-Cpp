@@ -4,6 +4,7 @@
 #include "Board.hpp"
 #include "PieceManager.hpp"
 #include "GameLogic.hpp"
+#include "SoundManager.hpp"
 #include <memory>
 #include <iostream>
 #include <vector>
@@ -52,6 +53,21 @@ int main() {
     Board board(tileSize);
     GameLogic game;
 
+    // Sound manager
+    SoundManager soundManager;
+    soundManager.loadSounds("../assets/sounds");
+    
+    // Setup sound callback for game logic
+    game.setSoundCallback([&soundManager](bool isPawnMove, bool isCapture) {
+        if (isPawnMove) {
+            if (isCapture) {
+                soundManager.playPawnHit();
+            } else {
+                soundManager.playPawnMove();
+            }
+        }
+    });
+
     // Simple time control (per side, in seconds)
     double initialClockSeconds = timeControls[selectedTimeControl].seconds;
     double whiteTimeSeconds = initialClockSeconds;
@@ -85,6 +101,9 @@ int main() {
     bool isPromotionPending = false;
     int promotionRow = -1, promotionCol = -1;
     Move promotionMove = {-1, -1, -1, -1};
+
+    // Track if end sound has been played
+    bool endSoundPlayed = false;
 
     sf::RenderWindow window(sf::VideoMode(sf::Vector2u(static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight))), "Chess - SFML 3");
     window.setVerticalSyncEnabled(true);
@@ -172,6 +191,7 @@ int main() {
                         whiteTimeSeconds = initialClockSeconds;
                         blackTimeSeconds = initialClockSeconds;
                         deltaClock.restart(); // Start timing now
+                        soundManager.playBackgroundMusic(); // Start background music
                         std::cout << "Game started with time control: " << timeControls[selectedTimeControl].name << "\n";
                     }
                 }
@@ -368,8 +388,16 @@ int main() {
 
                                             if (game.isCheckmate()) {
                                                 std::cout << "CHECKMATE! " << (game.getWinner() == Color::WHITE ? "White" : "Black") << " wins!\n";
+                                                if (!endSoundPlayed) {
+                                                    soundManager.playEndSound();
+                                                    endSoundPlayed = true;
+                                                }
                                             } else if (game.isStalemate()) {
                                                 std::cout << "STALEMATE - Draw!\n";
+                                                if (!endSoundPlayed) {
+                                                    soundManager.playEndSound();
+                                                    endSoundPlayed = true;
+                                                }
                                             } else if (game.isInCheck(game.getTurn())) {
                                                 std::cout << "CHECK!\n";
                                             }
@@ -450,6 +478,11 @@ int main() {
                         auto &l = cols.first; auto &d = cols.second;
                         std::cout << "Board colors set to light=(" << l[0] << "," << l[1] << "," << l[2] << ") dark=(" << d[0] << "," << d[1] << "," << d[2] << ")\n";
                     }
+
+                    // Toggle sound with M key
+                    if (key->code == sf::Keyboard::Key::M) {
+                        soundManager.toggleSound();
+                    }
                 }
             }
         }
@@ -463,12 +496,20 @@ int main() {
                 if (whiteTimeSeconds <= 0.0) {
                     timeExpired = true;
                     timeOutSide = Color::WHITE;
+                    if (!endSoundPlayed) {
+                        soundManager.playEndSound();
+                        endSoundPlayed = true;
+                    }
                 }
             } else {
                 blackTimeSeconds = std::max(0.0, blackTimeSeconds - delta);
                 if (blackTimeSeconds <= 0.0) {
                     timeExpired = true;
                     timeOutSide = Color::BLACK;
+                    if (!endSoundPlayed) {
+                        soundManager.playEndSound();
+                        endSoundPlayed = true;
+                    }
                 }
             }
         }
@@ -532,6 +573,12 @@ int main() {
                 startText.setPosition({menuX + 70.f, startBtnY + 10.f});
                 startText.setFillColor(sf::Color(255, 255, 255));
                 window.draw(startText);
+
+                // Sound toggle info
+                sf::Text soundInfo(font, std::string("Sound: ") + (soundManager.isSoundEnabled() ? "ON (Press M to toggle)" : "OFF (Press M to toggle)"), 14);
+                soundInfo.setPosition({menuX + 10.f, startBtnY + 70.f});
+                soundInfo.setFillColor(soundManager.isSoundEnabled() ? sf::Color(150, 255, 150) : sf::Color(255, 150, 150));
+                window.draw(soundInfo);
             }
         } else {
             // Draw game (existing code)
@@ -641,13 +688,18 @@ int main() {
             controls4.setFillColor(sf::Color(150, 150, 150));
             window.draw(controls4);
 
+            sf::Text controls5(font, std::string("M: Sound ") + (soundManager.isSoundEnabled() ? "ON" : "OFF"), 10);
+            controls5.setPosition({10.f, 320.f});
+            controls5.setFillColor(soundManager.isSoundEnabled() ? sf::Color(150, 255, 150) : sf::Color(255, 150, 150));
+            window.draw(controls5);
+
             // Move history
             sf::Text historyLabel(font, "Moves:", 12);
-            historyLabel.setPosition({10.f, 335.f});
+            historyLabel.setPosition({10.f, 350.f});
             historyLabel.setFillColor(sf::Color(200, 200, 200));
             window.draw(historyLabel);
 
-            int moveY = 355;
+            int moveY = 370;
             for (size_t i = 0; i < moveHistory.size() && i < 12; i++) {
                 std::string moveNum = std::to_string(i / 2 + 1) + ". " + moveHistory[i];
                 sf::Text moveText(font, moveNum, 10);

@@ -2,6 +2,7 @@
 
 #include <array>
 #include <memory>
+#include <functional>
 #include "Pieces/Piece.hpp"
 
 struct Move {
@@ -66,6 +67,10 @@ public:
     // Update game state (call after every move to check for mate/stalemate)
     void updateGameState();
 
+    // Callback for sound events
+    using SoundCallback = std::function<void(bool isPawnMove, bool isCapture)>;
+    void setSoundCallback(SoundCallback callback) { soundCallback = callback; }
+
 private:
     Grid grid;
     Color turn;
@@ -77,4 +82,7 @@ private:
     bool checkmate = false;
     bool stalemate = false;
     Color winner = Color::NONE;
+
+    // Sound callback
+    SoundCallback soundCallback;
 };

@@ -142,10 +142,24 @@ CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.cpp -o CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.s
 
+CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o: CMakeFiles/SFML_CHESS.dir/flags.make
+CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/SoundManager.cpp
+CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o: CMakeFiles/SFML_CHESS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o -MF CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o.d -o CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o -c /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/SoundManager.cpp
+
+CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/SoundManager.cpp > CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.i
+
+CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/SoundManager.cpp -o CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.s
+
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o: CMakeFiles/SFML_CHESS.dir/flags.make
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Rook.cpp
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o: CMakeFiles/SFML_CHESS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o -MF CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o.d -o CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o -c /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Rook.cpp
 
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.i: cmake_force
@@ -159,7 +173,7 @@ CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.s: cmake_force
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o: CMakeFiles/SFML_CHESS.dir/flags.make
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Pawn.cpp
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o: CMakeFiles/SFML_CHESS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o -MF CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o.d -o CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o -c /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Pawn.cpp
 
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.i: cmake_force
@@ -173,7 +187,7 @@ CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.s: cmake_force
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o: CMakeFiles/SFML_CHESS.dir/flags.make
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Knight.cpp
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o: CMakeFiles/SFML_CHESS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o -MF CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o.d -o CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o -c /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Knight.cpp
 
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.i: cmake_force
@@ -187,7 +201,7 @@ CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.s: cmake_force
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o: CMakeFiles/SFML_CHESS.dir/flags.make
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Bishop.cpp
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o: CMakeFiles/SFML_CHESS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o -MF CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o.d -o CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.o -c /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Bishop.cpp
 
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.i: cmake_force
@@ -201,7 +215,7 @@ CMakeFiles/SFML_CHESS.dir/src/Pieces/Bishop.cpp.s: cmake_force
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o: CMakeFiles/SFML_CHESS.dir/flags.make
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Queen.cpp
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o: CMakeFiles/SFML_CHESS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o -MF CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o.d -o CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.o -c /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Queen.cpp
 
 CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.i: cmake_force
@@ -215,7 +229,7 @@ CMakeFiles/SFML_CHESS.dir/src/Pieces/Queen.cpp.s: cmake_force
 CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o: CMakeFiles/SFML_CHESS.dir/flags.make
 CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o: /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/King.cpp
 CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o: CMakeFiles/SFML_CHESS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o -MF CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o.d -o CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o -c /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/King.cpp
 
 CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.i: cmake_force
@@ -233,6 +247,7 @@ SFML_CHESS_OBJECTS = \
 "CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o" \
 "CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o" \
 "CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o" \
+"CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o" \
 "CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o" \
 "CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o" \
 "CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o" \
@@ -248,6 +263,7 @@ SFML_CHESS: CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o
 SFML_CHESS: CMakeFiles/SFML_CHESS.dir/src/Piece.cpp.o
 SFML_CHESS: CMakeFiles/SFML_CHESS.dir/src/PieceManager.cpp.o
 SFML_CHESS: CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o
+SFML_CHESS: CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o
 SFML_CHESS: CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.o
 SFML_CHESS: CMakeFiles/SFML_CHESS.dir/src/Pieces/Pawn.cpp.o
 SFML_CHESS: CMakeFiles/SFML_CHESS.dir/src/Pieces/Knight.cpp.o
@@ -261,7 +277,7 @@ SFML_CHESS: /usr/lib/x86_64-linux-gnu/libsfml-window.so.3.0.2
 SFML_CHESS: /usr/lib/x86_64-linux-gnu/libsfml-audio.so.3.0.2
 SFML_CHESS: /usr/lib/x86_64-linux-gnu/libsfml-system.so.3.0.2
 SFML_CHESS: CMakeFiles/SFML_CHESS.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable SFML_CHESS"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable SFML_CHESS"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SFML_CHESS.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

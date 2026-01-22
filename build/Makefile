@@ -369,6 +369,30 @@ src/Pieces/Rook.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/Pieces/Rook.cpp.s
 .PHONY : src/Pieces/Rook.cpp.s
 
+src/SoundManager.o: src/SoundManager.cpp.o
+.PHONY : src/SoundManager.o
+
+# target to build an object file
+src/SoundManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.o
+.PHONY : src/SoundManager.cpp.o
+
+src/SoundManager.i: src/SoundManager.cpp.i
+.PHONY : src/SoundManager.i
+
+# target to preprocess a source file
+src/SoundManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.i
+.PHONY : src/SoundManager.cpp.i
+
+src/SoundManager.s: src/SoundManager.cpp.s
+.PHONY : src/SoundManager.s
+
+# target to generate assembly for a file
+src/SoundManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFML_CHESS.dir/build.make CMakeFiles/SFML_CHESS.dir/src/SoundManager.cpp.s
+.PHONY : src/SoundManager.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -432,6 +456,9 @@ help:
 	@echo "... src/Pieces/Rook.o"
 	@echo "... src/Pieces/Rook.i"
 	@echo "... src/Pieces/Rook.s"
+	@echo "... src/SoundManager.o"
+	@echo "... src/SoundManager.i"
+	@echo "... src/SoundManager.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

@@ -266,6 +266,7 @@ CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o: \
  /usr/include/SFML/System/Sleep.hpp \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.hpp \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
+ /usr/include/c++/15/functional /usr/include/c++/15/bits/std_function.h \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
  /usr/include/c++/15/algorithm /usr/include/c++/15/bits/stl_algo.h \
  /usr/include/c++/15/bits/algorithmfwd.h \

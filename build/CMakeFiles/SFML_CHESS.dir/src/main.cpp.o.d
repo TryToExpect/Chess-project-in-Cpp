@@ -293,5 +293,26 @@ CMakeFiles/SFML_CHESS.dir/src/main.cpp.o: \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Board.hpp \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/PieceManager.hpp \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/GameLogic.hpp \
+ /usr/include/c++/15/functional /usr/include/c++/15/bits/std_function.h \
  /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/Pieces/Piece.hpp \
+ /home/eul3r/Desktop/Studia/Chess-project-in-Cpp/src/SoundManager.hpp \
+ /usr/include/SFML/Audio.hpp /usr/include/SFML/Audio/InputSoundFile.hpp \
+ /usr/include/SFML/Audio/Export.hpp \
+ /usr/include/SFML/Audio/SoundFileReader.hpp \
+ /usr/include/SFML/Audio/SoundChannel.hpp \
+ /usr/include/SFML/Audio/Listener.hpp /usr/include/SFML/Audio/Music.hpp \
+ /usr/include/SFML/Audio/SoundStream.hpp \
+ /usr/include/SFML/Audio/SoundSource.hpp \
+ /usr/include/SFML/Audio/AudioResource.hpp \
+ /usr/include/SFML/Audio/OutputSoundFile.hpp \
+ /usr/include/SFML/Audio/SoundFileWriter.hpp \
+ /usr/include/SFML/Audio/PlaybackDevice.hpp \
+ /usr/include/SFML/Audio/Sound.hpp \
+ /usr/include/SFML/Audio/SoundBuffer.hpp \
+ /usr/include/c++/15/unordered_set \
+ /usr/include/c++/15/bits/unordered_set.h \
+ /usr/include/SFML/Audio/SoundBufferRecorder.hpp \
+ /usr/include/SFML/Audio/SoundRecorder.hpp \
+ /usr/include/SFML/Audio/SoundFileFactory.hpp \
+ /usr/include/SFML/Audio/SoundFileFactory.inl \
  /usr/include/c++/15/iostream
