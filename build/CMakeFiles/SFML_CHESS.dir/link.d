@@ -47,7 +47,6 @@ SFML_CHESS: \
   /usr/lib/gcc/x86_64-linux-gnu/15/../../../x86_64-linux-gnu/crtn.o \
   /usr/lib/x86_64-linux-gnu/libfreetype.so.6 \
   /usr/lib/x86_64-linux-gnu/libstb.so.0 \
-  /lib/x86_64-linux-gnu/libm.so.6 \
   /usr/lib/x86_64-linux-gnu/libX11.so.6 \
   /usr/lib/x86_64-linux-gnu/libXrandr.so.2 \
   /usr/lib/x86_64-linux-gnu/libXcursor.so.1 \
@@ -169,8 +168,6 @@ CMakeFiles/SFML_CHESS.dir/src/Pieces/King.cpp.o:
 /usr/lib/x86_64-linux-gnu/libfreetype.so.6:
 
 /usr/lib/x86_64-linux-gnu/libstb.so.0:
-
-/lib/x86_64-linux-gnu/libm.so.6:
 
 /usr/lib/x86_64-linux-gnu/libX11.so.6:
 

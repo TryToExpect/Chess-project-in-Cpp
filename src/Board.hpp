@@ -6,6 +6,16 @@
 #include <vector>
 #include <utility>
 
+// Structure to represent an arrow on the board
+struct Arrow {
+    int fromRow, fromCol;
+    int toRow, toCol;
+    sf::Color color;
+    
+    Arrow(int fr, int fc, int tr, int tc, const sf::Color& c = sf::Color(255, 165, 0, 200))
+        : fromRow(fr), fromCol(fc), toRow(tr), toCol(tc), color(c) {}
+};
+
 class Board : public sf::Drawable {
 public:
     using RGB = std::array<int,3>;
@@ -52,8 +62,14 @@ public:
     void clearMarkedSquares();
     bool isSquareMarked(int row, int col) const;
 
+    // Arrow management (for drawing planned moves)
+    void addArrow(int fromRow, int fromCol, int toRow, int toCol, const sf::Color& color = sf::Color(255, 165, 0, 200));
+    void clearArrows();
+    void removeArrow(int fromRow, int fromCol, int toRow, int toCol);
+
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    void drawArrow(sf::RenderTarget& target, sf::RenderStates states, const Arrow& arrow) const;
 
     float m_tileSize;
     sf::Vector2f m_origin;
@@ -72,4 +88,6 @@ private:
     std::string m_assetDir = "../assets/pieces";
     // marked squares for highlighting (set of (row, col) pairs)
     std::vector<std::pair<int, int>> m_markedSquares;
+    // arrows for drawing planned moves
+    std::vector<Arrow> m_arrows;
 };
