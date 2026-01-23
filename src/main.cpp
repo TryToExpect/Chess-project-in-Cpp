@@ -6,6 +6,7 @@
 #include "GameLogic.hpp"
 #include "GameRecorder.hpp"
 #include "SoundManager.hpp"
+#include "bot.hpp"
 #include <memory>
 #include <iostream>
 #include <vector>
@@ -35,6 +36,12 @@ enum class ChessMode {
     FISCHER_RANDOM,  // Chess960
     DIAGONAL_CHESS
 };
+
+enum class OpponentMode {
+    HUMAN,
+    BOT
+};
+
 
 struct TimeControl {
     std::string name;
@@ -193,10 +200,26 @@ int main() {
     // Move history
     std::vector<std::string> moveHistory;
 
+
+        OpponentMode opponentMode = OpponentMode::HUMAN;
+        Bot bot(Color::BLACK); // bot gra czarnymi
+
+        sf::Text playHumanText(font, "GRA Z CZLOWIEKIEM", 28);
+        playHumanText.setPosition({100.f, 300.f});
+
+        sf::Text playBotText(font, "GRA Z BOTEM", 28);
+        playBotText.setPosition({100.f, 350.f});
+
+
+
+
+
     // Don't start clock until game begins
     // deltaClock will be restarted when entering PLAYING state
 
     while (window.isOpen()) {
+
+
         while (auto evt = window.pollEvent()) {
             // SFML 3 uses an event object as a variant — helpers are provided to
             // query and fetch the subtype data.
@@ -223,6 +246,25 @@ int main() {
                 if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left) {
                     float mx = static_cast<float>(mouseBtn->position.x);
                     float my = static_cast<float>(mouseBtn->position.y);
+
+
+                    if (playHumanText.getGlobalBounds().contains({mx, my})) {
+                        opponentMode = OpponentMode::HUMAN;
+                    }
+                    if (playBotText.getGlobalBounds().contains({mx, my})) {
+                        opponentMode = OpponentMode::BOT;
+                    }
+
+
+                    if (playHumanText.getGlobalBounds().contains({mx, my})) {
+                        opponentMode = OpponentMode::HUMAN;
+                        continue;
+                    }
+                    if (playBotText.getGlobalBounds().contains({mx, my})) {
+                        opponentMode = OpponentMode::BOT;
+                        continue;
+                    }
+
                     
                     // Chess mode buttons
                     float modeButtonWidth = 140.f;
@@ -287,6 +329,13 @@ int main() {
                         soundManager.playBackgroundMusic(); // Start background music
                         
                         // Setup game with selected mode
+                       if (opponentMode == OpponentMode::BOT) {
+                        // BOT: zawsze standard
+                        chessMode = ChessMode::STANDARD; // opcjonalnie, żeby UI też było spójne
+                        game.setup();
+                        std::cout << "Game started: Standard Chess (vs BOT)\n";
+                         } else {
+                        // HUMAN: Twoja dotychczasowa logika wariantów
                         if (chessMode == ChessMode::FISCHER_RANDOM) {
                             game.setupFischer();
                             std::cout << "Game started: CHESS960 (Fischer Random)\n";
@@ -297,6 +346,8 @@ int main() {
                             game.setup();
                             std::cout << "Game started: Standard Chess\n";
                         }
+                    }
+
                         // Update board display with the new game state
                         board.updateFromGame(game);
                         std::cout << "Time control: " << timeControls[selectedTimeControl].name << "\n";
@@ -342,6 +393,7 @@ int main() {
                 if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Right) {
                     float mx = static_cast<float>(mouseBtn->position.x);
                     float my = static_cast<float>(mouseBtn->position.y);
+
                     
                     // Check if click is within board bounds
                     if (mx >= boardX && mx < boardX + boardSize && my >= boardY && my < boardY + boardSize) {
@@ -378,6 +430,13 @@ int main() {
                 else if (mouseBtn && mouseBtn->button == sf::Mouse::Button::Left) {
                     float mx = static_cast<float>(mouseBtn->position.x);
                     float my = static_cast<float>(mouseBtn->position.y);
+
+
+                    if (!isPromotionPending &&
+                        opponentMode == OpponentMode::BOT &&
+                        game.getTurn() == Color::BLACK) {
+                        continue;
+                    }
 
                     // If promotion is pending, check for promotion button clicks
                     if (isPromotionPending && !timeExpired) {
@@ -704,10 +763,62 @@ int main() {
             }
         }
 
+        if (gameState == GameState::PLAYING &&
+            opponentMode == OpponentMode::BOT &&
+                game.getTurn() == Color::BLACK &&
+                !isPromotionPending &&
+                !timeExpired &&
+                !game.isGameOver())
+            {
+                auto mOpt = bot.pickMove(game);
+                if (mOpt) {
+                    Move m = *mOpt;
+
+                    // bot zawsze promuje do hetmana
+                    if (m.isPromotion) {
+                        m.promotionPiece = PieceType::QUEEN;
+                    }
+                    
+                    Piece* p = game.getPiece(m.r1, m.c1);
+                    if (p && p->type == PieceType::PAWN && (m.r2 == 0 || m.r2 == 7)) {
+                        m.isPromotion = true;
+                        m.promotionPiece = PieceType::QUEEN;
+                    }
+
+
+
+
+                    game.makeMove(m);
+                    gameStarted = true; // żeby zegar zaczął lecieć
+                    board.updateFromGame(game);
+                    board.clearMarkedSquares();
+                    board.clearArrows();
+
+                    // (opcjonalnie) dopisz do historii, jeśli chcesz
+                    // moveHistory.push_back("bot move");
+                }
+            }
+
+
         window.clear();
 
         if (gameState == GameState::MENU) {
-            window.draw(menuBackgroundSprite);
+             window.draw(menuBackgroundSprite);
+
+
+            playHumanText.setFillColor(sf::Color::White);
+            playBotText.setFillColor(sf::Color::White);
+
+            if (opponentMode == OpponentMode::HUMAN)
+                playHumanText.setFillColor(sf::Color::Yellow);
+            else
+                playBotText.setFillColor(sf::Color::Yellow);
+
+            window.draw(playHumanText);
+            window.draw(playBotText);
+
+
+
             // Draw menu
             if (font.getInfo().family.size() > 0) {
                 sf::Text subtitle(font, "CHESS", 48);
@@ -1113,6 +1224,7 @@ int main() {
             window.draw(blackAvgText);
 
         }
+
 
         window.display();
     }

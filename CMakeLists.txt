@@ -25,6 +25,7 @@ add_executable(SFML_CHESS
 	src/Pieces/Bishop.cpp
 	src/Pieces/Queen.cpp
 	src/Pieces/King.cpp
+	src/bot.cpp
 )
 
 target_link_libraries(SFML_CHESS PRIVATE SFML::Graphics SFML::Window SFML::System SFML::Audio)
