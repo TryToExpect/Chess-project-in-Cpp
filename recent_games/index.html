@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wyszukiwarka zapisow partii</title>
+  <style>
+    :root { font-family: "Segoe UI", Tahoma, sans-serif; color: #0f172a; background: #f8fafc; }
+    body { margin: 24px; }
+    h1 { margin: 0 0 12px; }
+    form { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); background: #e2e8f0; padding: 12px; border-radius: 8px; }
+    label { display: flex; flex-direction: column; font-weight: 600; gap: 4px; font-size: 14px; }
+    input, select { padding: 6px 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 14px 0; }
+    button { padding: 8px 12px; border-radius: 8px; border: 1px solid #0f172a; background: #0f172a; color: #fff; cursor: pointer; font-weight: 600; }
+    button.secondary { background: #fff; color: #0f172a; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; text-align: left; font-size: 13px; }
+    th { background: #f1f5f9; position: sticky; top: 0; z-index: 1; }
+    .file-picker { margin: 12px 0; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .status { font-size: 14px; color: #475569; }
+    .warning { color: #b45309; font-weight: 600; }
+    .moves { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 320px; }
+    .drop-zone { border: 2px dashed #94a3b8; border-radius: 10px; padding: 18px; text-align: center; color: #475569; background: #e2e8f0; transition: background 0.2s, border-color 0.2s; }
+    .drop-zone.active { background: #cbd5e1; border-color: #0f172a; }
+  </style>
+</head>
+<body>
+  <h1>Wyszukiwarka zapisow partii (local-only)</h1>
+  <p class="status">Dziala lokalnie w przegladarce: wybierz folder <code>recent_games</code> lub pliki .txt. Brak backendu/SQL.</p>
+
+  <div class="file-picker">
+    <label>Wybierz pliki lub folder
+      <input id="fileInput" type="file" webkitdirectory multiple accept=".txt">
+    </label>
+    <span id="loadStatus" class="status">Nie wczytano plikow.</span>
+  </div>
+
+  <div id="dropZone" class="drop-zone">
+    Upusc tutaj pliki .txt (lub folder recent_games)
+  </div>
+
+  <form id="filters" autocomplete="off">
+    <label>Wynik
+      <select id="result">
+        <option value="">(dowolny)</option>
+        <option value="white">white win</option>
+        <option value="black">black win</option>
+        <option value="draw">draw / stalemate</option>
+        <option value="timeout">timeout</option>
+      </select>
+    </label>
+    <label>Dzien tygodnia
+      <select id="weekday">
+        <option value="">(dowolny)</option>
+        <option value="1">Poniedzialek</option>
+        <option value="2">Wtorek</option>
+        <option value="3">Sroda</option>
+        <option value="4">Czwartek</option>
+        <option value="5">Piatek</option>
+        <option value="6">Sobota</option>
+        <option value="7">Niedziela</option>
+      </select>
+    </label>
+    <label>Godzina od
+      <input id="timeStart" type="time">
+    </label>
+    <label>Godzina do
+      <input id="timeEnd" type="time">
+    </label>
+    <label>Powod zakonczenia (fragment)
+      <input id="reason" type="text" placeholder="checkmate / stalemate / timeout / resign">
+    </label>
+    <label>Otwarcie / pierwsze ruchy (fragment)
+      <input id="opening" type="text" placeholder="e4 c5, italian, sicilian">
+    </label>
+  </form>
+
+  <div class="actions">
+    <button id="apply">Zastosuj filtry</button>
+    <button id="clear" type="button" class="secondary">Wyczysc filtry</button>
+    <span id="matchInfo" class="status"></span>
+  </div>
+
+  <div style="overflow:auto; max-height: 70vh; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff;">
+    <table id="results">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Plik</th>
+          <th>Data</th>
+          <th>Godzina</th>
+          <th>Dzien</th>
+          <th>Wynik</th>
+          <th>Powod</th>
+          <th>Pierwsze ruchy</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const applyBtn = document.getElementById('apply');
+    const clearBtn = document.getElementById('clear');
+    const matchInfo = document.getElementById('matchInfo');
+    const loadStatus = document.getElementById('loadStatus');
+    const tbody = document.querySelector('#results tbody');
+    const dropZone = document.getElementById('dropZone');
+
+    let games = [];
+    const weekdayNames = ['1','2','3','4','5','6','7'];
+
+    const toMinutes = (hhmm) => {
+      if (!hhmm || !hhmm.includes(':')) return null;
+      const [h, m] = hhmm.split(':');
+      const hh = Number(h); const mm = Number(m);
+      if (Number.isNaN(hh) || Number.isNaN(mm)) return null;
+      return hh * 60 + mm;
+    };
+
+    const normalizeResultFromName = (parts) => {
+      const p3 = parts[2];
+      const p4 = parts[3];
+      const p5 = parts[4];
+      if (p3 === 'white' && p4 === 'win') return 'white';
+      if (p3 === 'black' && p4 === 'win') return 'black';
+      if (p3 === 'stalemate' || p4 === 'stalemate' || p5 === 'stalemate') return 'draw';
+      if (p4 === 'timeout' || p5 === 'timeout') return 'timeout';
+      return '';
+    };
+
+    const parseFile = async (file) => {
+      const name = file.name.replace(/\.txt$/i, '');
+      const parts = name.split('_');
+      if (parts.length < 2) return null;
+      const dateRaw = parts[0];
+      const timeRaw = parts[1];
+      if (!/^\d{8}$/.test(dateRaw) || !/^\d{6}$/.test(timeRaw)) return null;
+
+      const yyyy = dateRaw.slice(0,4); const mm = dateRaw.slice(4,6); const dd = dateRaw.slice(6,8);
+      const hh = timeRaw.slice(0,2); const mi = timeRaw.slice(2,4);
+      const dateIso = `${yyyy}-${mm}-${dd}`;
+      const timeHHMM = `${hh}:${mi}`;
+      const d = new Date(`${dateIso}T${timeHHMM}:00`);
+      const weekday = d.getDay() === 0 ? 7 : d.getDay(); // ISO like 1-7
+
+      const text = await file.text();
+      const lines = text.split(/\r?\n/);
+      const resultLine = lines.find(l => /^(1-0|0-1|1\/2-1\/2)/.test(l.trim())) || '';
+      const reasonLineRaw = lines.find(l => /^Reason:/i.test(l.trim())) || '';
+      const reason = reasonLineRaw.replace(/^Reason:\s*/i, '').trim();
+      const movesPreview = lines.slice(0, 12).join(' ').trim();
+
+      let normalized = '';
+      if (/^1-0/.test(resultLine)) normalized = 'white';
+      else if (/^0-1/.test(resultLine)) normalized = 'black';
+      else if (/^1\/2-1\/2/.test(resultLine)) normalized = 'draw';
+      if (!normalized) normalized = normalizeResultFromName(parts);
+
+      const minutes = toMinutes(timeHHMM);
+      return {
+        file,
+        path: file.webkitRelativePath || file.name,
+        dateIso,
+        timeHHMM,
+        weekday,
+        result: normalized,
+        reason,
+        movesPreview,
+        minutes,
+      };
+    };
+
+    const render = (rows) => {
+      tbody.innerHTML = '';
+      rows.forEach((g, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${idx + 1}</td>
+          <td>${g.path}</td>
+          <td>${g.dateIso}</td>
+          <td>${g.timeHHMM}</td>
+          <td>${g.weekday}</td>
+          <td>${g.result || 'nieznany'}</td>
+          <td>${g.reason || 'brak'}</td>
+          <td class="moves" title="${g.movesPreview}">${g.movesPreview}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+      matchInfo.textContent = rows.length ? `Znaleziono ${rows.length} partii` : 'Brak dopasowan';
+    };
+
+    const applyFilters = () => {
+      const result = document.getElementById('result').value;
+      const weekday = document.getElementById('weekday').value;
+      const timeStart = document.getElementById('timeStart').value;
+      const timeEnd = document.getElementById('timeEnd').value;
+      const reason = document.getElementById('reason').value.trim().toLowerCase();
+      const opening = document.getElementById('opening').value.trim().toLowerCase();
+
+      let startMin = timeStart ? toMinutes(timeStart) : null;
+      let endMin = timeEnd ? toMinutes(timeEnd) : null;
+      if ((timeStart && !timeEnd) || (!timeStart && timeEnd)) {
+        startMin = null; endMin = null;
+      }
+
+      const filtered = games.filter(g => {
+        if (result && g.result !== result) return false;
+        if (weekday && String(g.weekday) !== weekday) return false;
+        if (startMin !== null && endMin !== null) {
+          if (g.minutes === null) return false;
+          if (g.minutes < startMin || g.minutes > endMin) return false;
+        }
+        if (reason && !(g.reason || '').toLowerCase().includes(reason)) return false;
+        if (opening && !(g.movesPreview || '').toLowerCase().includes(opening)) return false;
+        return true;
+      });
+
+      // Sort newest first
+      filtered.sort((a, b) => {
+        if (a.dateIso === b.dateIso) return (b.timeHHMM || '').localeCompare(a.timeHHMM || '');
+        return b.dateIso.localeCompare(a.dateIso);
+      });
+
+      render(filtered);
+    };
+
+    const clearFilters = () => {
+      document.getElementById('filters').reset();
+      applyFilters();
+    };
+
+    const loadFiles = async (files) => {
+      if (!files.length) return;
+      loadStatus.textContent = `Wczytywanie ${files.length} plikow...`;
+      games = [];
+      for (const f of files) {
+        if (!f.name.toLowerCase().endsWith('.txt')) continue;
+        try {
+          const parsed = await parseFile(f);
+          if (parsed) games.push(parsed);
+        } catch (err) {
+          console.warn('Nie udalo sie odczytac pliku', f.name, err);
+        }
+      }
+      loadStatus.textContent = `Wczytano ${games.length} plikow (txt).`;
+      applyFilters();
+    };
+
+    fileInput.addEventListener('change', async (e) => {
+      await loadFiles(Array.from(e.target.files || []));
+    });
+
+    // Drag & drop obsluga
+    ['dragenter', 'dragover'].forEach(ev => {
+      dropZone.addEventListener(ev, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.add('active');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(ev => {
+      dropZone.addEventListener(ev, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        dropZone.classList.remove('active');
+      });
+    });
+
+    dropZone.addEventListener('drop', async (e) => {
+      const files = Array.from(e.dataTransfer?.files || []);
+      await loadFiles(files);
+    });
+
+    applyBtn.addEventListener('click', (e) => { e.preventDefault(); applyFilters(); });
+    clearBtn.addEventListener('click', (e) => { e.preventDefault(); clearFilters(); });
+  </script>
+</body>
+</html>

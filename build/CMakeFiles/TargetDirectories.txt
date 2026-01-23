@@ -1,3 +1,0 @@
-/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles/SFML_CHESS.dir
-/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles/edit_cache.dir
-/home/eul3r/Desktop/Studia/Chess-project-in-Cpp/build/CMakeFiles/rebuild_cache.dir
