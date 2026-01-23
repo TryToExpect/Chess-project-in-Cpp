@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/SFML_CHESS.dir/link.d"
   "CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o"
   "CMakeFiles/SFML_CHESS.dir/src/Board.cpp.o.d"
   "CMakeFiles/SFML_CHESS.dir/src/GameLogic.cpp.o"

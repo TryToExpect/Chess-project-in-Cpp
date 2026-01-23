@@ -138,7 +138,7 @@ int main() {
     window.setVerticalSyncEnabled(true);
 
         sf::Texture menuBackgroundTexture;
-    if (!menuBackgroundTexture.loadFromFile("assets/background_png/chess_background.png")) {
+    if (!menuBackgroundTexture.loadFromFile("./../assets/background_png/chess_background.png")) {
         std::cerr << "ERROR: Cannot load menu background\n";
     }
 
