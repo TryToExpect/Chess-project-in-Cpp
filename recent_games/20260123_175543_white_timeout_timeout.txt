@@ -1,0 +1,17 @@
+1. d3 f4
+2. d4 d7
+3. d5 d6
+4. c5 e6
+5. cxd6 exd5
+6. Ra5 Ra8
+7. Rxa8 f5
+8. Rxf8 f3
+9. e2 f4
+10. exf3 Rh3
+11. c4 Rxf3
+12. Rd3 Qe5
+13. Rb8 f6
+14. Rxf3 Nf8
+
+0-1[timeout]
+Reason: timeout
