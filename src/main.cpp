@@ -40,6 +40,20 @@ struct TimeControl {
     double seconds;
 };
 
+
+auto fitBackgroundToWindow = [](sf::Sprite& sprite, const sf::Texture& tex, const sf::Vector2u& winSize)
+{
+    auto s = tex.getSize();
+    if (s.x == 0 || s.y == 0) return;
+
+    sprite.setPosition({0.f, 0.f});
+    sprite.setScale({
+        winSize.x / static_cast<float>(s.x),
+        winSize.y / static_cast<float>(s.y)
+    });
+};
+
+
 int main() {
     // Game state management
     GameState gameState = GameState::MENU;
@@ -123,6 +137,23 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(sf::Vector2u(static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight))), "Chess - SFML 3");
     window.setVerticalSyncEnabled(true);
 
+        sf::Texture menuBackgroundTexture;
+    if (!menuBackgroundTexture.loadFromFile("assets/background_png/chess_background.png")) {
+        std::cerr << "ERROR: Cannot load menu background\n";
+    }
+
+    sf::Sprite menuBackgroundSprite(menuBackgroundTexture);
+
+    fitBackgroundToWindow(menuBackgroundSprite, menuBackgroundTexture, window.getSize());
+
+    // dopasowanie do rozmiaru okna
+    auto bgSize = menuBackgroundTexture.getSize();
+    menuBackgroundSprite.setScale({
+    windowWidth  / static_cast<float>(bgSize.x),
+    windowHeight / static_cast<float>(bgSize.y)
+    });
+
+
     // Load piece style: prefer "maestro" if available, otherwise pick first available.
     std::string defaultStyle = "maestro";
     auto allStyles = PieceManager::listAvailableStyles("../assets/pieces");
@@ -170,8 +201,20 @@ int main() {
             // query and fetch the subtype data.
             if (evt->is<sf::Event::Closed>()) {
                 window.close();
+                
                 break;
             }
+
+            if (const auto* e = evt->getIf<sf::Event::Resized>()) {
+                sf::View view(sf::FloatRect(
+                    {0.f, 0.f},
+                    {static_cast<float>(e->size.x), static_cast<float>(e->size.y)}
+                ));
+                window.setView(view);
+
+                fitBackgroundToWindow(menuBackgroundSprite, menuBackgroundTexture, {e->size.x, e->size.y});
+            }
+
 
             // Handle mouse button press for menu
             if (gameState == GameState::MENU && evt->is<sf::Event::MouseButtonPressed>()) {
@@ -650,9 +693,10 @@ int main() {
             }
         }
 
-        window.clear(sf::Color(50, 50, 50));
+        window.clear();
 
         if (gameState == GameState::MENU) {
+            window.draw(menuBackgroundSprite);
             // Draw menu
             if (font.getInfo().family.size() > 0) {
                 sf::Text subtitle(font, "CHESS", 48);

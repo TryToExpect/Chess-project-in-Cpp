@@ -1,0 +1,18 @@
+1. a4 c5
+2. c4 b5
+3. cxb5 d5
+4. d4 cxd4
+5. g4 g5
+6. f4 f5
+7. gxf5 gxf4
+8. h4 d3
+9. Qd2 f3
+10. Qc2 dxc2
+11. e3 d4
+12. exd4 e5
+13. Bd3 Qxd4
+14. Bc4 Qe4+
+15. Ne2 Qxe2+
+
+0-1[timeout]
+Reason: timeout
