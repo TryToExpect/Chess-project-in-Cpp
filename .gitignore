@@ -2,6 +2,8 @@
 build/
 cmake-build-*/
 
+# All game history files
+recent_games/
 # Binary executables
 SFML_CHESS
 chess

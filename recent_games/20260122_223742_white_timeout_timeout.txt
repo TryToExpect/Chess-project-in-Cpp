@@ -1,5 +1,0 @@
-1. e3 e6
-2. d4 Nd6
-
-0-1[timeout]
-Reason: timeout

@@ -1,8 +1,0 @@
-1. a4 c5
-2. e4 g5
-3. Nf3 a5
-4. b4 b5
-5. axb5 d5
-
-0-1[timeout]
-Reason: timeout
