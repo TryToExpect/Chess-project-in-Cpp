@@ -50,6 +50,11 @@
         <option value="timeout">timeout</option>
       </select>
     </label>
+    <label>Odmiana (wariant)
+      <select id="variant">
+        <option value="">(dowolny)</option>
+      </select>
+    </label>
     <label>Dzien tygodnia
       <select id="weekday">
         <option value="">(dowolny)</option>
@@ -102,6 +107,7 @@
 
   <script>
     const fileInput = document.getElementById('fileInput');
+    const variantSelect = document.getElementById('variant');
     const applyBtn = document.getElementById('apply');
     const clearBtn = document.getElementById('clear');
     const matchInfo = document.getElementById('matchInfo');
@@ -193,6 +199,7 @@
     };
 
     const applyFilters = () => {
+      const variant = document.getElementById('variant').value;
       const result = document.getElementById('result').value;
       const weekday = document.getElementById('weekday').value;
       const timeStart = document.getElementById('timeStart').value;
@@ -207,6 +214,14 @@
       }
 
       const filtered = games.filter(g => {
+        // Filter by variant: if files were loaded from a folder, their path will contain a top-level folder
+        if (variant) {
+          if (typeof g.path === 'string' && g.path.includes('/')) {
+            const top = g.path.split('/')[0];
+            if (top !== variant) return false;
+          }
+          // If g.path has no folder (user selected individual files), keep it.
+        }
         if (result && g.result !== result) return false;
         if (weekday && String(g.weekday) !== weekday) return false;
         if (startMin !== null && endMin !== null) {
@@ -236,16 +251,34 @@
       if (!files.length) return;
       loadStatus.textContent = `Wczytywanie ${files.length} plikow...`;
       games = [];
+      // Zbierz top-level foldery (warianty), jeśli pliki wczytano jako drzewo katalogow
+      const topSet = new Set();
       for (const f of files) {
         if (!f.name.toLowerCase().endsWith('.txt')) continue;
         try {
           const parsed = await parseFile(f);
           if (parsed) games.push(parsed);
+          const rel = f.webkitRelativePath || f.name;
+          if (typeof rel === 'string' && rel.includes('/')) {
+            topSet.add(rel.split('/')[0]);
+          }
         } catch (err) {
           console.warn('Nie udalo sie odczytac pliku', f.name, err);
         }
       }
+      // Zaktualizuj selector odmian
+      // zachowaj pierwszą opcję (dowolny)
+      while (variantSelect.options.length > 1) variantSelect.remove(1);
+      const tops = Array.from(topSet).sort();
+      for (const t of tops) {
+        const opt = document.createElement('option');
+        opt.value = t; opt.textContent = t; variantSelect.appendChild(opt);
+      }
+
       loadStatus.textContent = `Wczytano ${games.length} plikow (txt).`;
+      if (topSet.has('cylinder') || topSet.has('cylindrical')) {
+        loadStatus.textContent += '  [uwaga] W katalogu znaleziono "cylinder" — ten wariant nie jest jeszcze obsługiwany przez program.';
+      }
       applyFilters();
     };
 

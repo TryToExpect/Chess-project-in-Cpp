@@ -13,6 +13,47 @@ if [[ ! -d "${GAMES_DIR}" ]]; then
   exit 1
 fi
 
+# Wybór odmiany (wariantu) - lista podkatalogów w recent_games
+mapfile -t __variants < <(find "${GAMES_DIR}" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | sort)
+SEARCH_DIR="${GAMES_DIR}"
+if (( ${#__variants[@]} > 0 )); then
+  echo "Dostępne odmiany w ${GAMES_DIR}:"
+  echo "  0) Wszystkie odmiany"
+  for i in "${!__variants[@]}"; do
+    idx=$((i+1))
+    printf '  %d) %s\n' "${idx}" "${__variants[i]}"
+  done
+  read -r -p $'Wybierz odmianę (numer lub nazwa, Enter = wszystkie): ' __choice || true
+  if [[ -n "${__choice}" ]]; then
+    # Rozpoznaj numer
+    if [[ "${__choice}" =~ ^[0-9]+$ ]]; then
+      if (( __choice == 0 )); then
+        SEARCH_DIR="${GAMES_DIR}"
+      else
+        sel_index=$((__choice-1))
+        if (( sel_index >= 0 && sel_index < ${#__variants[@]} )); then
+          SEARCH_DIR="${GAMES_DIR}/${__variants[sel_index]}"
+        else
+          echo "Niepoprawny numer odmiany, przeszukam wszystkie odmiany." >&2
+          SEARCH_DIR="${GAMES_DIR}"
+        fi
+      fi
+    else
+      # Nazwa odmiany
+      if [[ -d "${GAMES_DIR}/${__choice}" ]]; then
+        SEARCH_DIR="${GAMES_DIR}/${__choice}"
+      else
+        echo "Nie odnaleziono odmiany '${__choice}', przeszukam wszystkie odmiany." >&2
+        SEARCH_DIR="${GAMES_DIR}"
+      fi
+    fi
+    # Informacja o szachach cylindrycznych
+    if [[ "${SEARCH_DIR}" == "${GAMES_DIR}/cylinder" || "${SEARCH_DIR}" == "${GAMES_DIR}/cylindrical" ]]; then
+      echo "[uwaga] Szachy cylindryczne (cylinder) nie są jeszcze obsługiwane przez program — tylko przeszukiwanie zapisów." >&2
+    fi
+  fi
+fi
+
 normalize_day() {
   # Zamienia polskie/angielskie nazwy/skrót na numer dnia ISO (1=pon). Zwraca pusty gdy nieznany.
   local input="${1,,}"  # lower
@@ -157,7 +198,7 @@ while IFS= read -r -d '' file; do
   printf '  Powód: %s\n' "${reason_line:-brak/niezapisany}"
   printf '  Pierwsze ruchy: %s\n' "${moves_preview}"
 
-done < <(find "${GAMES_DIR}" -maxdepth 1 -type f -name '*.txt' -print0 | sort -z)
+done < <(find "${SEARCH_DIR}" -maxdepth 1 -type f -name '*.txt' -print0 | sort -z)
 
 if (( matches == 0 )); then
   echo "\nBrak plików spełniających zadane kryteria."
