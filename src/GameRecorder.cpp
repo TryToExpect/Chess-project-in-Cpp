@@ -10,6 +10,7 @@ namespace fs = std::filesystem;
 
 GameRecorder::GameRecorder() 
     : gameResult(GameResult::UNKNOWN), endReason("unknown") {
+    variant = "";
     // Create recent_games directory if it doesn't exist
     // The directory is created relative to the build directory's parent
     fs::path projectRoot = fs::path(__FILE__).parent_path().parent_path();
@@ -129,7 +130,28 @@ void GameRecorder::saveToFile() {
     // Path to recent_games directory (at project root level, same as src, build)
     fs::path projectRoot = fs::path(__FILE__).parent_path().parent_path();
     fs::path gamesDir = projectRoot / "recent_games";
-    fs::path filepath = gamesDir / filename;
+    fs::path targetDir = gamesDir;
+    if (!variant.empty()) {
+        // sanitize variant: avoid absolute paths
+        fs::path var = fs::path(variant);
+        if (var.has_root_directory()) {
+            // ignore root, use only filename part
+            var = var.filename();
+        }
+        targetDir = gamesDir / var;
+    }
+
+    // Ensure target directory exists
+    if (!fs::exists(targetDir)) {
+        try {
+            fs::create_directories(targetDir);
+        } catch (const std::exception& e) {
+            std::cerr << "Error creating directory: " << e.what() << "\n";
+            throw;
+        }
+    }
+
+    fs::path filepath = targetDir / filename;
 
     std::ofstream file(filepath);
 

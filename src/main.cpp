@@ -348,6 +348,22 @@ int main() {
                         }
                     }
 
+                        // Set recorder variant so saved files go to subfolders like recent_games/standard
+                        switch (chessMode) {
+                            case ChessMode::STANDARD:
+                                gameRecorder.setVariant("standard");
+                                break;
+                            case ChessMode::FISCHER_RANDOM:
+                                gameRecorder.setVariant("fischer");
+                                break;
+                            case ChessMode::DIAGONAL_CHESS:
+                                gameRecorder.setVariant("diagonal");
+                                break;
+                            default:
+                                gameRecorder.setVariant("");
+                                break;
+                        }
+
                         // Update board display with the new game state
                         board.updateFromGame(game);
                         std::cout << "Time control: " << timeControls[selectedTimeControl].name << "\n";

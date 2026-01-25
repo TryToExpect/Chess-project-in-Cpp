@@ -31,6 +31,7 @@ private:
     std::string filename;
     GameResult gameResult;
     std::string endReason; // "checkmate", "timeout", "stalemate", etc.
+    std::string variant; // game variant / subdirectory under recent_games
     
     // Helper methods
     std::string getCurrentDateTime();
@@ -46,6 +47,10 @@ private:
 
 public:
     GameRecorder();
+
+    // Set/get game variant (e.g. "standard", "fischer", "diagonal", "cylinder")
+    void setVariant(const std::string& v) { variant = v; }
+    std::string getVariant() const { return variant; }
     
     // Record a move with game state information
     void recordMove(const Move& move, PieceType movingPiece, bool isCheckmate, bool isCheck, bool isCapture);
